@@ -1,0 +1,190 @@
+{
+    "name": "PhishGuard Gmail Scanner",
+    "nodes": [
+        {
+            "parameters": {
+                "pollTimes": {
+                    "item": [
+                        {
+                            "mode": "everyMinute"
+                        }
+                    ]
+                },
+                "simple": false
+            },
+            "id": "gmail-trigger",
+            "name": "Gmail Trigger",
+            "type": "n8n-nodes-base.gmailTrigger",
+            "typeVersion": 1,
+            "position": [
+                250,
+                300
+            ],
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+                    "name": "Gmail OAuth2 account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "// Extract email data for phishing analysis\nconst emails = [];\n\nfor (const item of $input.all()) {\n  const email = item.json;\n  \n  // Extract URLs from body\n  const urlRegex = /(https?:\\/\\/[^\\s<>\"{}|\\\\^`\\[\\]]+)/gi;\n  const bodyText = email.textPlain || email.snippet || '';\n  const htmlBody = email.textHtml || '';\n  \n  const textUrls = bodyText.match(urlRegex) || [];\n  const htmlUrls = htmlBody.match(urlRegex) || [];\n  const allUrls = [...new Set([...textUrls, ...htmlUrls])];\n  \n  // Extract sender info\n  const fromHeader = email.from || '';\n  const senderEmail = fromHeader.match(/<(.+?)>/) \n    ? fromHeader.match(/<(.+?)>/)[1] \n    : fromHeader;\n  \n  emails.push({\n    json: {\n      messageId: email.id || email.messageId,\n      subject: email.subject || '(No Subject)',\n      sender: senderEmail,\n      senderName: fromHeader.replace(/<.+?>/, '').trim(),\n      body: bodyText.substring(0, 5000),\n      htmlBody: htmlBody.substring(0, 10000),\n      urls: allUrls,\n      receivedAt: email.internalDate \n        ? new Date(parseInt(email.internalDate)).toISOString()\n        : new Date().toISOString(),\n      labels: email.labelIds || [],\n      snippet: email.snippet || ''\n    }\n  });\n}\n\nreturn emails;"
+            },
+            "id": "extract-email-data",
+            "name": "Extract Email Data",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                480,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{$env.BACKEND_URL || 'https://your-backend.onrender.com'}}/api/process-email",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"messageId\": \"{{ $json.messageId }}\",\n  \"subject\": \"{{ $json.subject }}\",\n  \"sender\": \"{{ $json.sender }}\",\n  \"senderName\": \"{{ $json.senderName }}\",\n  \"body\": \"{{ $json.body }}\",\n  \"urls\": {{ JSON.stringify($json.urls) }},\n  \"receivedAt\": \"{{ $json.receivedAt }}\"\n}",
+                "options": {
+                    "timeout": 30000
+                }
+            },
+            "id": "send-to-backend",
+            "name": "Send to PhishGuard API",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                710,
+                300
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "REPLACE_WITH_YOUR_API_KEY_CREDENTIAL",
+                    "name": "PhishGuard API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "values": {
+                    "string": [
+                        {
+                            "name": "status",
+                            "value": "processed"
+                        },
+                        {
+                            "name": "processedAt",
+                            "value": "={{ $now.toISO() }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "success-response",
+            "name": "Log Success",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.2,
+            "position": [
+                940,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "values": {
+                    "string": [
+                        {
+                            "name": "status",
+                            "value": "error"
+                        },
+                        {
+                            "name": "errorMessage",
+                            "value": "={{ $json.error || 'Unknown error' }}"
+                        },
+                        {
+                            "name": "failedAt",
+                            "value": "={{ $now.toISO() }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "error-handler",
+            "name": "Log Error",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.2,
+            "position": [
+                940,
+                480
+            ]
+        }
+    ],
+    "connections": {
+        "Gmail Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Extract Email Data",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract Email Data": {
+            "main": [
+                [
+                    {
+                        "node": "Send to PhishGuard API",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Send to PhishGuard API": {
+            "main": [
+                [
+                    {
+                        "node": "Log Success",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Log Error",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1",
+        "saveManualExecutions": true,
+        "callerPolicy": "workflowsFromSameOwner"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "phishing-detection"
+        },
+        {
+            "name": "gmail"
+        },
+        {
+            "name": "security"
+        }
+    ],
+    "triggerCount": 1,
+    "meta": {
+        "templateId": "phishguard-gmail-scanner",
+        "templateCredsSetupCompleted": false
+    }
+}
