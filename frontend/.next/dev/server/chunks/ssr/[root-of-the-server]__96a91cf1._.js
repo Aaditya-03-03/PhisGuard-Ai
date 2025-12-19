@@ -1150,7 +1150,7 @@ const features = [
     {
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"],
         title: "Gmail Auto-Fetch",
-        description: "Automatically connect and scan your Gmail inbox using n8n workflows for seamless email monitoring.",
+        description: "Securely connect your Gmail inbox using OAuth 2.0 for seamless email monitoring.",
         color: "cyan"
     },
     {
@@ -1296,7 +1296,7 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/components/ui/glass-card.tsx [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__ = __turbopack_context__.i("[project]/frontend/node_modules/lucide-react/dist/esm/icons/mail.js [app-rsc] (ecmascript) <export default as Mail>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$workflow$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Workflow$3e$__ = __turbopack_context__.i("[project]/frontend/node_modules/lucide-react/dist/esm/icons/workflow.js [app-rsc] (ecmascript) <export default as Workflow>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$key$2d$round$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__KeyRound$3e$__ = __turbopack_context__.i("[project]/frontend/node_modules/lucide-react/dist/esm/icons/key-round.js [app-rsc] (ecmascript) <export default as KeyRound>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cpu$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Cpu$3e$__ = __turbopack_context__.i("[project]/frontend/node_modules/lucide-react/dist/esm/icons/cpu.js [app-rsc] (ecmascript) <export default as Cpu>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__ = __turbopack_context__.i("[project]/frontend/node_modules/lucide-react/dist/esm/icons/lock.js [app-rsc] (ecmascript) <export default as Lock>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$database$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Database$3e$__ = __turbopack_context__.i("[project]/frontend/node_modules/lucide-react/dist/esm/icons/database.js [app-rsc] (ecmascript) <export default as Database>");
@@ -1311,9 +1311,9 @@ const steps = [
         description: "Emails fetched from your inbox"
     },
     {
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$workflow$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Workflow$3e$__["Workflow"],
-        title: "n8n",
-        description: "Workflow automation"
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$key$2d$round$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__KeyRound$3e$__["KeyRound"],
+        title: "OAuth 2.0",
+        description: "Secure Gmail authentication"
     },
     {
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cpu$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Cpu$3e$__["Cpu"],
@@ -1555,7 +1555,7 @@ function ArchitectureSection() {
                                                         stopColor: "#27F3D6"
                                                     }, void 0, false, {
                                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                        lineNumber: 21,
+                                                        lineNumber: 22,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("stop", {
@@ -1563,13 +1563,13 @@ function ArchitectureSection() {
                                                         stopColor: "#3A86FF"
                                                     }, void 0, false, {
                                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                        lineNumber: 22,
+                                                        lineNumber: 23,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 20,
+                                                lineNumber: 21,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("filter", {
@@ -1580,7 +1580,7 @@ function ArchitectureSection() {
                                                         result: "coloredBlur"
                                                     }, void 0, false, {
                                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                        lineNumber: 25,
+                                                        lineNumber: 26,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("feMerge", {
@@ -1589,120 +1589,108 @@ function ArchitectureSection() {
                                                                 in: "coloredBlur"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                                lineNumber: 27,
+                                                                lineNumber: 28,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("feMergeNode", {
                                                                 in: "SourceGraphic"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                                lineNumber: 28,
+                                                                lineNumber: 29,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                        lineNumber: 26,
+                                                        lineNumber: 27,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 24,
+                                                lineNumber: 25,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("marker", {
+                                                id: "arrowhead",
+                                                markerWidth: "10",
+                                                markerHeight: "7",
+                                                refX: "9",
+                                                refY: "3.5",
+                                                orient: "auto",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("polygon", {
+                                                    points: "0 0, 10 3.5, 0 7",
+                                                    fill: "#27F3D6"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/frontend/components/landing/architecture-section.tsx",
+                                                    lineNumber: 40,
+                                                    columnNumber: 19
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/frontend/components/landing/architecture-section.tsx",
+                                                lineNumber: 32,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 19,
+                                        lineNumber: 20,
                                         columnNumber: 15
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                        d: "M150 200 L280 200",
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                        x1: "150",
+                                        y1: "200",
+                                        x2: "270",
+                                        y2: "200",
                                         stroke: "url(#cyanGradient)",
                                         strokeWidth: "2",
                                         filter: "url(#glowFilter)",
-                                        strokeDasharray: "5,5",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("animate", {
-                                            attributeName: "stroke-dashoffset",
-                                            from: "10",
-                                            to: "0",
-                                            dur: "1s",
-                                            repeatCount: "indefinite"
-                                        }, void 0, false, {
-                                            fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 41,
-                                            columnNumber: 17
-                                        }, this)
+                                        markerEnd: "url(#arrowhead)"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 34,
+                                        lineNumber: 45,
                                         columnNumber: 15
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                        d: "M380 200 L510 200",
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                        x1: "380",
+                                        y1: "200",
+                                        x2: "500",
+                                        y2: "200",
                                         stroke: "url(#cyanGradient)",
                                         strokeWidth: "2",
                                         filter: "url(#glowFilter)",
-                                        strokeDasharray: "5,5",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("animate", {
-                                            attributeName: "stroke-dashoffset",
-                                            from: "10",
-                                            to: "0",
-                                            dur: "1s",
-                                            repeatCount: "indefinite"
-                                        }, void 0, false, {
-                                            fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 50,
-                                            columnNumber: 17
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 43,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                        d: "M610 200 L740 200",
-                                        stroke: "url(#cyanGradient)",
-                                        strokeWidth: "2",
-                                        filter: "url(#glowFilter)",
-                                        strokeDasharray: "5,5",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("animate", {
-                                            attributeName: "stroke-dashoffset",
-                                            from: "10",
-                                            to: "0",
-                                            dur: "1s",
-                                            repeatCount: "indefinite"
-                                        }, void 0, false, {
-                                            fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 59,
-                                            columnNumber: 17
-                                        }, this)
+                                        markerEnd: "url(#arrowhead)"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
                                         lineNumber: 52,
                                         columnNumber: 15
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                        d: "M840 200 L950 200",
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                        x1: "610",
+                                        y1: "200",
+                                        x2: "730",
+                                        y2: "200",
                                         stroke: "url(#cyanGradient)",
                                         strokeWidth: "2",
                                         filter: "url(#glowFilter)",
-                                        strokeDasharray: "5,5",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("animate", {
-                                            attributeName: "stroke-dashoffset",
-                                            from: "10",
-                                            to: "0",
-                                            dur: "1s",
-                                            repeatCount: "indefinite"
-                                        }, void 0, false, {
-                                            fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 68,
-                                            columnNumber: 17
-                                        }, this)
+                                        markerEnd: "url(#arrowhead)"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 61,
+                                        lineNumber: 59,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("line", {
+                                        x1: "840",
+                                        y1: "200",
+                                        x2: "940",
+                                        y2: "200",
+                                        stroke: "url(#cyanGradient)",
+                                        strokeWidth: "2",
+                                        filter: "url(#glowFilter)",
+                                        markerEnd: "url(#arrowhead)"
+                                    }, void 0, false, {
+                                        fileName: "[project]/frontend/components/landing/architecture-section.tsx",
+                                        lineNumber: 66,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("g", {
@@ -1717,7 +1705,7 @@ function ArchitectureSection() {
                                                 strokeWidth: "1"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 73,
+                                                lineNumber: 76,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1730,7 +1718,7 @@ function ArchitectureSection() {
                                                 children: "Gmail"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 74,
+                                                lineNumber: 77,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1742,7 +1730,7 @@ function ArchitectureSection() {
                                                 children: "Email Source"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 77,
+                                                lineNumber: 80,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -1752,7 +1740,7 @@ function ArchitectureSection() {
                                                 fill: "rgba(39, 243, 214, 0.2)"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 80,
+                                                lineNumber: 83,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1764,13 +1752,13 @@ function ArchitectureSection() {
                                                 children: "✉"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 81,
+                                                lineNumber: 84,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 72,
+                                        lineNumber: 75,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("g", {
@@ -1785,7 +1773,7 @@ function ArchitectureSection() {
                                                 strokeWidth: "1"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 88,
+                                                lineNumber: 91,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1795,10 +1783,10 @@ function ArchitectureSection() {
                                                 fontSize: "12",
                                                 textAnchor: "middle",
                                                 fontWeight: "600",
-                                                children: "n8n"
+                                                children: "OAuth 2.0"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 89,
+                                                lineNumber: 92,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1807,10 +1795,10 @@ function ArchitectureSection() {
                                                 fill: "rgba(234, 246, 255, 0.6)",
                                                 fontSize: "10",
                                                 textAnchor: "middle",
-                                                children: "Automation"
+                                                children: "Authentication"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 92,
+                                                lineNumber: 95,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -1820,7 +1808,7 @@ function ArchitectureSection() {
                                                 fill: "rgba(58, 134, 255, 0.2)"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 95,
+                                                lineNumber: 98,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1829,16 +1817,16 @@ function ArchitectureSection() {
                                                 fill: "#3A86FF",
                                                 fontSize: "16",
                                                 textAnchor: "middle",
-                                                children: "⚡"
+                                                children: "🔑"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 96,
+                                                lineNumber: 99,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 87,
+                                        lineNumber: 90,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("g", {
@@ -1853,7 +1841,7 @@ function ArchitectureSection() {
                                                 strokeWidth: "1"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 103,
+                                                lineNumber: 106,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1866,7 +1854,7 @@ function ArchitectureSection() {
                                                 children: "AI Engine"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 104,
+                                                lineNumber: 107,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1878,7 +1866,7 @@ function ArchitectureSection() {
                                                 children: "ML Classification"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 107,
+                                                lineNumber: 110,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -1888,7 +1876,7 @@ function ArchitectureSection() {
                                                 fill: "rgba(39, 243, 214, 0.2)"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 110,
+                                                lineNumber: 113,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1900,13 +1888,13 @@ function ArchitectureSection() {
                                                 children: "🧠"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 111,
+                                                lineNumber: 114,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 102,
+                                        lineNumber: 105,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("g", {
@@ -1921,7 +1909,7 @@ function ArchitectureSection() {
                                                 strokeWidth: "1"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 118,
+                                                lineNumber: 121,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1934,7 +1922,7 @@ function ArchitectureSection() {
                                                 children: "Firebase"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 119,
+                                                lineNumber: 122,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1946,7 +1934,7 @@ function ArchitectureSection() {
                                                 children: "Cloud Storage"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 122,
+                                                lineNumber: 125,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -1956,7 +1944,7 @@ function ArchitectureSection() {
                                                 fill: "rgba(58, 134, 255, 0.2)"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 125,
+                                                lineNumber: 128,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -1968,13 +1956,13 @@ function ArchitectureSection() {
                                                 children: "☁"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 126,
+                                                lineNumber: 129,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 117,
+                                        lineNumber: 120,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("g", {
@@ -1989,7 +1977,7 @@ function ArchitectureSection() {
                                                 strokeWidth: "1"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 133,
+                                                lineNumber: 136,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -2001,13 +1989,13 @@ function ArchitectureSection() {
                                                 children: "🔒 AES-256 Encrypted"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                                lineNumber: 141,
+                                                lineNumber: 144,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                        lineNumber: 132,
+                                        lineNumber: 135,
                                         columnNumber: 15
                                     }, this)
                                 ]
@@ -2031,7 +2019,7 @@ function ArchitectureSection() {
                                             className: "w-3 h-3 rounded-full bg-cyan"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 151,
+                                            lineNumber: 154,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2039,13 +2027,13 @@ function ArchitectureSection() {
                                             children: "Data Flow"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 152,
+                                            lineNumber: 155,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                    lineNumber: 150,
+                                    lineNumber: 153,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2055,7 +2043,7 @@ function ArchitectureSection() {
                                             className: "w-3 h-3 rounded-full bg-blue"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 155,
+                                            lineNumber: 158,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2063,13 +2051,13 @@ function ArchitectureSection() {
                                             children: "Processing"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 156,
+                                            lineNumber: 159,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                    lineNumber: 154,
+                                    lineNumber: 157,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2079,7 +2067,7 @@ function ArchitectureSection() {
                                             className: "w-3 h-3 rounded-full bg-risk-low"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 162,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2087,19 +2075,19 @@ function ArchitectureSection() {
                                             children: "Encrypted"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                            lineNumber: 160,
+                                            lineNumber: 163,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                                    lineNumber: 158,
+                                    lineNumber: 161,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/frontend/components/landing/architecture-section.tsx",
-                            lineNumber: 149,
+                            lineNumber: 152,
                             columnNumber: 11
                         }, this)
                     ]

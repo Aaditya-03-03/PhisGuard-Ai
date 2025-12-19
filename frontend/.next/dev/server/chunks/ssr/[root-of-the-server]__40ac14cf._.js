@@ -44,12 +44,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$firebase$2
 ;
 ;
 const firebaseConfig = {
-    apiKey: ("TURBOPACK compile-time value", "AIzaSyAPLfuF8S8_15EoJkwel7sC-oGBEgVbMfc"),
-    authDomain: ("TURBOPACK compile-time value", "phish-guard-ai-ac5be.firebaseapp.com"),
-    projectId: ("TURBOPACK compile-time value", "phish-guard-ai-ac5be"),
-    storageBucket: ("TURBOPACK compile-time value", "phish-guard-ai-ac5be.firebasestorage.app"),
-    messagingSenderId: ("TURBOPACK compile-time value", "980455330246"),
-    appId: ("TURBOPACK compile-time value", "1:980455330246:web:19c75d9434a138749062c7")
+    apiKey: ("TURBOPACK compile-time value", "AIzaSyDL2HOA7Gd-OTo3dBT_D7H3oR641hFB7Ww"),
+    authDomain: ("TURBOPACK compile-time value", "phish-guard-ai-3e110.firebaseapp.com"),
+    projectId: ("TURBOPACK compile-time value", "phish-guard-ai-3e110"),
+    storageBucket: ("TURBOPACK compile-time value", "phish-guard-ai-3e110.firebasestorage.app"),
+    messagingSenderId: ("TURBOPACK compile-time value", "311956616900"),
+    appId: ("TURBOPACK compile-time value", "1:311956616900:web:fe37b254bb5ba6aa82fb91")
 };
 // Initialize Firebase (prevent multiple initializations)
 const app = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$firebase$2f$app$2f$dist$2f$esm$2f$index$2e$esm$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getApps"])().length > 0 ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$firebase$2f$app$2f$dist$2f$esm$2f$index$2e$esm$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getApp"])() : (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$firebase$2f$app$2f$dist$2f$esm$2f$index$2e$esm$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["initializeApp"])(firebaseConfig);

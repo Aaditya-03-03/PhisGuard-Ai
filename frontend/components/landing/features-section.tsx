@@ -6,7 +6,7 @@ const features = [
   {
     icon: Mail,
     title: "Gmail Auto-Fetch",
-    description: "Automatically connect and scan your Gmail inbox using n8n workflows for seamless email monitoring.",
+    description: "Securely connect your Gmail inbox using OAuth 2.0 for seamless email monitoring.",
     color: "cyan",
   },
   {

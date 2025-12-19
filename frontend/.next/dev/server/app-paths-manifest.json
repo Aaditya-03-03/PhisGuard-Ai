@@ -1,3 +1,11 @@
 {
-  "/page": "app/page.js"
+  "/connect-gmail/page": "app/connect-gmail/page.js",
+  "/dashboard/flagged/page": "app/dashboard/flagged/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/reports/page": "app/dashboard/reports/page.js",
+  "/dashboard/settings/page": "app/dashboard/settings/page.js",
+  "/docs/page": "app/docs/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/signup/page": "app/signup/page.js"
 }

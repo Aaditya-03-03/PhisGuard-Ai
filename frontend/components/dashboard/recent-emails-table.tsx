@@ -76,7 +76,7 @@ export function RecentEmailsTable() {
           <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
             <Inbox className="w-12 h-12 mb-4 opacity-50" />
             <p className="text-lg font-medium">No emails processed yet</p>
-            <p className="text-sm">Emails will appear here once n8n starts sending them</p>
+            <p className="text-sm">Click "Scan Now" above to analyze your inbox</p>
           </div>
         ) : (
           <table className="w-full">

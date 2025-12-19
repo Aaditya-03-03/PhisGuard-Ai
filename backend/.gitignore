@@ -1,7 +1,7 @@
 # Backend
 node_modules/
 dist/
-.env
+# .env
 *.log
 
 # IDE

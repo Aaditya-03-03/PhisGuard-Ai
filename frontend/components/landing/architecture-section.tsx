@@ -16,6 +16,7 @@ export function ArchitectureSection() {
           <div className="relative">
             <svg viewBox="0 0 1000 400" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
               {/* Define gradients and filters */}
+              {/* Arrow marker definition */}
               <defs>
                 <linearGradient id="cyanGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#27F3D6" />
@@ -28,45 +29,47 @@ export function ArchitectureSection() {
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
+                <marker
+                  id="arrowhead"
+                  markerWidth="10"
+                  markerHeight="7"
+                  refX="9"
+                  refY="3.5"
+                  orient="auto"
+                >
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#27F3D6" />
+                </marker>
               </defs>
 
-              {/* Connection lines */}
-              <path
-                d="M150 200 L280 200"
+              {/* Connection arrows */}
+              <line
+                x1="150" y1="200" x2="270" y2="200"
                 stroke="url(#cyanGradient)"
                 strokeWidth="2"
                 filter="url(#glowFilter)"
-                strokeDasharray="5,5"
-              >
-                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite" />
-              </path>
-              <path
-                d="M380 200 L510 200"
+                markerEnd="url(#arrowhead)"
+              />
+              <line
+                x1="380" y1="200" x2="500" y2="200"
                 stroke="url(#cyanGradient)"
                 strokeWidth="2"
                 filter="url(#glowFilter)"
-                strokeDasharray="5,5"
-              >
-                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite" />
-              </path>
-              <path
-                d="M610 200 L740 200"
+                markerEnd="url(#arrowhead)"
+              />
+              <line
+                x1="610" y1="200" x2="730" y2="200"
                 stroke="url(#cyanGradient)"
                 strokeWidth="2"
                 filter="url(#glowFilter)"
-                strokeDasharray="5,5"
-              >
-                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite" />
-              </path>
-              <path
-                d="M840 200 L950 200"
+                markerEnd="url(#arrowhead)"
+              />
+              <line
+                x1="840" y1="200" x2="940" y2="200"
                 stroke="url(#cyanGradient)"
                 strokeWidth="2"
                 filter="url(#glowFilter)"
-                strokeDasharray="5,5"
-              >
-                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite" />
-              </path>
+                markerEnd="url(#arrowhead)"
+              />
 
               {/* Gmail Box */}
               <g transform="translate(50, 140)">
@@ -83,18 +86,18 @@ export function ArchitectureSection() {
                 </text>
               </g>
 
-              {/* n8n Box */}
+              {/* OAuth 2.0 Box */}
               <g transform="translate(280, 140)">
                 <rect width="100" height="120" rx="12" fill="rgba(26, 35, 64, 0.8)" stroke="#3A86FF" strokeWidth="1" />
                 <text x="50" y="50" fill="#fff" fontSize="12" textAnchor="middle" fontWeight="600">
-                  n8n
+                  OAuth 2.0
                 </text>
                 <text x="50" y="70" fill="rgba(234, 246, 255, 0.6)" fontSize="10" textAnchor="middle">
-                  Automation
+                  Authentication
                 </text>
                 <circle cx="50" cy="95" r="15" fill="rgba(58, 134, 255, 0.2)" />
                 <text x="50" y="100" fill="#3A86FF" fontSize="16" textAnchor="middle">
-                  ⚡
+                  🔑
                 </text>
               </g>
 

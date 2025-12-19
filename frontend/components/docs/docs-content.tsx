@@ -20,7 +20,7 @@ import {
 const sections = [
   { id: "introduction", label: "Introduction", icon: Book },
   { id: "how-it-works", label: "How It Works", icon: Workflow },
-  { id: "n8n-setup", label: "n8n Setup Guide", icon: Workflow },
+  { id: "gmail-setup", label: "Gmail OAuth Setup", icon: Workflow },
   { id: "api", label: "Backend API Endpoints", icon: Server },
   { id: "ai-model", label: "AI Model Description", icon: Brain },
   { id: "encryption", label: "Encryption Layer", icon: Lock },
@@ -99,11 +99,10 @@ export function DocsContent() {
                   <button
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      activeSection === section.id
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeSection === section.id
                         ? "bg-cyan/10 text-cyan border border-cyan/30"
                         : "text-muted-foreground hover:text-white hover:bg-navy-lighter"
-                    }`}
+                      }`}
                   >
                     <section.icon className="w-4 h-4" />
                     {section.label}
@@ -148,7 +147,7 @@ export function DocsContent() {
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
                   <ChevronRight className="w-5 h-5 text-cyan flex-shrink-0 mt-0.5" />
-                  <span>Automated Gmail integration via n8n workflows</span>
+                  <span>Secure Gmail integration via OAuth 2.0</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ChevronRight className="w-5 h-5 text-cyan flex-shrink-0 mt-0.5" />

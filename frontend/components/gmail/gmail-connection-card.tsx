@@ -1,12 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { AlertBox } from "@/components/ui/alert-box"
 import { StatusIndicator } from "@/components/ui/status-indicator"
 import { NeonBadge } from "@/components/ui/neon-badge"
-import { Mail, Shield, CheckCircle, ArrowRight, Lock, Workflow, Eye } from "lucide-react"
+import { Mail, Shield, CheckCircle, ArrowRight, Lock, Scan, Eye, AlertTriangle } from "lucide-react"
+import { useAuth } from "@/contexts/auth-context"
+import { getGmailConnectUrl, checkGmailStatus } from "@/lib/api"
 
 const steps = [
   {
@@ -23,22 +26,91 @@ const steps = [
   },
   {
     number: 3,
-    title: "Automatic Scanning Begins",
-    description: "n8n workflows start processing emails",
-    icon: Workflow,
+    title: "Scan Your Inbox",
+    description: "Click scan to analyze emails for phishing",
+    icon: Scan,
   },
 ]
 
 export function GmailConnectionCard() {
+  const { user } = useAuth()
+  const searchParams = useSearchParams()
   const [isConnecting, setIsConnecting] = useState(false)
   const [isConnected, setIsConnected] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleConnect = async () => {
+  // Check connection status on mount and after OAuth callback
+  useEffect(() => {
+    async function checkStatus() {
+      if (!user) {
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        const status = await checkGmailStatus()
+        setIsConnected(status.connected)
+
+        // Check for callback parameters
+        const gmailConnected = searchParams.get('gmail_connected')
+        const errorParam = searchParams.get('error')
+
+        if (gmailConnected === 'true') {
+          setIsConnected(true)
+        }
+
+        if (errorParam) {
+          setError(decodeURIComponent(errorParam))
+        }
+      } catch (err) {
+        console.error('Failed to check Gmail status:', err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    checkStatus()
+  }, [user, searchParams])
+
+  const handleConnect = () => {
+    if (!user) {
+      setError('Please sign in first to connect Gmail')
+      return
+    }
+
     setIsConnecting(true)
-    // Simulate OAuth flow
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setIsConnecting(false)
-    setIsConnected(true)
+    setError(null)
+
+    // Redirect to OAuth flow
+    const connectUrl = getGmailConnectUrl(user.uid)
+    window.location.href = connectUrl
+  }
+
+  if (isLoading) {
+    return (
+      <GlassCard variant="strong" className="p-8">
+        <div className="text-center py-8">
+          <div className="animate-spin w-10 h-10 border-4 border-cyan/30 border-t-cyan rounded-full mx-auto mb-4" />
+          <p className="text-muted-foreground">Checking Gmail connection status...</p>
+        </div>
+      </GlassCard>
+    )
+  }
+
+  if (!user) {
+    return (
+      <GlassCard variant="strong" className="p-8">
+        <div className="text-center py-8">
+          <AlertTriangle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-white mb-2">Sign In Required</h2>
+          <p className="text-muted-foreground mb-6">Please sign in to connect your Gmail account</p>
+          <GlowButton variant="primary" onClick={() => (window.location.href = "/login")}>
+            Go to Login
+          </GlowButton>
+        </div>
+      </GlassCard>
+    )
   }
 
   return (
@@ -49,8 +121,15 @@ export function GmailConnectionCard() {
           <Mail className="w-10 h-10 text-cyan" />
         </div>
         <h1 className="text-3xl font-bold text-white mb-3">Connect Your Gmail Account</h1>
-        <p className="text-lg text-muted-foreground">Allow automated scanning of incoming emails using n8n workflows</p>
+        <p className="text-lg text-muted-foreground">Enable phishing detection for your inbox</p>
       </div>
+
+      {/* Error Alert */}
+      {error && (
+        <AlertBox variant="error" title="Connection Error">
+          {error}
+        </AlertBox>
+      )}
 
       {/* Main Card */}
       <GlassCard variant="strong" className="p-8">
@@ -61,10 +140,10 @@ export function GmailConnectionCard() {
               <CheckCircle className="w-10 h-10 text-risk-low" />
             </div>
             <h2 className="text-2xl font-bold text-white mb-2">Gmail Connected!</h2>
-            <p className="text-muted-foreground mb-6">Your inbox is now being monitored for phishing threats</p>
+            <p className="text-muted-foreground mb-6">Your account is ready for phishing scans</p>
             <div className="flex items-center justify-center gap-2 mb-8">
               <StatusIndicator status="online" />
-              <span className="text-risk-low font-medium">Scanning Active</span>
+              <span className="text-risk-low font-medium">Ready to Scan</span>
             </div>
             <GlowButton variant="primary" onClick={() => (window.location.href = "/dashboard")}>
               Go to Dashboard
@@ -76,7 +155,7 @@ export function GmailConnectionCard() {
           <>
             {/* Steps */}
             <div className="space-y-4 mb-8">
-              {steps.map((step, index) => (
+              {steps.map((step) => (
                 <div key={step.number} className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-cyan/20 to-blue/20 flex items-center justify-center border border-cyan/30">
                     <span className="text-lg font-bold text-cyan">{step.number}</span>
@@ -110,7 +189,7 @@ export function GmailConnectionCard() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  Connecting...
+                  Redirecting to Google...
                 </span>
               ) : (
                 <>
@@ -125,7 +204,7 @@ export function GmailConnectionCard() {
 
       {/* Security Info */}
       <AlertBox variant="info" title="Your data is secure">
-        Your Gmail OAuth tokens are securely stored and encrypted with AES-256. We only request read-only access to scan
+        Your Gmail OAuth tokens are securely stored and encrypted. We only request read-only access to scan
         emails for phishing threats. Your data is never shared with third parties.
       </AlertBox>
 
@@ -147,3 +226,4 @@ export function GmailConnectionCard() {
     </div>
   )
 }
+

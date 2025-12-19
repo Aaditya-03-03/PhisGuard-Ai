@@ -1,5 +1,5 @@
 import { GlassCard } from "@/components/ui/glass-card"
-import { Mail, Workflow, Cpu, Lock, Database, BarChart3 } from "lucide-react"
+import { Mail, KeyRound, Cpu, Lock, Database, BarChart3 } from "lucide-react"
 
 const steps = [
   {
@@ -8,9 +8,9 @@ const steps = [
     description: "Emails fetched from your inbox",
   },
   {
-    icon: Workflow,
-    title: "n8n",
-    description: "Workflow automation",
+    icon: KeyRound,
+    title: "OAuth 2.0",
+    description: "Secure Gmail authentication",
   },
   {
     icon: Cpu,
