@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
@@ -10,25 +11,56 @@ import { Search, Filter, Eye, RefreshCw, Inbox } from "lucide-react"
 import { getEmailsByRisk, getLatestScan, type Email } from "@/lib/api"
 
 export function FlaggedEmailsList() {
+  const searchParams = useSearchParams()
+  const initialFilter = (searchParams.get('filter') as "all" | "high" | "medium" | "low") || "all"
+
   const [emails, setEmails] = useState<Email[]>([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
-  const [filter, setFilter] = useState<"all" | "high" | "medium" | "low">("all")
+  const [filter, setFilter] = useState<"all" | "high" | "medium" | "low">(initialFilter)
   const [searchQuery, setSearchQuery] = useState("")
 
   const fetchFlaggedEmails = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true)
 
     try {
-      // Get all emails from latest scan
-      const latestScan = await getLatestScan()
+      // Get all emails from scan history (multiple scans)
+      const { getScanHistory, getLatestScan } = await import("@/lib/api")
+      const scanHistory = await getScanHistory(10) // Get last 10 scans
 
-      if (latestScan && latestScan.results) {
-        // Store all emails, filtering will be done by the filter state
-        setEmails(latestScan.results)
-      } else {
-        setEmails([])
+      console.log('[FlaggedEmails] Scan history:', scanHistory?.length, 'scans')
+
+      let allEmails: Email[] = []
+
+      if (scanHistory && scanHistory.length > 0) {
+        // Combine all results from all scans, avoiding duplicates by emailId
+        const emailMap = new Map()
+        scanHistory.forEach(scan => {
+          console.log('[FlaggedEmails] Scan has', scan.results?.length, 'results, summary:', scan.summary)
+          if (scan.results && Array.isArray(scan.results)) {
+            scan.results.forEach((email: Email) => {
+              const key = email.gmailId || email.id || email.messageId || email.subject
+              if (key && !emailMap.has(key)) {
+                emailMap.set(key, email)
+              }
+            })
+          }
+        })
+        allEmails = Array.from(emailMap.values())
       }
+
+      // Fallback: also try latest scan if no emails found
+      if (allEmails.length === 0) {
+        console.log('[FlaggedEmails] Trying fallback to latest scan...')
+        const latestScan = await getLatestScan()
+        if (latestScan && latestScan.results) {
+          allEmails = latestScan.results
+        }
+      }
+
+      console.log('[FlaggedEmails] Total unique emails:', allEmails.length)
+      console.log('[FlaggedEmails] High risk:', allEmails.filter(e => e.riskLevel?.toLowerCase() === 'high').length)
+      setEmails(allEmails)
     } catch (error) {
       console.error('Failed to fetch flagged emails:', error)
     } finally {

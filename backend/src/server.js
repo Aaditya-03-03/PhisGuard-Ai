@@ -29,6 +29,7 @@ console.log('Environment check:', {
 
 import app from './app.js';
 import { initializeFirebase, isFirebaseConfigured } from './config/firebase.js';
+import { startScheduler } from './services/scheduler.service.js';
 
 const PORT = process.env.PORT || 3001;
 
@@ -76,6 +77,9 @@ async function startServer() {
                 console.warn('   Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env');
                 console.warn('   to enable Gmail integration.\n');
             }
+
+            // Start the auto-scan scheduler
+            startScheduler();
         });
     } catch (error) {
         console.error('Failed to start server:', error);

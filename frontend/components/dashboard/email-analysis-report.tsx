@@ -1,70 +1,131 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { NeonBadge } from "@/components/ui/neon-badge"
 import { ProbabilityBar } from "@/components/ui/probability-bar"
-import { EncryptedChip } from "@/components/ui/encrypted-chip"
 import { AlertBox } from "@/components/ui/alert-box"
-import { ArrowLeft, Mail, Clock, Hash, Shield, Brain, Link2, CheckCircle, Flag } from "lucide-react"
-
-// Mock email data
-const emailData = {
-  id: "1",
-  sender: "security-alert@bankofamerica.com",
-  subject: "Urgent: Verify your account information immediately",
-  timestamp: "2024-01-15 14:32:18 UTC",
-  messageIdHash: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
-  riskLevel: "high" as const,
-  phishingProbability: 92,
-  body: `Dear Valued Customer,
-
-We have detected unusual activity on your Bank of America account. Your account access has been temporarily limited due to security concerns.
-
-To restore full access to your account, please verify your identity by clicking the link below:
-
-[VERIFY YOUR ACCOUNT NOW]
-
-If you do not verify your account within 24 hours, your account will be permanently suspended.
-
-Thank you for your prompt attention to this matter.
-
-Sincerely,
-Bank of America Security Team`,
-  urls: [
-    {
-      encrypted: "aHR0cHM6Ly9zZWN1cmUtYmFua29mYW1lcmljYS5mYWtlLmNvbS92ZXJpZnk=",
-      decrypted: "https://secure-bankofamerica.fake.com/verify",
-      riskScore: 98,
-    },
-    {
-      encrypted: "aHR0cHM6Ly90cmFja2luZy5tYWxpY2lvdXMuY29tL2NsaWNr",
-      decrypted: "https://tracking.malicious.com/click",
-      riskScore: 95,
-    },
-  ],
-  aiInsights: {
-    keywords: [
-      { word: "Urgent", weight: 0.85 },
-      { word: "Verify", weight: 0.82 },
-      { word: "Account suspended", weight: 0.78 },
-      { word: "Click here", weight: 0.75 },
-      { word: "24 hours", weight: 0.72 },
-    ],
-    confidence: 94,
-    model: "DistilBERT-Phishing-v2",
-    analysisTime: "47ms",
-  },
-}
+import { ArrowLeft, Mail, Clock, Hash, Shield, Brain, Link2, AlertTriangle, RefreshCw, Flag, FileText } from "lucide-react"
+import { getScanHistory, getEmailById, type Email } from "@/lib/api"
 
 interface EmailAnalysisReportProps {
   emailId: string
 }
 
 export function EmailAnalysisReport({ emailId }: EmailAnalysisReportProps) {
-  const [urlsRevealed, setUrlsRevealed] = useState(false)
+  const [email, setEmail] = useState<Email | null>(null)
+  const [fullBody, setFullBody] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [loadingBody, setLoadingBody] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchEmail() {
+      try {
+        // Get emails from scan history and find by ID
+        const scanHistory = await getScanHistory(10)
+
+        let foundEmail: Email | null = null
+
+        for (const scan of scanHistory) {
+          if (scan.results) {
+            const match = scan.results.find((e: Email) =>
+              e.id === emailId ||
+              e.gmailId === emailId ||
+              e.messageId === emailId
+            )
+            if (match) {
+              foundEmail = match
+              break
+            }
+          }
+        }
+
+        if (foundEmail) {
+          setEmail(foundEmail)
+
+          // Use body if already stored, otherwise try to fetch from Gmail
+          if (foundEmail.body) {
+            setFullBody(foundEmail.body)
+          } else {
+            // Try to fetch full email body from Gmail
+            const gmailId = foundEmail.gmailId || foundEmail.id
+            if (gmailId) {
+              setLoadingBody(true)
+              try {
+                const fullEmail = await getEmailById(gmailId)
+                if (fullEmail && fullEmail.body) {
+                  setFullBody(fullEmail.body)
+                }
+              } catch (bodyErr) {
+                console.log("Could not fetch full body:", bodyErr)
+              } finally {
+                setLoadingBody(false)
+              }
+            }
+          }
+        } else {
+          setError("Email not found")
+        }
+      } catch (err) {
+        console.error("Failed to fetch email:", err)
+        setError("Failed to load email")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchEmail()
+  }, [emailId])
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short'
+    })
+  }
+
+  const getRiskBadgeVariant = (level: string) => {
+    const l = level.toLowerCase()
+    if (l === 'high') return 'high'
+    if (l === 'medium') return 'medium'
+    return 'low'
+  }
+
+  if (loading) {
+    return (
+      <GlassCard className="p-12 text-center">
+        <RefreshCw className="w-8 h-8 animate-spin text-cyan mx-auto mb-4" />
+        <p className="text-muted-foreground">Loading email analysis...</p>
+      </GlassCard>
+    )
+  }
+
+  if (error || !email) {
+    return (
+      <div className="space-y-6">
+        <Link href="/dashboard/flagged">
+          <GlowButton variant="ghost" size="sm">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Flagged Emails
+          </GlowButton>
+        </Link>
+        <GlassCard className="p-12 text-center">
+          <AlertTriangle className="w-12 h-12 text-risk-medium mx-auto mb-4" />
+          <h3 className="text-xl font-bold text-white mb-2">Email Not Found</h3>
+          <p className="text-muted-foreground">{error || "The requested email could not be found."}</p>
+        </GlassCard>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -90,23 +151,26 @@ export function EmailAnalysisReport({ emailId }: EmailAnalysisReportProps) {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Sender</p>
-                <p className="text-white font-medium">{emailData.sender}</p>
+                <p className="text-white font-medium">{email.sender}</p>
+                {email.senderName && (
+                  <p className="text-sm text-muted-foreground">{email.senderName}</p>
+                )}
               </div>
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Subject</p>
-                <p className="text-white font-medium">{emailData.subject}</p>
+                <p className="text-white font-medium">{email.subject || "(No subject)"}</p>
               </div>
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-1">
-                  <Clock className="w-3 h-3" /> Timestamp
+                  <Clock className="w-3 h-3" /> Received
                 </p>
-                <p className="text-muted-foreground">{emailData.timestamp}</p>
+                <p className="text-muted-foreground">{formatDate(email.receivedAt)}</p>
               </div>
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-1">
-                  <Hash className="w-3 h-3" /> Message ID Hash
+                  <Hash className="w-3 h-3" /> Email ID
                 </p>
-                <p className="text-muted-foreground font-mono text-sm truncate">{emailData.messageIdHash}</p>
+                <p className="text-muted-foreground font-mono text-sm truncate">{email.gmailId || email.id}</p>
               </div>
             </div>
 
@@ -114,120 +178,119 @@ export function EmailAnalysisReport({ emailId }: EmailAnalysisReportProps) {
             <div className="mt-6 pt-6 border-t border-cyan/20 flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex items-center gap-3">
                 <span className="text-sm text-muted-foreground">Risk Level:</span>
-                <NeonBadge variant="high" pulse>
-                  HIGH RISK
+                <NeonBadge variant={getRiskBadgeVariant(email.riskLevel)} pulse={email.riskLevel.toLowerCase() === 'high'}>
+                  {email.riskLevel.toUpperCase()} RISK
                 </NeonBadge>
               </div>
               <div className="flex-1 max-w-xs">
-                <ProbabilityBar value={emailData.phishingProbability} label="Phishing Probability" size="lg" />
+                <ProbabilityBar value={email.phishingScore} label="Phishing Probability" size="lg" />
               </div>
             </div>
           </GlassCard>
 
-          {/* Email body preview */}
+          {/* Email Content */}
           <GlassCard variant="strong">
             <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-cyan" />
-              Email Body Preview
+              <FileText className="w-5 h-5 text-cyan" />
+              Email Content
             </h2>
-            <div className="bg-navy-lighter/50 rounded-xl p-4 max-h-64 overflow-y-auto border border-cyan/10">
-              <pre className="text-sm text-muted-foreground whitespace-pre-wrap font-mono">{emailData.body}</pre>
+            <div className="bg-navy-lighter/50 rounded-xl p-4 border border-cyan/10 max-h-96 overflow-y-auto">
+              {loadingBody ? (
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  Loading full email content...
+                </div>
+              ) : fullBody ? (
+                <pre className="text-sm text-muted-foreground whitespace-pre-wrap font-sans">
+                  {fullBody}
+                </pre>
+              ) : (
+                <div>
+                  <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">Email Preview</p>
+                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                    {email.snippet || "No preview available"}
+                  </p>
+                </div>
+              )}
             </div>
           </GlassCard>
 
           {/* URL Analysis */}
-          <GlassCard variant="strong">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                <Link2 className="w-5 h-5 text-cyan" />
-                Extracted URLs ({emailData.urls.length})
-              </h2>
-              <GlowButton variant="secondary" size="sm" onClick={() => setUrlsRevealed(!urlsRevealed)}>
-                {urlsRevealed ? "Hide URLs" : "Decrypt URLs"}
-              </GlowButton>
-            </div>
+          {email.urlCount > 0 && (
+            <GlassCard variant="strong">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <Link2 className="w-5 h-5 text-cyan" />
+                  URLs Detected ({email.urlCount})
+                </h2>
+              </div>
 
-            <AlertBox variant="warning" className="mb-4">
-              These URLs have been identified as potentially malicious. Exercise caution.
-            </AlertBox>
-
-            <div className="space-y-3">
-              {emailData.urls.map((url, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 bg-navy-lighter/50 rounded-xl border border-cyan/10"
-                >
-                  <EncryptedChip
-                    value={url.encrypted}
-                    decryptedValue={urlsRevealed ? url.decrypted : undefined}
-                    className="flex-1"
-                  />
-                  <NeonBadge variant="high" className="ml-4">
-                    {url.riskScore}% Risk
-                  </NeonBadge>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
+              <AlertBox variant="warning" className="mb-4">
+                This email contains {email.urlCount} URL(s). URLs in suspicious emails may lead to phishing sites.
+              </AlertBox>
+            </GlassCard>
+          )}
         </div>
 
-        {/* Right column - AI Insights */}
+        {/* Right column - Analysis */}
         <div className="space-y-6">
           {/* AI Insights */}
           <GlassCard variant="strong" glow="cyan">
             <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <Brain className="w-5 h-5 text-cyan" />
-              AI Insights
+              Detection Analysis
             </h2>
 
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Model:</span>
-                <span className="text-cyan font-mono">{emailData.aiInsights.model}</span>
+                <span className="text-muted-foreground">Detection Model:</span>
+                <span className="text-cyan font-mono">Rule-Based Detector</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Confidence:</span>
-                <span className="text-white font-bold">{emailData.aiInsights.confidence}%</span>
+                <span className="text-muted-foreground">Phishing Score:</span>
+                <span className="text-white font-bold">{email.phishingScore}%</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Analysis Time:</span>
-                <span className="text-risk-low">{emailData.aiInsights.analysisTime}</span>
+                <span className="text-muted-foreground">URLs Found:</span>
+                <span className={email.urlCount > 0 ? "text-risk-high" : "text-risk-low"}>
+                  {email.urlCount}
+                </span>
               </div>
             </div>
 
-            <div className="mt-6 pt-6 border-t border-cyan/20">
-              <h3 className="text-sm font-semibold text-white mb-3">Key Indicators</h3>
-              <div className="space-y-3">
-                {emailData.aiInsights.keywords.map((keyword) => (
-                  <div key={keyword.word} className="space-y-1">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">{keyword.word}</span>
-                      <span className="text-risk-high">{Math.round(keyword.weight * 100)}%</span>
+            {/* Flags/Indicators */}
+            {email.flags && email.flags.length > 0 && (
+              <div className="mt-6 pt-6 border-t border-cyan/20">
+                <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                  <Flag className="w-4 h-4" />
+                  Risk Indicators
+                </h3>
+                <div className="space-y-2">
+                  {email.flags.map((flag, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <AlertTriangle className="w-4 h-4 text-risk-medium mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{flag}</span>
                     </div>
-                    <div className="h-1.5 bg-navy-lighter rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-risk-medium to-risk-high rounded-full"
-                        style={{ width: `${keyword.weight * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </GlassCard>
 
-          {/* Actions */}
+          {/* Email Stats */}
           <GlassCard variant="strong">
-            <h2 className="text-lg font-bold text-white mb-4">Actions</h2>
-            <div className="space-y-3">
-              <GlowButton variant="secondary" className="w-full justify-start">
-                <CheckCircle className="w-4 h-4" />
-                Mark as Safe
-              </GlowButton>
-              <GlowButton variant="outline" className="w-full justify-start text-risk-high border-risk-high">
-                <Flag className="w-4 h-4" />
-                Report Email
-              </GlowButton>
+            <h2 className="text-lg font-bold text-white mb-4">Email Statistics</h2>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Email ID:</span>
+                <span className="text-white font-mono truncate max-w-[150px]">{email.id}</span>
+              </div>
+              {email.messageId && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Message ID:</span>
+                  <span className="text-white font-mono truncate max-w-[150px]">{email.messageId}</span>
+                </div>
+              )}
             </div>
           </GlassCard>
         </div>

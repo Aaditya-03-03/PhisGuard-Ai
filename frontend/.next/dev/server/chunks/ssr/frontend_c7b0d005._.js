@@ -257,15 +257,18 @@ __turbopack_context__.s([
     ()=>StatCard
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/lib/utils.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/components/ui/glass-card.tsx [app-ssr] (ecmascript)");
+"use client";
 ;
 ;
 ;
-function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "default", className }) {
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GlassCard"], {
+;
+function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "default", className, href }) {
+    const cardContent = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GlassCard"], {
         hover: true,
-        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("relative overflow-hidden", className),
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("relative overflow-hidden", href && "cursor-pointer transition-transform hover:scale-[1.02]", className),
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-start justify-between",
@@ -278,7 +281,7 @@ function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "defaul
                                 children: title
                             }, void 0, false, {
                                 fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                                lineNumber: 23,
+                                lineNumber: 27,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -286,7 +289,7 @@ function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "defaul
                                 children: value
                             }, void 0, false, {
                                 fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                                lineNumber: 24,
+                                lineNumber: 28,
                                 columnNumber: 11
                             }, this),
                             subtitle && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -294,7 +297,7 @@ function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "defaul
                                 children: subtitle
                             }, void 0, false, {
                                 fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                                lineNumber: 37,
+                                lineNumber: 41,
                                 columnNumber: 24
                             }, this),
                             trend && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -307,13 +310,13 @@ function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "defaul
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                                lineNumber: 39,
+                                lineNumber: 43,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                        lineNumber: 22,
+                        lineNumber: 26,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -322,33 +325,44 @@ function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "defaul
                             className: "w-6 h-6"
                         }, void 0, false, {
                             fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                            lineNumber: 55,
+                            lineNumber: 59,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                        lineNumber: 44,
+                        lineNumber: 48,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                lineNumber: 21,
+                lineNumber: 25,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("absolute -bottom-8 -right-8 w-32 h-32 rounded-full blur-3xl opacity-20", variant === "cyan" && "bg-cyan", variant === "blue" && "bg-blue", variant === "success" && "bg-risk-low", variant === "warning" && "bg-risk-medium", variant === "danger" && "bg-risk-high", variant === "default" && "bg-white")
             }, void 0, false, {
                 fileName: "[project]/frontend/components/ui/stat-card.tsx",
-                lineNumber: 59,
+                lineNumber: 63,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/frontend/components/ui/stat-card.tsx",
-        lineNumber: 20,
+        lineNumber: 24,
         columnNumber: 5
     }, this);
+    if (href) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+            href: href,
+            children: cardContent
+        }, void 0, false, {
+            fileName: "[project]/frontend/components/ui/stat-card.tsx",
+            lineNumber: 78,
+            columnNumber: 12
+        }, this);
+    }
+    return cardContent;
 }
 }),
 "[project]/frontend/lib/api.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
@@ -356,31 +370,72 @@ function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "defaul
 
 /**
  * PhishGuard API Service
- * Handles all communication with the backend API
+ * Handles all communication with the backend API using Firebase Auth tokens
  */ __turbopack_context__.s([
-    "analyzeEmail",
-    ()=>analyzeEmail,
+    "checkGmailStatus",
+    ()=>checkGmailStatus,
     "checkHealth",
     ()=>checkHealth,
+    "disconnectGmail",
+    ()=>disconnectGmail,
+    "getAutoScanSettings",
+    ()=>getAutoScanSettings,
+    "getAutoScanStatus",
+    ()=>getAutoScanStatus,
+    "getEmailById",
+    ()=>getEmailById,
     "getEmailStats",
     ()=>getEmailStats,
     "getEmails",
     ()=>getEmails,
     "getEmailsByRisk",
-    ()=>getEmailsByRisk
+    ()=>getEmailsByRisk,
+    "getGmailConnectUrl",
+    ()=>getGmailConnectUrl,
+    "getGmailEmails",
+    ()=>getGmailEmails,
+    "getLatestScan",
+    ()=>getLatestScan,
+    "getScanHistory",
+    ()=>getScanHistory,
+    "scanInbox",
+    ()=>scanInbox,
+    "updateAutoScanSettings",
+    ()=>updateAutoScanSettings
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$firebase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/lib/firebase.ts [app-ssr] (ecmascript)");
+;
 const API_URL = ("TURBOPACK compile-time value", "http://localhost:3001") || 'http://localhost:3001';
-const API_KEY = ("TURBOPACK compile-time value", "your-api-key-here") || '';
-// Helper function for API calls
-async function fetchApi(endpoint, options) {
+// ============================================
+// Helper Functions
+// ============================================
+/**
+ * Get Firebase ID token for authenticated requests
+ */ async function getIdToken() {
+    const user = __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$firebase$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["auth"].currentUser;
+    if (!user) return null;
     try {
+        return await user.getIdToken();
+    } catch (error) {
+        console.error('Failed to get ID token:', error);
+        return null;
+    }
+}
+/**
+ * Make authenticated API request with Bearer token
+ */ async function fetchWithAuth(endpoint, options) {
+    try {
+        const token = await getIdToken();
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options?.headers
+        };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
         const response = await fetch(`${API_URL}${endpoint}`, {
             ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                'X-API-Key': API_KEY,
-                ...options?.headers
-            }
+            headers
         });
         const data = await response.json();
         return data;
@@ -392,43 +447,134 @@ async function fetchApi(endpoint, options) {
         };
     }
 }
-async function getEmails(limit = 20) {
-    const response = await fetchApi(`/api/emails?limit=${limit}`);
+/**
+ * Make public API request (no auth required)
+ */ async function fetchPublic(endpoint) {
+    try {
+        const response = await fetch(`${API_URL}${endpoint}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('API Error:', error);
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Network error'
+        };
+    }
+}
+function getGmailConnectUrl(userId) {
+    return `${API_URL}/auth/gmail/connect?userId=${encodeURIComponent(userId)}`;
+}
+async function checkGmailStatus() {
+    const response = await fetchWithAuth('/auth/gmail/status');
+    if (response.success && response.data) {
+        return response.data;
+    }
+    return {
+        connected: false
+    };
+}
+async function disconnectGmail() {
+    const response = await fetchWithAuth('/auth/gmail/disconnect', {
+        method: 'POST'
+    });
+    return response.success;
+}
+async function getEmailById(emailId) {
+    const response = await fetchWithAuth(`/gmail/emails/${emailId}`);
+    if (response.success && response.data) {
+        return response.data;
+    }
+    return null;
+}
+async function scanInbox(maxEmails = 500) {
+    const response = await fetchWithAuth('/scan/inbox', {
+        method: 'POST',
+        body: JSON.stringify({
+            maxEmails
+        })
+    });
+    if (response.success && response.data) {
+        return response.data;
+    }
+    // Handle specific error codes
+    if (response.code === 'GMAIL_NOT_CONNECTED') {
+        throw new Error('Gmail not connected. Please connect your Gmail account first.');
+    }
+    if (response.code === 'GMAIL_TOKEN_EXPIRED') {
+        throw new Error('Gmail access expired. Please reconnect your Gmail account.');
+    }
+    throw new Error(response.error || 'Failed to scan inbox');
+}
+async function getLatestScan() {
+    const response = await fetchWithAuth('/scan/latest');
+    return response.success ? response.data || null : null;
+}
+async function getScanHistory(limit = 10) {
+    const response = await fetchWithAuth(`/scan/history?limit=${limit}`);
     return response.success ? response.data || [] : [];
 }
+async function getGmailEmails(limit = 20) {
+    const response = await fetchWithAuth(`/gmail/emails?limit=${limit}`);
+    return response.success && response.data ? response.data.emails : [];
+}
 async function getEmailStats() {
-    const response = await fetchApi('/api/emails/stats');
-    return response.success ? response.data || {
-        total: 0,
-        highRisk: 0,
-        mediumRisk: 0,
-        lowRisk: 0
-    } : {
+    const defaultStats = {
         total: 0,
         highRisk: 0,
         mediumRisk: 0,
         lowRisk: 0
     };
+    const latestScan = await getLatestScan();
+    if (latestScan && latestScan.summary) {
+        return {
+            total: latestScan.summary.total,
+            highRisk: latestScan.summary.high,
+            mediumRisk: latestScan.summary.medium,
+            lowRisk: latestScan.summary.low
+        };
+    }
+    return defaultStats;
+}
+async function getEmails(limit = 20) {
+    const latestScan = await getLatestScan();
+    if (latestScan && latestScan.results) {
+        return latestScan.results.slice(0, limit);
+    }
+    return [];
 }
 async function getEmailsByRisk(level, limit = 50) {
-    const response = await fetchApi(`/api/emails/risk/${level}?limit=${limit}`);
-    return response.success ? response.data || [] : [];
-}
-async function analyzeEmail(email) {
-    const response = await fetchApi('/api/analyze-email', {
-        method: 'POST',
-        body: JSON.stringify(email)
-    });
-    return response.success ? response.data || null : null;
+    const latestScan = await getLatestScan();
+    if (latestScan && latestScan.results) {
+        return latestScan.results.filter((email)=>email.riskLevel.toLowerCase() === level).slice(0, limit);
+    }
+    return [];
 }
 async function checkHealth() {
-    try {
-        const response = await fetch(`${API_URL}/health`);
-        const data = await response.json();
-        return data.status === 'ok';
-    } catch  {
-        return false;
-    }
+    const response = await fetchPublic('/health');
+    return response.success && response.data?.status === 'healthy';
+}
+async function getAutoScanSettings() {
+    const response = await fetchWithAuth('/autoscan/settings');
+    return response.success && response.data ? response.data : {
+        autoScanEnabled: true,
+        autoScanInterval: 15,
+        lastAutoScan: null
+    };
+}
+async function updateAutoScanSettings(settings) {
+    const response = await fetchWithAuth('/autoscan/settings', {
+        method: 'PUT',
+        body: JSON.stringify(settings)
+    });
+    return response.success;
+}
+async function getAutoScanStatus() {
+    const response = await fetchPublic('/autoscan/status');
+    return response.success && response.data ? response.data : {
+        running: false,
+        jobInProgress: false
+    };
 }
 }),
 "[project]/frontend/components/dashboard/dashboard-stats.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
@@ -485,7 +631,8 @@ function DashboardStats() {
                 value: loading ? "..." : stats.total.toLocaleString(),
                 subtitle: "All processed emails",
                 icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"],
-                variant: "cyan"
+                variant: "cyan",
+                href: "/dashboard/flagged?filter=all"
             }, void 0, false, {
                 fileName: "[project]/frontend/components/dashboard/dashboard-stats.tsx",
                 lineNumber: 39,
@@ -494,34 +641,37 @@ function DashboardStats() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$stat$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatCard"], {
                 title: "High Risk (Phishing)",
                 value: loading ? "..." : stats.highRisk.toLocaleString(),
-                subtitle: "Detected threats",
+                subtitle: "Click to view threats",
                 icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__["AlertTriangle"],
-                variant: "danger"
+                variant: "danger",
+                href: "/dashboard/flagged?filter=high"
             }, void 0, false, {
                 fileName: "[project]/frontend/components/dashboard/dashboard-stats.tsx",
-                lineNumber: 46,
+                lineNumber: 47,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$stat$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatCard"], {
                 title: "Medium Risk",
                 value: loading ? "..." : stats.mediumRisk.toLocaleString(),
-                subtitle: "Needs review",
+                subtitle: "Click to review",
                 icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldAlert$3e$__["ShieldAlert"],
-                variant: "warning"
+                variant: "warning",
+                href: "/dashboard/flagged?filter=medium"
             }, void 0, false, {
                 fileName: "[project]/frontend/components/dashboard/dashboard-stats.tsx",
-                lineNumber: 53,
+                lineNumber: 55,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$stat$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatCard"], {
-                title: "Safe Emails",
+                title: "Low Risk Emails",
                 value: loading ? "..." : safeEmails.toLocaleString(),
-                subtitle: "Low risk",
+                subtitle: "Click to view",
                 icon: __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"],
-                variant: "success"
+                variant: "success",
+                href: "/dashboard/flagged?filter=low"
             }, void 0, false, {
                 fileName: "[project]/frontend/components/dashboard/dashboard-stats.tsx",
-                lineNumber: 60,
+                lineNumber: 63,
                 columnNumber: 7
             }, this)
         ]
@@ -540,7 +690,9 @@ __turbopack_context__.s([
     ()=>DashboardCharts
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/components/ui/glass-card.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__ = __turbopack_context__.i("[project]/frontend/node_modules/lucide-react/dist/esm/icons/refresh-cw.js [app-ssr] (ecmascript) <export default as RefreshCw>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$LineChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/recharts/es6/chart/LineChart.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/recharts/es6/cartesian/Line.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/recharts/es6/cartesian/XAxis.js [app-ssr] (ecmascript)");
@@ -551,70 +703,145 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$PieChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/recharts/es6/chart/PieChart.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$polar$2f$Pie$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/recharts/es6/polar/Pie.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Cell$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/node_modules/recharts/es6/component/Cell.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/frontend/lib/api.ts [app-ssr] (ecmascript)");
 "use client";
 ;
 ;
 ;
-const lineChartData = [
-    {
-        date: "Mon",
-        phishing: 12,
-        safe: 245
-    },
-    {
-        date: "Tue",
-        phishing: 19,
-        safe: 312
-    },
-    {
-        date: "Wed",
-        phishing: 8,
-        safe: 287
-    },
-    {
-        date: "Thu",
-        phishing: 24,
-        safe: 356
-    },
-    {
-        date: "Fri",
-        phishing: 15,
-        safe: 298
-    },
-    {
-        date: "Sat",
-        phishing: 6,
-        safe: 189
-    },
-    {
-        date: "Sun",
-        phishing: 9,
-        safe: 167
-    }
-];
-const pieChartData = [
-    {
-        name: "High Risk",
-        value: 234,
-        color: "#ff4757"
-    },
-    {
-        name: "Medium Risk",
-        value: 89,
-        color: "#ffa502"
-    },
-    {
-        name: "Low Risk",
-        value: 156,
-        color: "#2ed573"
-    },
-    {
-        name: "Safe",
-        value: 12368,
-        color: "#27F3D6"
-    }
-];
+;
+;
+;
 function DashboardCharts() {
+    const [lineChartData, setLineChartData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [pieChartData, setPieChartData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        async function fetchChartData() {
+            try {
+                // Get scan history for line chart (last 7 scans)
+                const history = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getScanHistory"])(7);
+                if (history && history.length > 0) {
+                    // Create line chart data from scan history
+                    const lineData = history.map((scan)=>{
+                        const date = new Date(scan.scannedAt);
+                        return {
+                            date: date.toLocaleDateString('en-US', {
+                                weekday: 'short'
+                            }),
+                            phishing: scan.summary.high + scan.summary.medium,
+                            safe: scan.summary.low
+                        };
+                    }).reverse() // Oldest first
+                    ;
+                    setLineChartData(lineData);
+                }
+                // Get latest scan for pie chart
+                const latestScan = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getLatestScan"])();
+                if (latestScan && latestScan.summary) {
+                    const pieData = [
+                        {
+                            name: "High Risk",
+                            value: latestScan.summary.high,
+                            color: "#ff4757"
+                        },
+                        {
+                            name: "Medium Risk",
+                            value: latestScan.summary.medium,
+                            color: "#ffa502"
+                        },
+                        {
+                            name: "Low Risk",
+                            value: latestScan.summary.low,
+                            color: "#2ed573"
+                        }
+                    ].filter((item)=>item.value > 0) // Only show non-zero values
+                    ;
+                    // If no data, show placeholder
+                    if (pieData.length === 0) {
+                        pieData.push({
+                            name: "No Data",
+                            value: 1,
+                            color: "#27F3D6"
+                        });
+                    }
+                    setPieChartData(pieData);
+                } else {
+                    // Default empty state
+                    setPieChartData([
+                        {
+                            name: "No Data",
+                            value: 1,
+                            color: "#27F3D6"
+                        }
+                    ]);
+                }
+            } catch (error) {
+                console.error('Failed to fetch chart data:', error);
+                // Set empty state on error
+                setPieChartData([
+                    {
+                        name: "No Data",
+                        value: 1,
+                        color: "#27F3D6"
+                    }
+                ]);
+            } finally{
+                setLoading(false);
+            }
+        }
+        fetchChartData();
+        // Refresh every 30 seconds
+        const interval = setInterval(fetchChartData, 30000);
+        return ()=>clearInterval(interval);
+    }, []);
+    if (loading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GlassCard"], {
+                    variant: "strong",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center justify-center h-72",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
+                            className: "w-8 h-8 animate-spin text-cyan"
+                        }, void 0, false, {
+                            fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                            lineNumber: 99,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                        lineNumber: 98,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                    lineNumber: 97,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GlassCard"], {
+                    variant: "strong",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center justify-center h-72",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
+                            className: "w-8 h-8 animate-spin text-cyan"
+                        }, void 0, false, {
+                            fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                            lineNumber: 104,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                        lineNumber: 103,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                    lineNumber: 102,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true);
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GlassCard"], {
@@ -622,15 +849,15 @@ function DashboardCharts() {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                         className: "text-lg font-semibold text-white mb-6",
-                        children: "Phishing Emails Per Day"
+                        children: "Phishing Emails Per Scan"
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                        lineNumber: 39,
+                        lineNumber: 115,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "h-72",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
+                        children: lineChartData.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
                             width: "100%",
                             height: "100%",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$LineChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LineChart"], {
@@ -641,8 +868,8 @@ function DashboardCharts() {
                                         stroke: "rgba(39, 243, 214, 0.1)"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 43,
-                                        columnNumber: 15
+                                        lineNumber: 120,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
                                         dataKey: "date",
@@ -650,16 +877,16 @@ function DashboardCharts() {
                                         fontSize: 12
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 44,
-                                        columnNumber: 15
+                                        lineNumber: 121,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
                                         stroke: "rgba(234, 246, 255, 0.5)",
                                         fontSize: 12
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 45,
-                                        columnNumber: 15
+                                        lineNumber: 122,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
                                         contentStyle: {
@@ -670,8 +897,8 @@ function DashboardCharts() {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 46,
-                                        columnNumber: 15
+                                        lineNumber: 123,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
                                         type: "monotone",
@@ -691,8 +918,8 @@ function DashboardCharts() {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 54,
-                                        columnNumber: 15
+                                        lineNumber: 131,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
                                         type: "monotone",
@@ -712,23 +939,46 @@ function DashboardCharts() {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 62,
-                                        columnNumber: 15
+                                        lineNumber: 139,
+                                        columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                lineNumber: 42,
-                                columnNumber: 13
+                                lineNumber: 119,
+                                columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                            lineNumber: 41,
-                            columnNumber: 11
+                            lineNumber: 118,
+                            columnNumber: 13
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex flex-col items-center justify-center h-full text-muted-foreground",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    children: "No scan history yet"
+                                }, void 0, false, {
+                                    fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                                    lineNumber: 151,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-sm",
+                                    children: "Scan your inbox to see trends"
+                                }, void 0, false, {
+                                    fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                                    lineNumber: 152,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
+                            lineNumber: 150,
+                            columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                        lineNumber: 40,
+                        lineNumber: 116,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -741,7 +991,7 @@ function DashboardCharts() {
                                         className: "w-3 h-3 rounded-full bg-risk-high"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 75,
+                                        lineNumber: 158,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -749,13 +999,13 @@ function DashboardCharts() {
                                         children: "Phishing"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 76,
+                                        lineNumber: 159,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                lineNumber: 74,
+                                lineNumber: 157,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -765,7 +1015,7 @@ function DashboardCharts() {
                                         className: "w-3 h-3 rounded-full bg-cyan"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 79,
+                                        lineNumber: 162,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -773,25 +1023,25 @@ function DashboardCharts() {
                                         children: "Safe"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 80,
+                                        lineNumber: 163,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                lineNumber: 78,
+                                lineNumber: 161,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                        lineNumber: 73,
+                        lineNumber: 156,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                lineNumber: 38,
+                lineNumber: 114,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$glass$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["GlassCard"], {
@@ -802,7 +1052,7 @@ function DashboardCharts() {
                         children: "Risk Distribution"
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                        lineNumber: 87,
+                        lineNumber: 170,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -825,12 +1075,12 @@ function DashboardCharts() {
                                                 stroke: "transparent"
                                             }, `cell-${index}`, false, {
                                                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                                lineNumber: 101,
+                                                lineNumber: 184,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 91,
+                                        lineNumber: 174,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
@@ -842,23 +1092,23 @@ function DashboardCharts() {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 104,
+                                        lineNumber: 187,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                lineNumber: 90,
+                                lineNumber: 173,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                            lineNumber: 89,
+                            lineNumber: 172,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                        lineNumber: 88,
+                        lineNumber: 171,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -873,32 +1123,36 @@ function DashboardCharts() {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 118,
+                                        lineNumber: 201,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         className: "text-muted-foreground",
-                                        children: item.name
-                                    }, void 0, false, {
+                                        children: [
+                                            item.name,
+                                            ": ",
+                                            item.value
+                                        ]
+                                    }, void 0, true, {
                                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                        lineNumber: 119,
+                                        lineNumber: 202,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, item.name, true, {
                                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                                lineNumber: 117,
+                                lineNumber: 200,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                        lineNumber: 115,
+                        lineNumber: 198,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/frontend/components/dashboard/dashboard-charts.tsx",
-                lineNumber: 86,
+                lineNumber: 169,
                 columnNumber: 7
             }, this)
         ]
@@ -1192,7 +1446,7 @@ function RecentEmailsTable() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-sm",
-                            children: "Emails will appear here once n8n starts sending them"
+                            children: 'Click "Scan Now" above to analyze your inbox'
                         }, void 0, false, {
                             fileName: "[project]/frontend/components/dashboard/recent-emails-table.tsx",
                             lineNumber: 79,
@@ -1271,7 +1525,7 @@ function RecentEmailsTable() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
                             className: "divide-y divide-cyan/10",
-                            children: emails.map((email)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                            children: emails.map((email, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                     className: "hover:bg-cyan/5 transition-colors",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1308,7 +1562,7 @@ function RecentEmailsTable() {
                                             className: "px-4 py-4 hidden md:table-cell",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "text-sm text-muted-foreground",
-                                                children: formatDate(email.receivedAt || email.processedAt)
+                                                children: formatDate(email.receivedAt || email.processedAt || new Date().toISOString())
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/dashboard/recent-emails-table.tsx",
                                                 lineNumber: 119,
@@ -1344,7 +1598,7 @@ function RecentEmailsTable() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                             className: "px-4 py-4",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$ui$2f$neon$2d$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["NeonBadge"], {
-                                                variant: email.riskLevel,
+                                                variant: email.riskLevel.toLowerCase(),
                                                 children: email.riskLevel.toUpperCase()
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/dashboard/recent-emails-table.tsx",
@@ -1408,7 +1662,7 @@ function RecentEmailsTable() {
                                             columnNumber: 19
                                         }, this)
                                     ]
-                                }, email.id, true, {
+                                }, email.id || `email-${index}`, true, {
                                     fileName: "[project]/frontend/components/dashboard/recent-emails-table.tsx",
                                     lineNumber: 107,
                                     columnNumber: 17

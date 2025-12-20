@@ -42,29 +42,32 @@ export function DashboardStats() {
         subtitle="All processed emails"
         icon={Mail}
         variant="cyan"
+        href="/dashboard/flagged?filter=all"
       />
       <StatCard
         title="High Risk (Phishing)"
         value={loading ? "..." : stats.highRisk.toLocaleString()}
-        subtitle="Detected threats"
+        subtitle="Click to view threats"
         icon={AlertTriangle}
         variant="danger"
+        href="/dashboard/flagged?filter=high"
       />
       <StatCard
         title="Medium Risk"
         value={loading ? "..." : stats.mediumRisk.toLocaleString()}
-        subtitle="Needs review"
+        subtitle="Click to review"
         icon={ShieldAlert}
         variant="warning"
+        href="/dashboard/flagged?filter=medium"
       />
       <StatCard
-        title="Safe Emails"
+        title="Low Risk Emails"
         value={loading ? "..." : safeEmails.toLocaleString()}
-        subtitle="Low risk"
+        subtitle="Click to view"
         icon={Activity}
         variant="success"
+        href="/dashboard/flagged?filter=low"
       />
     </div>
   )
 }
-

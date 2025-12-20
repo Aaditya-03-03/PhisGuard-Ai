@@ -40,7 +40,7 @@ export async function scanInbox(req, res) {
         const { maxEmails = 10, query = 'in:inbox' } = req.body;
 
         // Limit to prevent abuse (max 100)
-        const limitedMaxEmails = Math.min(maxEmails, 100);
+        const limitedMaxEmails = Math.min(maxEmails, 500);
 
         console.log(`Starting inbox scan for user ${userId}, fetching ${limitedMaxEmails} emails...`);
 
@@ -68,20 +68,26 @@ export async function scanInbox(req, res) {
         const scanResults = emails.map(email => {
             const analysis = analyzeEmail(email);
 
+            // For HIGH risk emails, store more content
+            const isHighRisk = analysis.riskLevel === 'HIGH';
+
             return {
                 id: email.gmailId || email.messageId,
                 emailId: email.gmailId,
+                gmailId: email.gmailId,
                 messageId: email.messageId,
-                subject: (email.subject || '').substring(0, 200), // Truncate long subjects
+                subject: (email.subject || '').substring(0, 200),
                 sender: email.sender,
                 senderName: email.senderName,
                 receivedAt: email.receivedAt,
-                snippet: (email.snippet || '').substring(0, 150), // Truncate snippets
+                // Store full body for HIGH risk, or longer snippet for others
+                body: isHighRisk ? (email.body || '').substring(0, 2000) : null,
+                snippet: (email.snippet || email.body || '').substring(0, 500),
                 urlCount: email.urls?.length || 0,
+                urls: isHighRisk ? email.urls?.slice(0, 10) : [],
                 riskLevel: analysis.riskLevel,
                 phishingScore: analysis.score,
-                flags: analysis.flags?.slice(0, 5) || [] // Limit to 5 flags
-                // Note: We don't store 'details' to save space
+                flags: analysis.flags?.slice(0, 5) || []
             };
         });
 
@@ -93,12 +99,16 @@ export async function scanInbox(req, res) {
             low: scanResults.filter(r => r.riskLevel === 'LOW').length
         };
 
-        // Store only summary + limited results in Firestore (to stay under 1MB limit)
-        // Keep only high/medium risk emails in storage, or up to 50 total
-        const resultsToStore = scanResults
-            .filter(r => r.riskLevel === 'HIGH' || r.riskLevel === 'MEDIUM')
-            .concat(scanResults.filter(r => r.riskLevel === 'LOW').slice(0, 20))
-            .slice(0, 50);
+        // Store emails prioritized by risk - HIGH risk ALWAYS stored, then MEDIUM, then LOW
+        // This ensures high-risk threats are never truncated
+        const highRisk = scanResults.filter(r => r.riskLevel === 'HIGH');
+        const mediumRisk = scanResults.filter(r => r.riskLevel === 'MEDIUM').slice(0, 100);
+        const lowRisk = scanResults.filter(r => r.riskLevel === 'LOW').slice(0, 50);
+
+        // Combine: all HIGH + up to 100 MEDIUM + up to 50 LOW
+        const resultsToStore = [...highRisk, ...mediumRisk, ...lowRisk];
+
+        console.log(`Storing: ${highRisk.length} high, ${mediumRisk.length} medium, ${lowRisk.length} low = ${resultsToStore.length} total`);
 
         const scanRecord = {
             userId,

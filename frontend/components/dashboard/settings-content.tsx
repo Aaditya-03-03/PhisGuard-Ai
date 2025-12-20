@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { AlertBox } from "@/components/ui/alert-box"
-import { Settings, Brain, Lock, User, Mail, RefreshCw, Trash2, Eye, EyeOff, LogOut, Check, AlertTriangle } from "lucide-react"
+import { Settings, Brain, Lock, User, Mail, RefreshCw, Trash2, Eye, EyeOff, LogOut, Check, AlertTriangle, Clock } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
-import { getGmailConnectUrl, checkGmailStatus, disconnectGmail } from "@/lib/api"
+import { getGmailConnectUrl, checkGmailStatus, disconnectGmail, getAutoScanSettings, updateAutoScanSettings } from "@/lib/api"
 
 export function SettingsContent() {
   const { user, logout } = useAuth()
@@ -15,9 +15,11 @@ export function SettingsContent() {
 
   // Settings state
   const [autoScan, setAutoScan] = useState(true)
+  const [autoScanInterval, setAutoScanInterval] = useState(15)
   const [selectedModel, setSelectedModel] = useState("rule-based")
   const [sensitivity, setSensitivity] = useState(75)
   const [showKey, setShowKey] = useState(false)
+  const [lastAutoScan, setLastAutoScan] = useState<string | null>(null)
 
   // Gmail connection state
   const [gmailConnected, setGmailConnected] = useState(false)
@@ -44,39 +46,60 @@ export function SettingsContent() {
     checkConnection()
   }, [])
 
-  // Load settings from localStorage on mount
+  // Load settings from server and localStorage on mount
   useEffect(() => {
-    const savedSettings = localStorage.getItem('phishguard_settings')
-    if (savedSettings) {
+    async function loadSettings() {
       try {
-        const settings = JSON.parse(savedSettings)
-        setAutoScan(settings.autoScan ?? true)
-        setSelectedModel(settings.selectedModel ?? "rule-based")
-        setSensitivity(settings.sensitivity ?? 75)
+        // Load from server
+        const serverSettings = await getAutoScanSettings()
+        setAutoScan(serverSettings.autoScanEnabled)
+        setAutoScanInterval(serverSettings.autoScanInterval)
+        setLastAutoScan(serverSettings.lastAutoScan)
       } catch (e) {
-        console.error('Failed to load settings:', e)
+        console.error('Failed to load server settings:', e)
+      }
+
+      // Load local settings
+      const savedSettings = localStorage.getItem('phishguard_settings')
+      if (savedSettings) {
+        try {
+          const settings = JSON.parse(savedSettings)
+          setSelectedModel(settings.selectedModel ?? "rule-based")
+          setSensitivity(settings.sensitivity ?? 75)
+        } catch (e) {
+          console.error('Failed to load local settings:', e)
+        }
       }
     }
+    loadSettings()
   }, [])
 
-  // Save settings to localStorage
-  const handleSaveSettings = () => {
+  // Save settings to server and localStorage
+  const handleSaveSettings = async () => {
     setSavingSettings(true)
 
-    const settings = {
-      autoScan,
-      selectedModel,
-      sensitivity,
-      updatedAt: new Date().toISOString()
-    }
+    try {
+      // Save auto-scan settings to server
+      await updateAutoScanSettings({
+        autoScanEnabled: autoScan,
+        autoScanInterval: autoScanInterval
+      })
 
-    localStorage.setItem('phishguard_settings', JSON.stringify(settings))
+      // Save other settings to localStorage
+      const settings = {
+        selectedModel,
+        sensitivity,
+        updatedAt: new Date().toISOString()
+      }
+      localStorage.setItem('phishguard_settings', JSON.stringify(settings))
 
-    setTimeout(() => {
       setSavingSettings(false)
       setSettingsSaved(true)
       setTimeout(() => setSettingsSaved(false), 3000)
-    }, 500)
+    } catch (error) {
+      console.error('Failed to save settings:', error)
+      setSavingSettings(false)
+    }
   }
 
   // Handle Gmail re-authorization
@@ -134,7 +157,7 @@ export function SettingsContent() {
           <div className="flex items-center justify-between p-4 bg-navy-lighter/50 rounded-xl border border-cyan/10">
             <div>
               <h3 className="text-white font-medium">Auto-scan Gmail</h3>
-              <p className="text-sm text-muted-foreground">Automatically scan new emails as they arrive</p>
+              <p className="text-sm text-muted-foreground">Automatically scan emails in background</p>
             </div>
             <button
               onClick={() => setAutoScan(!autoScan)}
@@ -146,6 +169,36 @@ export function SettingsContent() {
               />
             </button>
           </div>
+
+          {/* Auto-scan interval */}
+          {autoScan && (
+            <div className="p-4 bg-navy-lighter/50 rounded-xl border border-cyan/10">
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <h3 className="text-white font-medium flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-cyan" />
+                    Scan Interval
+                  </h3>
+                  <p className="text-sm text-muted-foreground">How often to check for new emails</p>
+                </div>
+                <select
+                  value={autoScanInterval}
+                  onChange={(e) => setAutoScanInterval(Number(e.target.value))}
+                  className="px-4 py-2 bg-navy-lighter border border-cyan/20 rounded-xl text-white focus:outline-none focus:border-cyan/50"
+                >
+                  <option value={5}>Every 5 minutes</option>
+                  <option value={15}>Every 15 minutes</option>
+                  <option value={30}>Every 30 minutes</option>
+                  <option value={60}>Every hour</option>
+                </select>
+              </div>
+              {lastAutoScan && (
+                <p className="text-xs text-muted-foreground mt-2">
+                  Last auto-scan: {new Date(lastAutoScan).toLocaleString()}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Gmail Connection */}
           <div className="p-4 bg-navy-lighter/50 rounded-xl border border-cyan/10">

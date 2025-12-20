@@ -10,6 +10,7 @@ import rateLimit from 'express-rate-limit';
 import authRoutes from './routes/auth.routes.js';
 import gmailRoutes from './routes/gmail.routes.js';
 import scanRoutes from './routes/scan.routes.js';
+import autoscanRoutes from './routes/autoscan.routes.js';
 
 // Import config
 import { isFirebaseConfigured } from './config/firebase.js';
@@ -40,6 +41,7 @@ app.use('/api/', limiter);
 app.use('/auth/', limiter);
 app.use('/scan/', limiter);
 app.use('/gmail/', limiter);
+app.use('/autoscan/', limiter);
 
 // Body parsing
 app.use(express.json({ limit: '1mb' }));
@@ -94,6 +96,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/gmail', gmailRoutes);
 app.use('/scan', scanRoutes);
+app.use('/autoscan', autoscanRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

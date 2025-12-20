@@ -96,9 +96,13 @@ router.get('/emails/:id', async (req, res) => {
             });
         }
 
-        // Fetch single email
-        const emails = await fetchInboxEmails(userId, 50, `rfc822msgid:${emailId}`);
-        const email = emails.find(e => e.gmailId === emailId);
+        // Fetch all recent emails and find by ID
+        const emails = await fetchInboxEmails(userId, 100, 'in:inbox');
+        const email = emails.find(e =>
+            e.gmailId === emailId ||
+            e.messageId === emailId ||
+            e.id === emailId
+        );
 
         if (!email) {
             return res.status(404).json({

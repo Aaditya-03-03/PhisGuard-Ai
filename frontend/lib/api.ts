@@ -19,6 +19,8 @@ export interface Email {
     sender: string;
     senderName: string;
     snippet?: string;
+    body?: string;
+    htmlBody?: string;
     urls?: string[];
     phishingScore: number;
     riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'low' | 'medium' | 'high';
@@ -156,6 +158,17 @@ export async function disconnectGmail(): Promise<boolean> {
     return response.success;
 }
 
+/**
+ * Get full email content by ID from Gmail
+ */
+export async function getEmailById(emailId: string): Promise<Email | null> {
+    const response = await fetchWithAuth<Email>(`/gmail/emails/${emailId}`);
+    if (response.success && response.data) {
+        return response.data;
+    }
+    return null;
+}
+
 // ============================================
 // Scan API
 // ============================================
@@ -163,7 +176,7 @@ export async function disconnectGmail(): Promise<boolean> {
 /**
  * Scan inbox for phishing emails
  */
-export async function scanInbox(maxEmails: number = 100): Promise<ScanResult | null> {
+export async function scanInbox(maxEmails: number = 500): Promise<ScanResult | null> {
     const response = await fetchWithAuth<ScanResult>('/scan/inbox', {
         method: 'POST',
         body: JSON.stringify({ maxEmails }),
@@ -267,3 +280,43 @@ export async function checkHealth(): Promise<boolean> {
     return response.success && response.data?.status === 'healthy';
 }
 
+// ============================================
+// Auto-Scan API
+// ============================================
+
+export interface AutoScanSettings {
+    autoScanEnabled: boolean;
+    autoScanInterval: number;
+    lastAutoScan: string | null;
+}
+
+/**
+ * Get auto-scan settings
+ */
+export async function getAutoScanSettings(): Promise<AutoScanSettings> {
+    const response = await fetchWithAuth<AutoScanSettings>('/autoscan/settings');
+    return response.success && response.data ? response.data : {
+        autoScanEnabled: true,
+        autoScanInterval: 15,
+        lastAutoScan: null
+    };
+}
+
+/**
+ * Update auto-scan settings
+ */
+export async function updateAutoScanSettings(settings: Partial<AutoScanSettings>): Promise<boolean> {
+    const response = await fetchWithAuth<AutoScanSettings>('/autoscan/settings', {
+        method: 'PUT',
+        body: JSON.stringify(settings)
+    });
+    return response.success;
+}
+
+/**
+ * Get auto-scan scheduler status
+ */
+export async function getAutoScanStatus(): Promise<{ running: boolean; jobInProgress: boolean }> {
+    const response = await fetchPublic<{ running: boolean; jobInProgress: boolean }>('/autoscan/status');
+    return response.success && response.data ? response.data : { running: false, jobInProgress: false };
+}

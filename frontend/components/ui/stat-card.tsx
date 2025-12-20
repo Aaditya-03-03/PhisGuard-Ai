@@ -1,3 +1,6 @@
+"use client"
+
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { GlassCard } from "./glass-card"
 import type { LucideIcon } from "lucide-react"
@@ -13,11 +16,12 @@ interface StatCardProps {
   }
   variant?: "default" | "cyan" | "blue" | "success" | "warning" | "danger"
   className?: string
+  href?: string
 }
 
-export function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "default", className }: StatCardProps) {
-  return (
-    <GlassCard hover className={cn("relative overflow-hidden", className)}>
+export function StatCard({ title, value, subtitle, icon: Icon, trend, variant = "default", className, href }: StatCardProps) {
+  const cardContent = (
+    <GlassCard hover className={cn("relative overflow-hidden", href && "cursor-pointer transition-transform hover:scale-[1.02]", className)}>
       <div className="flex items-start justify-between">
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground font-medium">{title}</p>
@@ -69,4 +73,10 @@ export function StatCard({ title, value, subtitle, icon: Icon, trend, variant = 
       />
     </GlassCard>
   )
+
+  if (href) {
+    return <Link href={href}>{cardContent}</Link>
+  }
+
+  return cardContent
 }
