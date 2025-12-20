@@ -1,16 +1,122 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { AlertBox } from "@/components/ui/alert-box"
-import { Settings, Brain, Lock, User, Mail, RefreshCw, Trash2, Eye, EyeOff } from "lucide-react"
+import { Settings, Brain, Lock, User, Mail, RefreshCw, Trash2, Eye, EyeOff, LogOut, Check, AlertTriangle } from "lucide-react"
+import { useAuth } from "@/contexts/auth-context"
+import { getGmailConnectUrl, checkGmailStatus, disconnectGmail } from "@/lib/api"
 
 export function SettingsContent() {
+  const { user, logout } = useAuth()
+  const router = useRouter()
+
+  // Settings state
   const [autoScan, setAutoScan] = useState(true)
-  const [selectedModel, setSelectedModel] = useState("distilbert")
+  const [selectedModel, setSelectedModel] = useState("rule-based")
   const [sensitivity, setSensitivity] = useState(75)
   const [showKey, setShowKey] = useState(false)
+
+  // Gmail connection state
+  const [gmailConnected, setGmailConnected] = useState(false)
+  const [checkingGmail, setCheckingGmail] = useState(true)
+
+  // Action states
+  const [savingSettings, setSavingSettings] = useState(false)
+  const [settingsSaved, setSettingsSaved] = useState(false)
+  const [disconnecting, setDisconnecting] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+
+  // Check Gmail connection status on mount
+  useEffect(() => {
+    async function checkConnection() {
+      try {
+        const status = await checkGmailStatus()
+        setGmailConnected(status.connected)
+      } catch (error) {
+        console.error('Failed to check Gmail status:', error)
+      } finally {
+        setCheckingGmail(false)
+      }
+    }
+    checkConnection()
+  }, [])
+
+  // Load settings from localStorage on mount
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('phishguard_settings')
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings)
+        setAutoScan(settings.autoScan ?? true)
+        setSelectedModel(settings.selectedModel ?? "rule-based")
+        setSensitivity(settings.sensitivity ?? 75)
+      } catch (e) {
+        console.error('Failed to load settings:', e)
+      }
+    }
+  }, [])
+
+  // Save settings to localStorage
+  const handleSaveSettings = () => {
+    setSavingSettings(true)
+
+    const settings = {
+      autoScan,
+      selectedModel,
+      sensitivity,
+      updatedAt: new Date().toISOString()
+    }
+
+    localStorage.setItem('phishguard_settings', JSON.stringify(settings))
+
+    setTimeout(() => {
+      setSavingSettings(false)
+      setSettingsSaved(true)
+      setTimeout(() => setSettingsSaved(false), 3000)
+    }, 500)
+  }
+
+  // Handle Gmail re-authorization
+  const handleReauthorizeGmail = () => {
+    if (user?.uid) {
+      window.location.href = getGmailConnectUrl(user.uid)
+    }
+  }
+
+  // Handle Gmail disconnection
+  const handleDisconnectGmail = async () => {
+    setDisconnecting(true)
+    try {
+      const success = await disconnectGmail()
+      if (success) {
+        setGmailConnected(false)
+      }
+    } catch (error) {
+      console.error('Failed to disconnect Gmail:', error)
+    } finally {
+      setDisconnecting(false)
+    }
+  }
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push('/login')
+    } catch (error) {
+      console.error('Failed to logout:', error)
+    }
+  }
+
+  // Handle account deletion (placeholder - would need backend implementation)
+  const handleDeleteAccount = () => {
+    // This would need a proper backend implementation
+    alert('Account deletion requires server-side implementation. Please contact support.')
+    setShowDeleteConfirm(false)
+  }
 
   return (
     <div className="grid lg:grid-cols-2 gap-6">
@@ -35,26 +141,74 @@ export function SettingsContent() {
               className={`relative w-14 h-7 rounded-full transition-colors ${autoScan ? "bg-cyan" : "bg-navy-lighter"}`}
             >
               <span
-                className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-transform ${
-                  autoScan ? "left-8" : "left-1"
-                }`}
+                className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-transform ${autoScan ? "left-8" : "left-1"
+                  }`}
               />
             </button>
           </div>
 
-          {/* Re-authorize Gmail */}
+          {/* Gmail Connection */}
           <div className="p-4 bg-navy-lighter/50 rounded-xl border border-cyan/10">
             <div className="flex items-center justify-between mb-2">
               <div>
                 <h3 className="text-white font-medium">Gmail Connection</h3>
-                <p className="text-sm text-muted-foreground">Re-authorize your Gmail account</p>
+                <p className="text-sm text-muted-foreground">
+                  {checkingGmail ? 'Checking...' : gmailConnected ? 'Connected' : 'Not connected'}
+                </p>
               </div>
-              <GlowButton variant="secondary" size="sm">
-                <Mail className="w-4 h-4" />
-                Re-authorize
-              </GlowButton>
+              <div className="flex gap-2">
+                {gmailConnected ? (
+                  <>
+                    <GlowButton variant="secondary" size="sm" onClick={handleReauthorizeGmail}>
+                      <RefreshCw className="w-4 h-4" />
+                      Refresh
+                    </GlowButton>
+                    <GlowButton
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleDisconnectGmail}
+                      disabled={disconnecting}
+                    >
+                      {disconnecting ? (
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Mail className="w-4 h-4" />
+                      )}
+                      Disconnect
+                    </GlowButton>
+                  </>
+                ) : (
+                  <GlowButton variant="primary" size="sm" onClick={handleReauthorizeGmail}>
+                    <Mail className="w-4 h-4" />
+                    Connect Gmail
+                  </GlowButton>
+                )}
+              </div>
             </div>
+            {gmailConnected && (
+              <div className="flex items-center gap-2 mt-2 text-sm text-risk-low">
+                <Check className="w-4 h-4" />
+                Gmail is connected and ready
+              </div>
+            )}
           </div>
+
+          {/* Save button */}
+          <GlowButton
+            variant="primary"
+            className="w-full"
+            onClick={handleSaveSettings}
+            disabled={savingSettings}
+          >
+            {savingSettings ? (
+              <RefreshCw className="w-4 h-4 animate-spin" />
+            ) : settingsSaved ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Settings className="w-4 h-4" />
+            )}
+            {savingSettings ? 'Saving...' : settingsSaved ? 'Settings Saved!' : 'Save Settings'}
+          </GlowButton>
         </div>
       </GlassCard>
 
@@ -76,9 +230,9 @@ export function SettingsContent() {
               onChange={(e) => setSelectedModel(e.target.value)}
               className="w-full px-4 py-3 bg-navy-lighter/80 border border-cyan/20 rounded-xl text-white focus:outline-none focus:border-cyan/50"
             >
-              <option value="distilbert">DistilBERT (Recommended)</option>
-              <option value="custom">Custom Trained Model</option>
-              <option value="lightweight">Lightweight Model (Faster)</option>
+              <option value="rule-based">Rule-Based Detection (Active)</option>
+              <option value="distilbert">DistilBERT (Coming Soon)</option>
+              <option value="custom">Custom Trained Model (Coming Soon)</option>
             </select>
           </div>
 
@@ -101,6 +255,10 @@ export function SettingsContent() {
               <span>More Strict</span>
             </div>
           </div>
+
+          <AlertBox variant="info">
+            Higher sensitivity catches more threats but may have more false positives.
+          </AlertBox>
         </div>
       </GlassCard>
 
@@ -116,10 +274,18 @@ export function SettingsContent() {
         <div className="space-y-6">
           {/* AES key display */}
           <div className="p-4 bg-navy-lighter/50 rounded-xl border border-cyan/10">
-            <label className="text-sm font-medium text-white mb-2 block">AES-256 Encryption Key</label>
+            <label className="text-sm font-medium text-white mb-2 block">AES-256 Encryption Status</label>
+            <div className="flex items-center gap-2 text-risk-low">
+              <Check className="w-5 h-5" />
+              <span>Active - All data is encrypted</span>
+            </div>
+          </div>
+
+          <div className="p-4 bg-navy-lighter/50 rounded-xl border border-cyan/10">
+            <label className="text-sm font-medium text-white mb-2 block">Encryption Key (Server-side)</label>
             <div className="flex items-center gap-2">
-              <div className="flex-1 px-4 py-3 bg-navy-lighter rounded-xl font-mono text-sm border border-cyan/10">
-                {showKey ? "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0" : "••••••••••••••••••••••••••••••••"}
+              <div className="flex-1 px-4 py-3 bg-navy-lighter rounded-xl font-mono text-sm border border-cyan/10 text-muted-foreground">
+                {showKey ? "Managed by server - not exposed to frontend" : "••••••••••••••••••••••••••••••••"}
               </div>
               <button
                 onClick={() => setShowKey(!showKey)}
@@ -130,13 +296,8 @@ export function SettingsContent() {
             </div>
           </div>
 
-          <GlowButton variant="secondary" className="w-full">
-            <RefreshCw className="w-4 h-4" />
-            Regenerate Encryption Key
-          </GlowButton>
-
-          <AlertBox variant="warning">
-            Regenerating your encryption key will require re-encrypting all stored data. This may take several minutes.
+          <AlertBox variant="success">
+            Encryption keys are managed securely on the server and never exposed to the frontend.
           </AlertBox>
         </div>
       </GlassCard>
@@ -147,24 +308,62 @@ export function SettingsContent() {
           <div className="p-2 rounded-xl bg-risk-medium/20">
             <User className="w-5 h-5 text-risk-medium" />
           </div>
-          <h2 className="text-xl font-bold text-white">User Settings</h2>
+          <h2 className="text-xl font-bold text-white">Account Settings</h2>
         </div>
 
         <div className="space-y-4">
-          <GlowButton variant="secondary" className="w-full justify-start">
-            <Lock className="w-4 h-4" />
-            Change Password
+          {/* User info */}
+          {user && (
+            <div className="p-4 bg-navy-lighter/50 rounded-xl border border-cyan/10 mb-4">
+              <p className="text-white font-medium">{user.displayName || 'User'}</p>
+              <p className="text-sm text-muted-foreground">{user.email}</p>
+            </div>
+          )}
+
+          <GlowButton variant="secondary" className="w-full justify-start" onClick={handleLogout}>
+            <LogOut className="w-4 h-4" />
+            Sign Out
           </GlowButton>
 
-          <GlowButton
-            variant="outline"
-            className="w-full justify-start text-risk-high border-risk-high hover:bg-risk-high/10"
-          >
-            <Trash2 className="w-4 h-4" />
-            Delete Account
-          </GlowButton>
+          <div className="pt-4 border-t border-cyan/10">
+            <h4 className="text-sm font-medium text-risk-high mb-3">Danger Zone</h4>
 
-          <AlertBox variant="error">Deleting your account is permanent and cannot be undone.</AlertBox>
+            {!showDeleteConfirm ? (
+              <GlowButton
+                variant="outline"
+                className="w-full justify-start text-risk-high border-risk-high hover:bg-risk-high/10"
+                onClick={() => setShowDeleteConfirm(true)}
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete Account
+              </GlowButton>
+            ) : (
+              <div className="space-y-3">
+                <AlertBox variant="error">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    This action is permanent and cannot be undone!
+                  </div>
+                </AlertBox>
+                <div className="flex gap-2">
+                  <GlowButton
+                    variant="ghost"
+                    className="flex-1"
+                    onClick={() => setShowDeleteConfirm(false)}
+                  >
+                    Cancel
+                  </GlowButton>
+                  <GlowButton
+                    variant="outline"
+                    className="flex-1 text-risk-high border-risk-high hover:bg-risk-high/10"
+                    onClick={handleDeleteAccount}
+                  >
+                    Confirm Delete
+                  </GlowButton>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </GlassCard>
     </div>

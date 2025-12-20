@@ -1,6 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { GlassCard } from "@/components/ui/glass-card"
+import { RefreshCw } from "lucide-react"
 import {
   LineChart,
   Line,
@@ -13,62 +15,143 @@ import {
   Pie,
   Cell,
 } from "recharts"
+import { getScanHistory, getLatestScan, type ScanResult } from "@/lib/api"
 
-const lineChartData = [
-  { date: "Mon", phishing: 12, safe: 245 },
-  { date: "Tue", phishing: 19, safe: 312 },
-  { date: "Wed", phishing: 8, safe: 287 },
-  { date: "Thu", phishing: 24, safe: 356 },
-  { date: "Fri", phishing: 15, safe: 298 },
-  { date: "Sat", phishing: 6, safe: 189 },
-  { date: "Sun", phishing: 9, safe: 167 },
-]
+interface ChartDataPoint {
+  date: string;
+  phishing: number;
+  safe: number;
+}
 
-const pieChartData = [
-  { name: "High Risk", value: 234, color: "#ff4757" },
-  { name: "Medium Risk", value: 89, color: "#ffa502" },
-  { name: "Low Risk", value: 156, color: "#2ed573" },
-  { name: "Safe", value: 12368, color: "#27F3D6" },
-]
+interface PieDataPoint {
+  name: string;
+  value: number;
+  color: string;
+  [key: string]: string | number;
+}
 
 export function DashboardCharts() {
+  const [lineChartData, setLineChartData] = useState<ChartDataPoint[]>([])
+  const [pieChartData, setPieChartData] = useState<PieDataPoint[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchChartData() {
+      try {
+        // Get scan history for line chart (last 7 scans)
+        const history = await getScanHistory(7)
+
+        if (history && history.length > 0) {
+          // Create line chart data from scan history
+          const lineData: ChartDataPoint[] = history.map((scan: ScanResult) => {
+            const date = new Date(scan.scannedAt)
+            return {
+              date: date.toLocaleDateString('en-US', { weekday: 'short' }),
+              phishing: scan.summary.high + scan.summary.medium,
+              safe: scan.summary.low
+            }
+          }).reverse() // Oldest first
+
+          setLineChartData(lineData)
+        }
+
+        // Get latest scan for pie chart
+        const latestScan = await getLatestScan()
+
+        if (latestScan && latestScan.summary) {
+          const pieData: PieDataPoint[] = [
+            { name: "High Risk", value: latestScan.summary.high, color: "#ff4757" },
+            { name: "Medium Risk", value: latestScan.summary.medium, color: "#ffa502" },
+            { name: "Low Risk", value: latestScan.summary.low, color: "#2ed573" },
+          ].filter(item => item.value > 0) // Only show non-zero values
+
+          // If no data, show placeholder
+          if (pieData.length === 0) {
+            pieData.push({ name: "No Data", value: 1, color: "#27F3D6" })
+          }
+
+          setPieChartData(pieData)
+        } else {
+          // Default empty state
+          setPieChartData([{ name: "No Data", value: 1, color: "#27F3D6" }])
+        }
+      } catch (error) {
+        console.error('Failed to fetch chart data:', error)
+        // Set empty state on error
+        setPieChartData([{ name: "No Data", value: 1, color: "#27F3D6" }])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchChartData()
+
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchChartData, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  if (loading) {
+    return (
+      <>
+        <GlassCard variant="strong">
+          <div className="flex items-center justify-center h-72">
+            <RefreshCw className="w-8 h-8 animate-spin text-cyan" />
+          </div>
+        </GlassCard>
+        <GlassCard variant="strong">
+          <div className="flex items-center justify-center h-72">
+            <RefreshCw className="w-8 h-8 animate-spin text-cyan" />
+          </div>
+        </GlassCard>
+      </>
+    )
+  }
+
   return (
     <>
       {/* Line Chart - Phishing per day */}
       <GlassCard variant="strong">
-        <h3 className="text-lg font-semibold text-white mb-6">Phishing Emails Per Day</h3>
+        <h3 className="text-lg font-semibold text-white mb-6">Phishing Emails Per Scan</h3>
         <div className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={lineChartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
-              <XAxis dataKey="date" stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
-              <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "rgba(16, 24, 40, 0.9)",
-                  border: "1px solid rgba(39, 243, 214, 0.3)",
-                  borderRadius: "12px",
-                  color: "#EAF6FF",
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey="phishing"
-                stroke="#ff4757"
-                strokeWidth={3}
-                dot={{ fill: "#ff4757", strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, fill: "#ff4757", stroke: "#0A0F1F", strokeWidth: 2 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="safe"
-                stroke="#27F3D6"
-                strokeWidth={3}
-                dot={{ fill: "#27F3D6", strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, fill: "#27F3D6", stroke: "#0A0F1F", strokeWidth: 2 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {lineChartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={lineChartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
+                <XAxis dataKey="date" stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "rgba(16, 24, 40, 0.9)",
+                    border: "1px solid rgba(39, 243, 214, 0.3)",
+                    borderRadius: "12px",
+                    color: "#EAF6FF",
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="phishing"
+                  stroke="#ff4757"
+                  strokeWidth={3}
+                  dot={{ fill: "#ff4757", strokeWidth: 2, r: 4 }}
+                  activeDot={{ r: 6, fill: "#ff4757", stroke: "#0A0F1F", strokeWidth: 2 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="safe"
+                  stroke="#27F3D6"
+                  strokeWidth={3}
+                  dot={{ fill: "#27F3D6", strokeWidth: 2, r: 4 }}
+                  activeDot={{ r: 6, fill: "#27F3D6", stroke: "#0A0F1F", strokeWidth: 2 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
+              <p>No scan history yet</p>
+              <p className="text-sm">Scan your inbox to see trends</p>
+            </div>
+          )}
         </div>
         <div className="flex items-center justify-center gap-6 mt-4 text-sm">
           <div className="flex items-center gap-2">
@@ -116,7 +199,7 @@ export function DashboardCharts() {
           {pieChartData.map((item) => (
             <div key={item.name} className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-              <span className="text-muted-foreground">{item.name}</span>
+              <span className="text-muted-foreground">{item.name}: {item.value}</span>
             </div>
           ))}
         </div>

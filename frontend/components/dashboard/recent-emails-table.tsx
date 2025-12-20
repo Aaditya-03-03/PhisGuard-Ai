@@ -103,8 +103,8 @@ export function RecentEmailsTable() {
               </tr>
             </thead>
             <tbody className="divide-y divide-cyan/10">
-              {emails.map((email) => (
-                <tr key={email.id} className="hover:bg-cyan/5 transition-colors">
+              {emails.map((email, index) => (
+                <tr key={email.id || `email-${index}`} className="hover:bg-cyan/5 transition-colors">
                   <td className="px-4 py-4">
                     <span className="text-sm text-white font-medium truncate max-w-[200px] block">
                       {email.sender || email.senderName || 'Unknown'}
@@ -117,7 +117,7 @@ export function RecentEmailsTable() {
                   </td>
                   <td className="px-4 py-4 hidden md:table-cell">
                     <span className="text-sm text-muted-foreground">
-                      {formatDate(email.receivedAt || email.processedAt)}
+                      {formatDate(email.receivedAt || email.processedAt || new Date().toISOString())}
                     </span>
                   </td>
                   <td className="px-4 py-4">
@@ -126,7 +126,7 @@ export function RecentEmailsTable() {
                     </div>
                   </td>
                   <td className="px-4 py-4">
-                    <NeonBadge variant={email.riskLevel}>
+                    <NeonBadge variant={email.riskLevel.toLowerCase() as 'low' | 'medium' | 'high'}>
                       {email.riskLevel.toUpperCase()}
                     </NeonBadge>
                   </td>

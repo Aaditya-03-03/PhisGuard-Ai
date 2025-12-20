@@ -1,246 +1,309 @@
-[00:00:02.561] Server  LOG      ✓ Ready in 1627ms
-[00:00:05.641] Server  LOG      ○ Compiling /signup ...
-[00:00:09.906] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:09.906] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/signup","route":"/signup"}
-[00:00:09.906] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/signup color: rgb(120, 120, 120) color: inherit {"dp":"/signup","o":"http://localhost:3000/signup","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164666414}
-[00:00:20.447] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164677776}
-[00:00:34.740] Server  LOG      ○ Compiling /dashboard ...
-[00:00:35.598] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164692921}
-[00:00:36.743] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164694082}
-[00:00:57.786] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:02.098] Server  LOG      ✓ Ready in 1409ms
+[00:00:17.064] Server  LOG      ○ Compiling / ...
+[00:00:24.804] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:25.092] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:25.092] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:25.092] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766246383753}
+[00:10:32.720] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/signup color: rgb(120, 120, 120) color: inherit {"dp":"/signup","o":"http://localhost:3000/signup","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766246991382}
+[00:11:10.636] Server  LOG      ○ Compiling /dashboard ...
+[00:11:11.403] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247030064}
+[00:11:14.322] Browser ERROR   API Error: {}
+[00:11:14.322] Browser ERROR   API Error: {}
+[00:11:16.643] Browser ERROR   API Error: {}
+[00:11:16.644] Browser ERROR   API Error: {}
+[00:11:16.914] Browser ERROR   API Error: {}
+[00:11:19.036] Browser ERROR   API Error: {}
+[00:11:19.036] Browser ERROR   API Error: {}
+[00:11:19.036] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:57.786] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:11:19.036] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:57.786] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:11:19.252] Browser ERROR   API Error: {}
+[00:11:27.518] Browser ERROR   API Error: {}
+[00:11:27.519] Browser ERROR   Scan failed: {}
+[00:11:28.509] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247047175}
+[00:11:30.862] Browser ERROR   API Error: {}
+[00:11:31.107] Browser ERROR   API Error: {}
+[00:11:57.349] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:57.526] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:57.526] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:11:57.526] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard?gmail_connected=true color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard?gmail_connected=true","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247076191}
+[00:12:03.238] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247081903}
+[00:12:05.976] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:12:06.116] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:12:06.116] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:12:06.116] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247084778}
+[00:12:09.095] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:57.786] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:09.095] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:57.786] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164715045}
-[00:01:02.083] Browser ERROR   API Error: {}
-[00:01:02.247] Browser ERROR   API Error: {}
-[00:01:03.920] Browser ERROR   API Error: {}
-[00:01:04.223] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:04.495] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:04.495] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/connect-gmail","route":"/connect-gmail"}
-[00:01:04.495] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164721833}
-[00:01:05.510] Browser ERROR   API Error: {}
-[00:01:31.122] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:31.369] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:31.369] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/connect-gmail","route":"/connect-gmail"}
-[00:01:31.369] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail?error=7%20PERMISSION_DENIED%3A%20Cloud%20Firestore%20API%20has%20not%20been%20used%20in%20project%20phish-guard-ai-3e110%20before%20or%20it%20is%20disabled.%20Enable%20it%20by%20visiting%20https%3A%2F%2Fconsole.developers.google.com%2Fapis%2Fapi%2Ffirestore.googleapis.com%2Foverview%3Fproject%3Dphish-guard-ai-3e110%20then%20retry.%20If%20you%20enabled%20this%20API%20recently%2C%20wait%20a%20few%20minutes%20for%20the%20action%20to%20propagate%20to%20our%20systems%20and%20retry. color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail?error=7%20PERMISSION_DENIED%3A%20Cloud%20Firestore%20API%20has%20not%20been%20used%20in%20project%20phish-guard-ai-3e110%20before%20or%20it%20is%20disabled.%20Enable%20it%20by%20visiting%20https%3A%2F%2Fconsole.developers.google.com%2Fapis%2Fapi%2Ffirestore.googleapis.com%2Foverview%3Fproject%3Dphish-guard-ai-3e110%20then%20retry.%20If%20you%20enabled%20this%20API%20recently%2C%20wait%20a%20few%20minutes%20for%20the%20action%20to%20propagate%20to%20our%20systems%20and%20retry.","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164748694}
-[00:05:06.584] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:06.804] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:05:06.804] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/connect-gmail","route":"/connect-gmail"}
-[00:05:06.804] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail?error=5%20NOT_FOUND%3A%20 color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail?error=5%20NOT_FOUND%3A%20","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766164964134}
-[00:11:44.985] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:11:45.138] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:11:45.138] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:11:45.138] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard?gmail_connected=true color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard?gmail_connected=true","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165362473}
-[00:11:45.802] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:09.095] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:11:45.802] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:09.095] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:11:45.803] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:25.535] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247104200}
+[00:12:32.176] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:11:45.803] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:32.176] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:11:53.467] Browser ERROR   API Error: {}
-[00:11:53.467] Browser ERROR   Scan failed: {}
-[00:14:48.907] Browser ERROR   API Error: {}
-[00:14:48.907] Browser ERROR   API Error: {}
-[00:16:44.220] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:16:44.360] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:16:44.360] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:16:44.360] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard?gmail_connected=true color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard?gmail_connected=true","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165661700}
-[00:16:45.256] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:32.176] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:16:45.257] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:32.176] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:16:45.257] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:12:32.176] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247110795}
+[00:13:37.259] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247175922}
+[00:13:39.373] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:16:45.257] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:13:39.374] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:16:49.709] Browser ERROR   Scan failed: {}
-[00:17:35.732] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165713059}
-[00:17:40.920] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:13:39.374] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:40.920] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:13:39.374] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:40.920] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:15:13.057] Server  LOG      ✓ Compiled in 264ms
+[00:16:36.704] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247355368}
+[00:17:14.011] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:40.920] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:17:14.011] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:40.920] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165718136}
-[00:17:43.319] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:17:14.011] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:43.319] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:17:14.011] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:43.319] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:18:15.484] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247454147}
+[00:19:10.700] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:43.319] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:19:10.700] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:17:43.319] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165720604}
-[00:21:17.877] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:21:18.019] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:21:18.019] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:21:18.019] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165935359}
-[00:21:18.619] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:19:10.701] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:21:18.619] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:19:10.701] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:21:18.619] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:22:40.773] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247719429}
+[00:25:05.588] Server  LOG      ✓ Compiled in 156ms
+[00:27:11.266] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766247989930}
+[00:27:22.183] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248000840}
+[00:27:25.071] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:21:18.619] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:25.071] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:21:23.938] Browser ERROR   API Error: {}
-[00:21:23.938] Browser ERROR   Scan failed: {}
-[00:21:38.550] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:21:38.686] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:21:38.686] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:21:38.686] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165956022}
-[00:21:39.382] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:25.071] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:21:39.382] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:25.071] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:21:39.382] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:37.599] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248016261}
+[00:27:42.469] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248021127}
+[00:27:44.943] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:21:39.382] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:44.943] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:22:15.131] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:22:15.314] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:22:15.314] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:22:15.314] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766165992655}
-[00:25:20.135] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:44.943] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:20.135] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:44.943] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:20.135] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:53.423] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248032084}
+[00:27:55.877] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248034538}
+[00:27:58.380] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:20.135] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:58.380] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:20.135] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166177456}
-[00:25:37.645] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166194975}
-[00:25:50.012] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:58.380] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:50.012] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:27:58.380] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:50.012] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:30:11.782] Server  LOG      ✓ Compiled in 225ms
+[00:30:17.572] Server  LOG      ✓ Compiled in 156ms
+[00:30:52.173] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248210837}
+[00:30:55.587] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248214248}
+[00:30:58.227] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/signup color: rgb(120, 120, 120) color: inherit {"dp":"/signup","o":"http://localhost:3000/signup","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248216893}
+[00:31:11.257] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248229919}
+[00:31:14.259] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:50.012] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:31:14.259] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:25:50.012] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166207350}
-[00:26:04.953] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166222287}
-[00:26:33.747] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166251082}
-[00:27:21.676] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/docs color: rgb(120, 120, 120) color: inherit {"dp":"/docs","o":"http://localhost:3000/docs","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166299005}
-[00:27:25.718] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166303049}
-[00:27:28.701] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:31:14.259] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:27:28.701] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:31:14.259] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:27:28.701] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:31:14.781] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248233438}
+[00:31:18.247] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:31:18.446] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:31:18.447] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:31:18.447] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248237103}
+[00:31:23.829] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:27:28.701] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:31:23.829] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:27:28.701] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166305985}
-[00:28:25.678] Server  LOG      ✓ Compiled in 254ms
-[00:28:35.715] Server  LOG      ✓ Compiled in 210ms
-[00:28:37.744] Server  LOG      ✓ Compiled in 267ms
-[00:28:50.709] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166388050}
-[00:29:13.033] Server  LOG      ✓ Compiled in 430ms
-[00:29:16.338] Server  LOG      ✓ Compiled in 220ms
-[00:36:08.302] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:36:08.528] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:36:08.528] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:36:08.528] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766166825861}
-[00:37:28.688] Server  LOG      ✓ Compiled in 78ms
-[00:39:24.947] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:39:25.161] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:39:25.161] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:39:25.161] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766167022496}
-[00:39:29.205] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:39:29.419] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:39:29.419] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:39:29.419] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766167026747}
-[00:49:19.028] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766167616368}
-[00:49:30.562] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/connect-gmail color: rgb(120, 120, 120) color: inherit {"dp":"/connect-gmail","o":"http://localhost:3000/connect-gmail","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766167627898}
-[00:51:22.850] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766167740176}
+[00:31:23.829] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:31:23.829] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:31:28.136] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248246796}
+[00:31:30.415] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248249076}
+[00:31:47.995] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248266660}
+[00:31:56.746] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248275408}
+[00:32:00.399] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248279062}
+[00:32:08.679] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:32:08.679] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:32:08.679] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:32:08.679] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:32:17.611] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248296276}
+[00:32:36.520] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:32:36.681] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:32:36.681] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/reports","route":"/dashboard/reports"}
+[00:32:36.681] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766248315346}
+[00:33:17.299] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:33:17.299] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:33:17.299] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:33:17.299] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:33:21.840] Server  LOG      ✓ Compiled in 137ms
+[00:33:48.397] Server  LOG      ✓ Compiled in 109ms
+[00:35:43.230] Server  LOG      ✓ Compiled in 213ms
+[00:39:37.005] Browser ERROR   API Error: {}
+[00:39:38.443] Browser ERROR   API Error: {}
+[00:45:41.897] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:45:42.096] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:45:42.097] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/reports","route":"/dashboard/reports"}
+[00:45:42.097] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766249100762}
+[00:45:48.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:45:48.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:45:48.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:45:48.584] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:48:03.172] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766249241833}
+[00:48:04.888] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766249243551}
+[00:48:08.362] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:48:08.363] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:48:08.363] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:48:08.363] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.

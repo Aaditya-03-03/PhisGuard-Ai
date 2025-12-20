@@ -163,7 +163,7 @@ export async function disconnectGmail(): Promise<boolean> {
 /**
  * Scan inbox for phishing emails
  */
-export async function scanInbox(maxEmails: number = 10): Promise<ScanResult | null> {
+export async function scanInbox(maxEmails: number = 100): Promise<ScanResult | null> {
     const response = await fetchWithAuth<ScanResult>('/scan/inbox', {
         method: 'POST',
         body: JSON.stringify({ maxEmails }),

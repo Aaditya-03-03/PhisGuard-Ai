@@ -1,67 +1,279 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { NeonBadge } from "@/components/ui/neon-badge"
-import { Calendar, Download, FileText, FileSpreadsheet } from "lucide-react"
+import { Calendar, Download, FileText, FileSpreadsheet, RefreshCw, Inbox } from "lucide-react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts"
+import { getScanHistory, type ScanResult } from "@/lib/api"
 
-const weeklyData = [
-  { week: "Week 1", high: 45, medium: 23, low: 12 },
-  { week: "Week 2", high: 52, medium: 31, low: 18 },
-  { week: "Week 3", high: 38, medium: 25, low: 15 },
-  { week: "Week 4", high: 61, medium: 42, low: 22 },
-]
+interface ChartDataPoint {
+  label: string;
+  high: number;
+  medium: number;
+  low: number;
+  [key: string]: string | number;
+}
 
-const hourlyData = Array.from({ length: 24 }, (_, i) => ({
-  hour: `${i.toString().padStart(2, "0")}:00`,
-  count: Math.floor(Math.random() * 50) + 5,
-}))
+interface HistoricalLog {
+  id: string;
+  date: string;
+  total: number;
+  high: number;
+  medium: number;
+  low: number;
+  status: string;
+}
 
-const historicalLogs = [
-  { id: "1", date: "2024-01-15", total: 456, phishing: 34, status: "Processed" },
-  { id: "2", date: "2024-01-14", total: 523, phishing: 41, status: "Processed" },
-  { id: "3", date: "2024-01-13", total: 389, phishing: 28, status: "Processed" },
-  { id: "4", date: "2024-01-12", total: 467, phishing: 35, status: "Processed" },
-  { id: "5", date: "2024-01-11", total: 512, phishing: 39, status: "Processed" },
-]
+// Export to CSV function
+function exportToCSV(logs: HistoricalLog[]) {
+  if (logs.length === 0) {
+    alert('No data to export')
+    return
+  }
+
+  const headers = ['Date', 'Total Emails', 'High Risk', 'Medium Risk', 'Low Risk', 'Status']
+  const csvRows = [
+    headers.join(','),
+    ...logs.map(log => [
+      `"${log.date}"`,
+      log.total,
+      log.high,
+      log.medium,
+      log.low,
+      log.status
+    ].join(','))
+  ]
+
+  const csvContent = csvRows.join('\n')
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const link = document.createElement('a')
+  const url = URL.createObjectURL(blob)
+  link.setAttribute('href', url)
+  link.setAttribute('download', `phishguard-report-${new Date().toISOString().split('T')[0]}.csv`)
+  link.style.visibility = 'hidden'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+// Export to PDF function (generates a printable HTML page)
+function exportToPDF(logs: HistoricalLog[]) {
+  if (logs.length === 0) {
+    alert('No data to export')
+    return
+  }
+
+  const printWindow = window.open('', '_blank')
+  if (!printWindow) {
+    alert('Please allow popups to export PDF')
+    return
+  }
+
+  const totalScans = logs.length
+  const totalHigh = logs.reduce((sum, log) => sum + log.high, 0)
+  const totalMedium = logs.reduce((sum, log) => sum + log.medium, 0)
+  const totalLow = logs.reduce((sum, log) => sum + log.low, 0)
+  const totalEmails = logs.reduce((sum, log) => sum + log.total, 0)
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>PhishGuard AI - Security Report</title>
+      <style>
+        body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
+        h1 { color: #0a0f1f; border-bottom: 3px solid #27f3d6; padding-bottom: 10px; }
+        .summary { display: flex; gap: 20px; margin: 20px 0; }
+        .stat-box { padding: 20px; background: #f5f5f5; border-radius: 8px; text-align: center; flex: 1; }
+        .stat-value { font-size: 32px; font-weight: bold; }
+        .high { color: #ff4757; }
+        .medium { color: #ffa502; }
+        .low { color: #2ed573; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #0a0f1f; color: white; }
+        tr:hover { background: #f5f5f5; }
+        .footer { margin-top: 30px; color: #666; font-size: 12px; }
+        @media print { .no-print { display: none; } }
+      </style>
+    </head>
+    <body>
+      <h1>🛡️ PhishGuard AI - Security Report</h1>
+      <p>Generated: ${new Date().toLocaleString()}</p>
+      
+      <div class="summary">
+        <div class="stat-box">
+          <div class="stat-value">${totalScans}</div>
+          <div>Total Scans</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">${totalEmails}</div>
+          <div>Emails Analyzed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value high">${totalHigh}</div>
+          <div>High Risk</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value medium">${totalMedium}</div>
+          <div>Medium Risk</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value low">${totalLow}</div>
+          <div>Low Risk</div>
+        </div>
+      </div>
+
+      <h2>Scan History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date & Time</th>
+            <th>Total</th>
+            <th>High Risk</th>
+            <th>Medium Risk</th>
+            <th>Low Risk</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${logs.map(log => `
+            <tr>
+              <td>${log.date}</td>
+              <td>${log.total}</td>
+              <td class="high">${log.high}</td>
+              <td class="medium">${log.medium}</td>
+              <td class="low">${log.low}</td>
+              <td>${log.status}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <div class="footer">
+        <p>This report was generated by PhishGuard AI - AI-Powered Phishing Detection System</p>
+      </div>
+
+      <button class="no-print" onclick="window.print()" style="margin-top: 20px; padding: 10px 20px; background: #27f3d6; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+        Print / Save as PDF
+      </button>
+    </body>
+    </html>
+  `
+
+  printWindow.document.write(html)
+  printWindow.document.close()
+}
 
 export function ReportsContent() {
-  const [dateRange, setDateRange] = useState({ start: "2024-01-01", end: "2024-01-15" })
+  const [scanHistory, setScanHistory] = useState<ScanResult[]>([])
+  const [chartData, setChartData] = useState<ChartDataPoint[]>([])
+  const [historicalLogs, setHistoricalLogs] = useState<HistoricalLog[]>([])
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+
+  const fetchReportData = useCallback(async (isRefresh = false) => {
+    if (isRefresh) setRefreshing(true)
+
+    try {
+      // Get scan history (up to 10 recent scans for faster loading)
+      const history = await getScanHistory(10)
+      setScanHistory(history)
+
+      if (history && history.length > 0) {
+        // Create chart data from scan history
+        const chartPoints: ChartDataPoint[] = history.slice(0, 7).map((scan, index) => {
+          const date = new Date(scan.scannedAt)
+          return {
+            label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+            high: scan.summary?.high || 0,
+            medium: scan.summary?.medium || 0,
+            low: scan.summary?.low || 0
+          }
+        }).reverse()
+
+        setChartData(chartPoints)
+
+        // Create historical logs from scan history
+        const logs: HistoricalLog[] = history.map((scan, index) => {
+          const date = new Date(scan.scannedAt)
+          return {
+            id: `scan-${index}`,
+            date: date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            }),
+            total: scan.summary?.total || 0,
+            high: scan.summary?.high || 0,
+            medium: scan.summary?.medium || 0,
+            low: scan.summary?.low || 0,
+            status: 'Completed'
+          }
+        })
+
+        setHistoricalLogs(logs)
+      }
+    } catch (error) {
+      console.error('Failed to fetch report data:', error)
+    } finally {
+      setLoading(false)
+      setRefreshing(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchReportData()
+
+    // Auto-refresh every 60 seconds (reduced frequency for better performance)
+    const interval = setInterval(() => fetchReportData(), 60000)
+    return () => clearInterval(interval)
+  }, [fetchReportData])
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <GlassCard variant="strong">
+          <div className="flex items-center justify-center h-72">
+            <RefreshCw className="w-8 h-8 animate-spin text-cyan" />
+          </div>
+        </GlassCard>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
-      {/* Date range and export */}
+      {/* Header with refresh */}
       <GlassCard className="p-4">
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-          {/* Date range picker */}
           <div className="flex items-center gap-4">
             <Calendar className="w-5 h-5 text-cyan" />
-            <div className="flex items-center gap-2">
-              <input
-                type="date"
-                value={dateRange.start}
-                onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                className="px-4 py-2 bg-navy-lighter/50 border border-cyan/20 rounded-xl text-white text-sm focus:outline-none focus:border-cyan/50"
-              />
-              <span className="text-muted-foreground">to</span>
-              <input
-                type="date"
-                value={dateRange.end}
-                onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                className="px-4 py-2 bg-navy-lighter/50 border border-cyan/20 rounded-xl text-white text-sm focus:outline-none focus:border-cyan/50"
-              />
-            </div>
+            <span className="text-white font-medium">
+              {scanHistory.length} scans in history
+            </span>
           </div>
 
-          {/* Export buttons */}
+          {/* Action buttons */}
           <div className="flex items-center gap-2">
-            <GlowButton variant="secondary" size="sm">
+            <GlowButton
+              variant="ghost"
+              size="sm"
+              onClick={() => fetchReportData(true)}
+              disabled={refreshing}
+            >
+              <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+              Refresh
+            </GlowButton>
+            <GlowButton variant="secondary" size="sm" onClick={() => exportToPDF(historicalLogs)}>
               <FileText className="w-4 h-4" />
               Export PDF
             </GlowButton>
-            <GlowButton variant="secondary" size="sm">
+            <GlowButton variant="secondary" size="sm" onClick={() => exportToCSV(historicalLogs)}>
               <FileSpreadsheet className="w-4 h-4" />
               Export CSV
             </GlowButton>
@@ -71,28 +283,36 @@ export function ReportsContent() {
 
       {/* Charts row */}
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Weekly bar chart */}
+        {/* Bar chart - Risk Distribution per Scan */}
         <GlassCard variant="strong">
-          <h3 className="text-lg font-semibold text-white mb-6">Weekly Phishing Email Counts</h3>
+          <h3 className="text-lg font-semibold text-white mb-6">Risk Distribution by Scan</h3>
           <div className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={weeklyData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
-                <XAxis dataKey="week" stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
-                <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "rgba(16, 24, 40, 0.9)",
-                    border: "1px solid rgba(39, 243, 214, 0.3)",
-                    borderRadius: "12px",
-                    color: "#EAF6FF",
-                  }}
-                />
-                <Bar dataKey="high" stackId="a" fill="#ff4757" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="medium" stackId="a" fill="#ffa502" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="low" stackId="a" fill="#2ed573" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            {chartData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
+                  <XAxis dataKey="label" stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                  <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "rgba(16, 24, 40, 0.9)",
+                      border: "1px solid rgba(39, 243, 214, 0.3)",
+                      borderRadius: "12px",
+                      color: "#EAF6FF",
+                    }}
+                  />
+                  <Bar dataKey="high" stackId="a" fill="#ff4757" name="High Risk" radius={[0, 0, 0, 0]} />
+                  <Bar dataKey="medium" stackId="a" fill="#ffa502" name="Medium Risk" radius={[0, 0, 0, 0]} />
+                  <Bar dataKey="low" stackId="a" fill="#2ed573" name="Low Risk" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
+                <Inbox className="w-12 h-12 mb-4 opacity-50" />
+                <p>No scan data yet</p>
+                <p className="text-sm">Scan your inbox to see reports</p>
+              </div>
+            )}
           </div>
           <div className="flex items-center justify-center gap-6 mt-4 text-sm">
             <div className="flex items-center gap-2">
@@ -110,39 +330,64 @@ export function ReportsContent() {
           </div>
         </GlassCard>
 
-        {/* Hourly activity heatmap-style chart */}
+        {/* Area chart - Total emails scanned over time */}
         <GlassCard variant="strong">
-          <h3 className="text-lg font-semibold text-white mb-6">Phishing Activity by Hour</h3>
+          <h3 className="text-lg font-semibold text-white mb-6">Emails Scanned Over Time</h3>
           <div className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={hourlyData}>
-                <defs>
-                  <linearGradient id="colorActivity" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#27F3D6" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#27F3D6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
-                <XAxis dataKey="hour" stroke="rgba(234, 246, 255, 0.5)" fontSize={10} interval={3} />
-                <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "rgba(16, 24, 40, 0.9)",
-                    border: "1px solid rgba(39, 243, 214, 0.3)",
-                    borderRadius: "12px",
-                    color: "#EAF6FF",
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="count"
-                  stroke="#27F3D6"
-                  strokeWidth={2}
-                  fillOpacity={1}
-                  fill="url(#colorActivity)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            {chartData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData.map(d => ({
+                  label: d.label,
+                  total: d.high + d.medium + d.low,
+                  phishing: d.high + d.medium
+                }))}>
+                  <defs>
+                    <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#27F3D6" stopOpacity={0.4} />
+                      <stop offset="95%" stopColor="#27F3D6" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorPhishing" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#ff4757" stopOpacity={0.4} />
+                      <stop offset="95%" stopColor="#ff4757" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
+                  <XAxis dataKey="label" stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                  <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "rgba(16, 24, 40, 0.9)",
+                      border: "1px solid rgba(39, 243, 214, 0.3)",
+                      borderRadius: "12px",
+                      color: "#EAF6FF",
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="total"
+                    stroke="#27F3D6"
+                    strokeWidth={2}
+                    fillOpacity={1}
+                    fill="url(#colorTotal)"
+                    name="Total Scanned"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="phishing"
+                    stroke="#ff4757"
+                    strokeWidth={2}
+                    fillOpacity={1}
+                    fill="url(#colorPhishing)"
+                    name="Phishing Detected"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
+                <Inbox className="w-12 h-12 mb-4 opacity-50" />
+                <p>No scan data yet</p>
+              </div>
+            )}
           </div>
         </GlassCard>
       </div>
@@ -150,7 +395,7 @@ export function ReportsContent() {
       {/* Historical logs table */}
       <GlassCard variant="strong">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-white">Historical Email Logs</h3>
+          <h3 className="text-lg font-semibold text-white">Scan History Logs</h3>
           <GlowButton variant="ghost" size="sm">
             <Download className="w-4 h-4" />
             Download All
@@ -158,52 +403,58 @@ export function ReportsContent() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-cyan/20">
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Date
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Total Emails
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Phishing Detected
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Detection Rate
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-cyan/10">
-              {historicalLogs.map((log) => (
-                <tr key={log.id} className="hover:bg-cyan/5 transition-colors">
-                  <td className="px-4 py-4 text-sm text-white">{log.date}</td>
-                  <td className="px-4 py-4 text-sm text-muted-foreground">{log.total.toLocaleString()}</td>
-                  <td className="px-4 py-4 text-sm">
-                    <span className="text-risk-high font-medium">{log.phishing}</span>
-                  </td>
-                  <td className="px-4 py-4 text-sm text-muted-foreground">
-                    {((log.phishing / log.total) * 100).toFixed(1)}%
-                  </td>
-                  <td className="px-4 py-4">
-                    <NeonBadge variant="cyan">{log.status}</NeonBadge>
-                  </td>
-                  <td className="px-4 py-4 text-right">
-                    <GlowButton variant="ghost" size="sm">
-                      <Download className="w-4 h-4" />
-                    </GlowButton>
-                  </td>
+          {historicalLogs.length > 0 ? (
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-cyan/20">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Date & Time
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Total Emails
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    High Risk
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Medium Risk
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Low Risk
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Status
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-cyan/10">
+                {historicalLogs.map((log) => (
+                  <tr key={log.id} className="hover:bg-cyan/5 transition-colors">
+                    <td className="px-4 py-4 text-sm text-white">{log.date}</td>
+                    <td className="px-4 py-4 text-sm text-muted-foreground">{log.total}</td>
+                    <td className="px-4 py-4 text-sm">
+                      <span className="text-risk-high font-medium">{log.high}</span>
+                    </td>
+                    <td className="px-4 py-4 text-sm">
+                      <span className="text-risk-medium font-medium">{log.medium}</span>
+                    </td>
+                    <td className="px-4 py-4 text-sm">
+                      <span className="text-risk-low font-medium">{log.low}</span>
+                    </td>
+                    <td className="px-4 py-4">
+                      <NeonBadge variant="cyan">{log.status}</NeonBadge>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
+              <Inbox className="w-12 h-12 mb-4 opacity-50" />
+              <p className="text-lg font-medium">No scan history yet</p>
+              <p className="text-sm">Scan your inbox to see historical logs</p>
+            </div>
+          )}
         </div>
       </GlassCard>
     </div>

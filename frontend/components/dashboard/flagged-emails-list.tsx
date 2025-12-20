@@ -1,81 +1,78 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { NeonBadge } from "@/components/ui/neon-badge"
 import { ProbabilityBar } from "@/components/ui/probability-bar"
-import { Search, Filter, Eye, CheckCircle, AlertTriangle } from "lucide-react"
-
-const flaggedEmails = [
-  {
-    id: "1",
-    sender: "security-alert@bankofamerica.com",
-    subject: "Urgent: Verify your account information immediately",
-    date: "2024-01-15 14:32",
-    riskScore: 92,
-    status: "high",
-    keywords: ["urgent", "verify", "account", "immediately"],
-  },
-  {
-    id: "2",
-    sender: "admin@paypa1.com",
-    subject: "Action Required: Confirm your payment details",
-    date: "2024-01-15 12:18",
-    riskScore: 97,
-    status: "high",
-    keywords: ["action required", "confirm", "payment"],
-  },
-  {
-    id: "3",
-    sender: "support@microsoft.com",
-    subject: "Your Microsoft 365 subscription renewal",
-    date: "2024-01-15 11:02",
-    riskScore: 45,
-    status: "medium",
-    keywords: ["subscription", "renewal"],
-  },
-  {
-    id: "4",
-    sender: "urgent-security@g00gle.com",
-    subject: "Your account has been compromised - Act now!",
-    date: "2024-01-15 08:15",
-    riskScore: 98,
-    status: "high",
-    keywords: ["compromised", "act now", "urgent"],
-  },
-  {
-    id: "5",
-    sender: "prize@lottery-winner.net",
-    subject: "Congratulations! You've won $1,000,000",
-    date: "2024-01-14 22:45",
-    riskScore: 99,
-    status: "high",
-    keywords: ["congratulations", "won", "prize"],
-  },
-  {
-    id: "6",
-    sender: "hr@company-update.info",
-    subject: "Important: Update your direct deposit information",
-    date: "2024-01-14 16:30",
-    riskScore: 78,
-    status: "high",
-    keywords: ["important", "update", "direct deposit"],
-  },
-]
+import { Search, Filter, Eye, RefreshCw, Inbox } from "lucide-react"
+import { getEmailsByRisk, getLatestScan, type Email } from "@/lib/api"
 
 export function FlaggedEmailsList() {
+  const [emails, setEmails] = useState<Email[]>([])
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
   const [filter, setFilter] = useState<"all" | "high" | "medium" | "low">("all")
   const [searchQuery, setSearchQuery] = useState("")
 
-  const filteredEmails = flaggedEmails.filter((email) => {
-    const matchesFilter = filter === "all" || email.status === filter
+  const fetchFlaggedEmails = useCallback(async (isRefresh = false) => {
+    if (isRefresh) setRefreshing(true)
+
+    try {
+      // Get all emails from latest scan
+      const latestScan = await getLatestScan()
+
+      if (latestScan && latestScan.results) {
+        // Store all emails, filtering will be done by the filter state
+        setEmails(latestScan.results)
+      } else {
+        setEmails([])
+      }
+    } catch (error) {
+      console.error('Failed to fetch flagged emails:', error)
+    } finally {
+      setLoading(false)
+      setRefreshing(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchFlaggedEmails()
+
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(() => fetchFlaggedEmails(), 30000)
+    return () => clearInterval(interval)
+  }, [fetchFlaggedEmails])
+
+  const filteredEmails = emails.filter((email) => {
+    const riskLevel = email.riskLevel.toLowerCase()
+    const matchesFilter = filter === "all" || riskLevel === filter
     const matchesSearch =
-      email.sender.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      email.subject.toLowerCase().includes(searchQuery.toLowerCase())
+      (email.sender || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (email.subject || '').toLowerCase().includes(searchQuery.toLowerCase())
     return matchesFilter && matchesSearch
   })
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  if (loading) {
+    return (
+      <GlassCard className="p-12">
+        <div className="flex items-center justify-center">
+          <RefreshCw className="w-8 h-8 animate-spin text-cyan" />
+        </div>
+      </GlassCard>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -101,82 +98,102 @@ export function FlaggedEmailsList() {
               <button
                 key={filterOption}
                 onClick={() => setFilter(filterOption)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  filter === filterOption
-                    ? "bg-cyan/20 text-cyan border border-cyan/30"
-                    : "text-muted-foreground hover:text-white hover:bg-navy-lighter"
-                }`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === filterOption
+                  ? "bg-cyan/20 text-cyan border border-cyan/30"
+                  : "text-muted-foreground hover:text-white hover:bg-navy-lighter"
+                  }`}
               >
                 {filterOption.charAt(0).toUpperCase() + filterOption.slice(1)}
               </button>
             ))}
+            <GlowButton
+              variant="ghost"
+              size="sm"
+              onClick={() => fetchFlaggedEmails(true)}
+              disabled={refreshing}
+            >
+              <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+            </GlowButton>
           </div>
         </div>
       </GlassCard>
 
       {/* Email cards */}
-      <div className="grid gap-4">
-        {filteredEmails.map((email) => (
-          <GlassCard key={email.id} hover className="p-6">
-            <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-              {/* Email info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start gap-3 mb-2">
-                  <NeonBadge variant={email.status === "high" ? "high" : email.status === "medium" ? "medium" : "low"}>
-                    {email.status.toUpperCase()}
-                  </NeonBadge>
+      {filteredEmails.length > 0 ? (
+        <div className="grid gap-4">
+          {filteredEmails.map((email, index) => {
+            const riskLevel = email.riskLevel.toLowerCase() as 'low' | 'medium' | 'high'
+
+            return (
+              <GlassCard key={email.id || `email-${index}`} hover className="p-6">
+                <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+                  {/* Email info */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-white font-semibold truncate">{email.sender}</h3>
-                    <p className="text-muted-foreground text-sm truncate">{email.subject}</p>
+                    <div className="flex items-start gap-3 mb-2">
+                      <NeonBadge variant={riskLevel}>
+                        {riskLevel.toUpperCase()}
+                      </NeonBadge>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-white font-semibold truncate">
+                          {email.sender || email.senderName || 'Unknown sender'}
+                        </h3>
+                        <p className="text-muted-foreground text-sm truncate">
+                          {email.subject || 'No subject'}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Flags/Keywords */}
+                    {email.flags && email.flags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {email.flags.slice(0, 4).map((flag, flagIndex) => (
+                          <span
+                            key={`${flag}-${flagIndex}`}
+                            className="px-2 py-1 bg-risk-high/10 text-risk-high text-xs rounded-md border border-risk-high/20"
+                          >
+                            {flag.replace(/_/g, ' ')}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Risk score and actions */}
+                  <div className="flex items-center gap-6">
+                    <div className="w-32">
+                      <ProbabilityBar value={email.phishingScore} label="Risk Score" size="md" />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Link href={`/dashboard/flagged/${email.id || email.messageId}`}>
+                        <GlowButton variant="secondary" size="sm">
+                          <Eye className="w-4 h-4" />
+                          View
+                        </GlowButton>
+                      </Link>
+                    </div>
                   </div>
                 </div>
 
-                {/* Keywords */}
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {email.keywords.map((keyword) => (
-                    <span
-                      key={keyword}
-                      className="px-2 py-1 bg-risk-high/10 text-risk-high text-xs rounded-md border border-risk-high/20"
-                    >
-                      {keyword}
-                    </span>
-                  ))}
+                <div className="mt-3 pt-3 border-t border-cyan/10 text-xs text-muted-foreground">
+                  Received: {formatDate(email.receivedAt || email.processedAt || new Date().toISOString())}
+                  {email.urlCount > 0 && (
+                    <span className="ml-4">• {email.urlCount} URL{email.urlCount > 1 ? 's' : ''} detected</span>
+                  )}
                 </div>
-              </div>
-
-              {/* Risk score and actions */}
-              <div className="flex items-center gap-6">
-                <div className="w-32">
-                  <ProbabilityBar value={email.riskScore} label="Risk Score" size="md" />
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Link href={`/dashboard/flagged/${email.id}`}>
-                    <GlowButton variant="secondary" size="sm">
-                      <Eye className="w-4 h-4" />
-                      View
-                    </GlowButton>
-                  </Link>
-                  <GlowButton variant="ghost" size="sm">
-                    <CheckCircle className="w-4 h-4" />
-                  </GlowButton>
-                  <GlowButton variant="ghost" size="sm">
-                    <AlertTriangle className="w-4 h-4" />
-                  </GlowButton>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-3 pt-3 border-t border-cyan/10 text-xs text-muted-foreground">
-              Received: {email.date}
-            </div>
-          </GlassCard>
-        ))}
-      </div>
-
-      {filteredEmails.length === 0 && (
+              </GlassCard>
+            )
+          })}
+        </div>
+      ) : (
         <GlassCard className="p-12 text-center">
-          <p className="text-muted-foreground">No emails match your search criteria</p>
+          <Inbox className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+          <p className="text-lg font-medium text-white mb-2">No flagged emails found</p>
+          <p className="text-muted-foreground">
+            {searchQuery || filter !== "all"
+              ? "No emails match your search criteria"
+              : "Scan your inbox to detect phishing threats"}
+          </p>
         </GlassCard>
       )}
     </div>

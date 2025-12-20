@@ -39,8 +39,8 @@ export async function scanInbox(req, res) {
         // Get scan parameters from request body
         const { maxEmails = 10, query = 'in:inbox' } = req.body;
 
-        // Limit to prevent abuse
-        const limitedMaxEmails = Math.min(maxEmails, 50);
+        // Limit to prevent abuse (max 100)
+        const limitedMaxEmails = Math.min(maxEmails, 100);
 
         console.log(`Starting inbox scan for user ${userId}, fetching ${limitedMaxEmails} emails...`);
 
@@ -69,18 +69,19 @@ export async function scanInbox(req, res) {
             const analysis = analyzeEmail(email);
 
             return {
+                id: email.gmailId || email.messageId,
                 emailId: email.gmailId,
                 messageId: email.messageId,
-                subject: email.subject,
+                subject: (email.subject || '').substring(0, 200), // Truncate long subjects
                 sender: email.sender,
                 senderName: email.senderName,
                 receivedAt: email.receivedAt,
-                snippet: email.snippet,
+                snippet: (email.snippet || '').substring(0, 150), // Truncate snippets
                 urlCount: email.urls?.length || 0,
                 riskLevel: analysis.riskLevel,
                 phishingScore: analysis.score,
-                flags: analysis.flags,
-                details: analysis.details
+                flags: analysis.flags?.slice(0, 5) || [] // Limit to 5 flags
+                // Note: We don't store 'details' to save space
             };
         });
 
@@ -92,13 +93,19 @@ export async function scanInbox(req, res) {
             low: scanResults.filter(r => r.riskLevel === 'LOW').length
         };
 
-        // Store scan results in Firestore
+        // Store only summary + limited results in Firestore (to stay under 1MB limit)
+        // Keep only high/medium risk emails in storage, or up to 50 total
+        const resultsToStore = scanResults
+            .filter(r => r.riskLevel === 'HIGH' || r.riskLevel === 'MEDIUM')
+            .concat(scanResults.filter(r => r.riskLevel === 'LOW').slice(0, 20))
+            .slice(0, 50);
+
         const scanRecord = {
             userId,
             scannedAt: new Date().toISOString(),
             emailCount: emails.length,
             summary,
-            results: scanResults
+            results: resultsToStore
         };
 
         await saveScanResults(userId, scanRecord);

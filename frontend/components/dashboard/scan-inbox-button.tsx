@@ -38,7 +38,7 @@ export function ScanInboxButton({ onScanComplete }: ScanInboxButtonProps) {
             }
 
             // Perform the scan
-            const result = await scanInbox(10)
+            const result = await scanInbox(100)
             if (result) {
                 setScanResult(result)
                 onScanComplete?.(result)
