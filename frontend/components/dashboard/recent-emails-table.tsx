@@ -1,38 +1,25 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useMemo } from "react"
 import Link from "next/link"
 import { GlassCard } from "@/components/ui/glass-card"
 import { NeonBadge } from "@/components/ui/neon-badge"
 import { ProbabilityBar } from "@/components/ui/probability-bar"
 import { GlowButton } from "@/components/ui/glow-button"
 import { Eye, MoreHorizontal, RefreshCw, Inbox } from "lucide-react"
-import { getEmails, type Email } from "@/lib/api"
+import { useDashboardData } from "@/contexts/dashboard-data-context"
 
 export function RecentEmailsTable() {
-  const [emails, setEmails] = useState<Email[]>([])
-  const [loading, setLoading] = useState(true)
-  const [refreshing, setRefreshing] = useState(false)
+  const { data, refresh } = useDashboardData()
+  const { scanResult, isLoading, lastUpdated, hasNewData } = data
 
-  const fetchEmails = useCallback(async (isRefresh = false) => {
-    if (isRefresh) setRefreshing(true)
-    try {
-      const data = await getEmails(10)
-      setEmails(data)
-    } catch (error) {
-      console.error('Failed to fetch emails:', error)
-    } finally {
-      setLoading(false)
-      setRefreshing(false)
+  // Get recent emails from scan results
+  const emails = useMemo(() => {
+    if (scanResult?.results && scanResult.results.length > 0) {
+      return scanResult.results.slice(0, 10) // Show latest 10 emails
     }
-  }, [])
-
-  useEffect(() => {
-    fetchEmails()
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(() => fetchEmails(), 30000)
-    return () => clearInterval(interval)
-  }, [fetchEmails])
+    return []
+  }, [scanResult])
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -45,18 +32,25 @@ export function RecentEmailsTable() {
   }
 
   return (
-    <GlassCard variant="strong">
+    <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50 transition-all duration-300' : 'transition-all duration-300'}>
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-white">Recent Emails</h3>
+        <div className="flex items-center gap-3">
+          <h3 className="text-lg font-semibold text-white">Recent Emails</h3>
+          {lastUpdated && (
+            <span className="text-xs text-muted-foreground flex items-center gap-1">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              Live
+            </span>
+          )}
+        </div>
         <div className="flex items-center gap-2">
           <GlowButton
             variant="ghost"
             size="sm"
-            onClick={() => fetchEmails(true)}
-            disabled={refreshing}
+            onClick={() => refresh()}
           >
-            <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-            {refreshing ? 'Refreshing...' : 'Refresh'}
+            <RefreshCw className="w-4 h-4" />
+            Refresh
           </GlowButton>
           <Link href="/dashboard/flagged">
             <GlowButton variant="secondary" size="sm">
@@ -68,7 +62,7 @@ export function RecentEmailsTable() {
 
       {/* Table */}
       <div className="overflow-x-auto">
-        {loading ? (
+        {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <RefreshCw className="w-8 h-8 animate-spin text-cyan" />
           </div>
@@ -151,4 +145,3 @@ export function RecentEmailsTable() {
     </GlassCard>
   )
 }
-

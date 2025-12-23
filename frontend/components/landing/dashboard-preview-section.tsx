@@ -1,3 +1,5 @@
+"use client"
+
 import { GlassCard } from "@/components/ui/glass-card"
 import { NeonBadge } from "@/components/ui/neon-badge"
 import { ProbabilityBar } from "@/components/ui/probability-bar"

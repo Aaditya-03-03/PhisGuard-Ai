@@ -229,7 +229,8 @@ export async function getLatestScan(req, res) {
 }
 
 /**
- * Save scan results to Firestore
+ * Save scan results to Firestore (CUMULATIVE - merges with existing emails)
+ * New emails are added to the existing collection, duplicates are updated
  * @param {string} userId - User ID
  * @param {Object} scanRecord - Scan record to save
  */
@@ -237,47 +238,140 @@ async function saveScanResults(userId, scanRecord) {
     const db = getFirestoreDb();
 
     if (!db) {
-        // Development mode
-        const userScans = devScanStorage.get(userId) || [];
-        userScans.unshift({ id: `dev-${Date.now()}`, ...scanRecord });
-        devScanStorage.set(userId, userScans.slice(0, 20)); // Keep last 20
-        console.log(`[DEV MODE] Saved scan results for user: ${userId}`);
+        // Development mode - cumulative storage
+        let userScans = devScanStorage.get(userId) || { emails: [] };
+
+        // Create a map of existing emails
+        const emailMap = new Map();
+        userScans.emails.forEach(email => {
+            if (email.gmailId) {
+                emailMap.set(email.gmailId, email);
+            }
+        });
+
+        // Add/update new results
+        for (const result of scanRecord.results) {
+            if (result.gmailId) {
+                emailMap.set(result.gmailId, result);
+            }
+        }
+
+        // Convert back to sorted array
+        const allEmails = Array.from(emailMap.values())
+            .sort((a, b) => new Date(b.receivedAt) - new Date(a.receivedAt));
+
+        devScanStorage.set(userId, {
+            emails: allEmails,
+            lastScannedAt: scanRecord.scannedAt,
+            summary: {
+                total: allEmails.length,
+                high: allEmails.filter(e => e.riskLevel === 'HIGH').length,
+                medium: allEmails.filter(e => e.riskLevel === 'MEDIUM').length,
+                low: allEmails.filter(e => e.riskLevel === 'LOW').length
+            }
+        });
+        console.log(`[DEV MODE] Saved ${allEmails.length} cumulative emails for user: ${userId}`);
         return;
     }
 
-    await db.collection(SCAN_RESULTS_COLLECTION)
-        .doc(userId)
-        .collection('scans')
-        .add({
-            ...scanRecord,
-            createdAt: FieldValue.serverTimestamp()
-        });
+    const userDocRef = db.collection(SCAN_RESULTS_COLLECTION).doc(userId);
+
+    // Get existing emails
+    const existingDoc = await userDocRef.get();
+    let existingEmails = [];
+
+    if (existingDoc.exists) {
+        existingEmails = existingDoc.data().emails || [];
+    }
+
+    // Create a map of existing emails by gmailId for quick lookup
+    const emailMap = new Map();
+    existingEmails.forEach(email => {
+        if (email.gmailId) {
+            emailMap.set(email.gmailId, email);
+        }
+    });
+
+    // Add/update new scan results
+    let newCount = 0;
+    let updatedCount = 0;
+
+    for (const result of scanRecord.results) {
+        if (result.gmailId) {
+            if (emailMap.has(result.gmailId)) {
+                emailMap.set(result.gmailId, result);
+                updatedCount++;
+            } else {
+                emailMap.set(result.gmailId, result);
+                newCount++;
+            }
+        }
+    }
+
+    // Convert map back to array and sort by receivedAt (newest first)
+    const allEmails = Array.from(emailMap.values())
+        .sort((a, b) => new Date(b.receivedAt) - new Date(a.receivedAt));
+
+    // Recalculate summary for ALL emails
+    const totalSummary = {
+        total: allEmails.length,
+        high: allEmails.filter(e => e.riskLevel === 'HIGH').length,
+        medium: allEmails.filter(e => e.riskLevel === 'MEDIUM').length,
+        low: allEmails.filter(e => e.riskLevel === 'LOW').length
+    };
+
+    // Save the cumulative results
+    await userDocRef.set({
+        userId,
+        lastScannedAt: new Date().toISOString(),
+        lastScanNewCount: scanRecord.emailCount,
+        totalEmailCount: allEmails.length,
+        summary: totalSummary,
+        emails: allEmails,
+        updatedAt: FieldValue.serverTimestamp()
+    }, { merge: true });
+
+    console.log(`[Save] User ${userId} - Added ${newCount} new, updated ${updatedCount}, total ${allEmails.length} emails`);
 }
 
 /**
- * Get user's scan history from Firestore
+ * Get user's cumulative scan results from Firestore
  * @param {string} userId - User ID
- * @param {number} limit - Max results to return
- * @returns {Promise<Array>} Scan history
+ * @param {number} limit - Max emails to return (not used for cumulative, kept for compatibility)
+ * @returns {Promise<Array>} Array containing the scan data
  */
 async function getUserScanHistory(userId, limit = 10) {
     const db = getFirestoreDb();
 
     if (!db) {
-        // Development mode
-        const userScans = devScanStorage.get(userId) || [];
-        return userScans.slice(0, limit);
+        // Development mode - return cumulative data
+        const userData = devScanStorage.get(userId);
+        if (!userData || !userData.emails) {
+            return [];
+        }
+        return [{
+            id: 'cumulative',
+            scannedAt: userData.lastScannedAt,
+            summary: userData.summary,
+            results: userData.emails.slice(0, limit * 50), // Return more emails
+            emailCount: userData.emails.length
+        }];
     }
 
-    const snapshot = await db.collection(SCAN_RESULTS_COLLECTION)
-        .doc(userId)
-        .collection('scans')
-        .orderBy('createdAt', 'desc')
-        .limit(limit)
-        .get();
+    // Get the cumulative document
+    const userDoc = await db.collection(SCAN_RESULTS_COLLECTION).doc(userId).get();
 
-    return snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }));
+    if (!userDoc.exists) {
+        return [];
+    }
+
+    const data = userDoc.data();
+
+    return [{
+        id: 'cumulative',
+        scannedAt: data.lastScannedAt,
+        summary: data.summary,
+        results: data.emails || [],
+        emailCount: data.totalEmailCount || 0
+    }];
 }

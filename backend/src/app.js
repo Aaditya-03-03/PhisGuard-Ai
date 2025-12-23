@@ -64,6 +64,16 @@ app.get('/health', (req, res) => {
     });
 });
 
+// Also respond to /api/health
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        firebase: isFirebaseConfigured() ? 'configured' : 'not configured',
+        version: '2.0.0'
+    });
+});
+
 // Root endpoint
 app.get('/', (req, res) => {
     res.json({
@@ -92,7 +102,13 @@ app.get('/', (req, res) => {
     });
 });
 
-// Mount routes
+// Mount routes with /api prefix
+app.use('/api/auth', authRoutes);
+app.use('/api/gmail', gmailRoutes);
+app.use('/api/scan', scanRoutes);
+app.use('/api/autoscan', autoscanRoutes);
+
+// Also mount without prefix for backwards compatibility
 app.use('/auth', authRoutes);
 app.use('/gmail', gmailRoutes);
 app.use('/scan', scanRoutes);

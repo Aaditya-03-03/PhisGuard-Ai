@@ -143,37 +143,97 @@ export async function getGmailClient(userId) {
 /**
  * Fetch emails from user's inbox
  * @param {string} userId - User's Firebase UID
- * @param {number} maxResults - Maximum number of emails to fetch (default: 10)
+ * @param {number} maxResults - Maximum number of emails to fetch (0 = unlimited, default: 10)
  * @param {string} query - Gmail search query (default: inbox emails)
- * @returns {Promise<Array>} Array of parsed email objects
+ * @returns {Promise<Array>} Array of parsed email objects (sorted by newest first)
  */
 export async function fetchInboxEmails(userId, maxResults = 10, query = 'in:inbox') {
     const gmail = await getGmailClient(userId);
+    let allMessages = [];
+    let pageToken = undefined;
 
-    // Get list of messages
-    const listResponse = await gmail.users.messages.list({
-        userId: 'me',
-        maxResults,
-        q: query
-    });
+    // Gmail API max is 500 per request
+    const batchSize = maxResults === 0 ? 500 : Math.min(maxResults, 500);
+    const unlimitedFetch = maxResults === 0;
 
-    const messages = listResponse.data.messages || [];
+    // Fetch messages with pagination for unlimited or large requests
+    do {
+        const listResponse = await gmail.users.messages.list({
+            userId: 'me',
+            maxResults: batchSize,
+            q: query,
+            pageToken: pageToken
+        });
 
-    if (messages.length === 0) {
+        const messages = listResponse.data.messages || [];
+        allMessages = allMessages.concat(messages);
+        pageToken = listResponse.data.nextPageToken;
+
+        // If not unlimited and we have enough, stop
+        if (!unlimitedFetch && allMessages.length >= maxResults) {
+            allMessages = allMessages.slice(0, maxResults);
+            break;
+        }
+
+    } while (pageToken && (unlimitedFetch || allMessages.length < maxResults));
+
+    if (allMessages.length === 0) {
         return [];
     }
 
-    // Fetch full message details for each
-    const emailPromises = messages.map(async (msg) => {
-        const fullMessage = await gmail.users.messages.get({
-            userId: 'me',
-            id: msg.id,
-            format: 'full'
-        });
-        return parseGmailMessage(fullMessage.data);
-    });
+    console.log(`[Gmail] Fetching ${allMessages.length} email details...`);
 
-    return Promise.all(emailPromises);
+    // Fetch full message details in batches to avoid rate limiting
+    const batchSizeDetails = 50; // Process 50 at a time
+    const parsedEmails = [];
+
+    for (let i = 0; i < allMessages.length; i += batchSizeDetails) {
+        const batch = allMessages.slice(i, i + batchSizeDetails);
+        const emailPromises = batch.map(async (msg) => {
+            try {
+                const fullMessage = await gmail.users.messages.get({
+                    userId: 'me',
+                    id: msg.id,
+                    format: 'full'
+                });
+                return parseGmailMessage(fullMessage.data);
+            } catch (error) {
+                console.error(`Failed to fetch email ${msg.id}:`, error.message);
+                return null;
+            }
+        });
+
+        const results = await Promise.all(emailPromises);
+        parsedEmails.push(...results.filter(e => e !== null));
+    }
+
+    // Sort by receivedAt (newest first)
+    parsedEmails.sort((a, b) => new Date(b.receivedAt) - new Date(a.receivedAt));
+
+    return parsedEmails;
+}
+
+/**
+ * Fetch only new emails since a given timestamp
+ * @param {string} userId - User's Firebase UID
+ * @param {string|Date} sinceDate - ISO date string or Date object for the cutoff
+ * @returns {Promise<Array>} Array of new email objects (sorted by newest first)
+ */
+export async function fetchNewEmailsSince(userId, sinceDate) {
+    const gmail = await getGmailClient(userId);
+
+    // Convert to Unix timestamp (seconds)
+    const sinceTimestamp = sinceDate
+        ? Math.floor(new Date(sinceDate).getTime() / 1000)
+        : Math.floor(Date.now() / 1000) - (24 * 60 * 60); // Default: last 24 hours
+
+    // Gmail query for emails after a specific date
+    const query = `in:inbox after:${sinceTimestamp}`;
+
+    console.log(`[Gmail] Fetching new emails since ${new Date(sinceTimestamp * 1000).toISOString()}`);
+
+    // Fetch all new emails (no limit)
+    return fetchInboxEmails(userId, 0, query);
 }
 
 /**

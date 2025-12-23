@@ -1,19 +1,21 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useMemo, useState } from "react"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { NeonBadge } from "@/components/ui/neon-badge"
 import { Calendar, Download, FileText, FileSpreadsheet, RefreshCw, Inbox } from "lucide-react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts"
-import { getScanHistory, type ScanResult } from "@/lib/api"
+import { useDashboardData } from "@/contexts/dashboard-data-context"
+import type { Email } from "@/lib/api"
 
-interface ChartDataPoint {
-  label: string;
+interface DayDataPoint {
+  date: string;
+  dayName: string;
   high: number;
   medium: number;
   low: number;
-  [key: string]: string | number;
+  total: number;
 }
 
 interface HistoricalLog {
@@ -24,6 +26,54 @@ interface HistoricalLog {
   medium: number;
   low: number;
   status: string;
+}
+
+// Get the past 7 days as an array of date strings
+function getPast7Days(): { date: string; dayName: string }[] {
+  const days: { date: string; dayName: string }[] = []
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date()
+    date.setDate(date.getDate() - i)
+    days.push({
+      date: date.toISOString().split('T')[0],
+      dayName: date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+    })
+  }
+  return days
+}
+
+// Group emails by date (past 7 days)
+function groupEmailsByDay(emails: Email[]): DayDataPoint[] {
+  const past7Days = getPast7Days()
+  const groupedData: Record<string, { high: number; medium: number; low: number }> = {}
+
+  past7Days.forEach(day => {
+    groupedData[day.date] = { high: 0, medium: 0, low: 0 }
+  })
+
+  emails.forEach(email => {
+    if (!email.receivedAt) return
+
+    const emailDate = new Date(email.receivedAt).toISOString().split('T')[0]
+
+    if (groupedData[emailDate]) {
+      const riskLevel = email.riskLevel?.toUpperCase() || 'LOW'
+      if (riskLevel === 'HIGH') {
+        groupedData[emailDate].high++
+      } else if (riskLevel === 'MEDIUM') {
+        groupedData[emailDate].medium++
+      } else {
+        groupedData[emailDate].low++
+      }
+    }
+  })
+
+  return past7Days.map(day => ({
+    date: day.date,
+    dayName: day.dayName,
+    ...groupedData[day.date],
+    total: groupedData[day.date].high + groupedData[day.date].medium + groupedData[day.date].low
+  }))
 }
 
 // Export to CSV function
@@ -58,7 +108,7 @@ function exportToCSV(logs: HistoricalLog[]) {
   document.body.removeChild(link)
 }
 
-// Export to PDF function (generates a printable HTML page)
+// Export to PDF function
 function exportToPDF(logs: HistoricalLog[]) {
   if (logs.length === 0) {
     alert('No data to export')
@@ -71,7 +121,6 @@ function exportToPDF(logs: HistoricalLog[]) {
     return
   }
 
-  const totalScans = logs.length
   const totalHigh = logs.reduce((sum, log) => sum + log.high, 0)
   const totalMedium = logs.reduce((sum, log) => sum + log.medium, 0)
   const totalLow = logs.reduce((sum, log) => sum + log.low, 0)
@@ -81,7 +130,7 @@ function exportToPDF(logs: HistoricalLog[]) {
     <!DOCTYPE html>
     <html>
     <head>
-      <title>PhishGuard AI - Security Report</title>
+      <title>PhishGuard AI - Security Report (Past 7 Days)</title>
       <style>
         body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
         h1 { color: #0a0f1f; border-bottom: 3px solid #27f3d6; padding-bottom: 10px; }
@@ -100,13 +149,13 @@ function exportToPDF(logs: HistoricalLog[]) {
       </style>
     </head>
     <body>
-      <h1>🛡️ PhishGuard AI - Security Report</h1>
+      <h1>🛡️ PhishGuard AI - Security Report (Past 7 Days)</h1>
       <p>Generated: ${new Date().toLocaleString()}</p>
       
       <div class="summary">
         <div class="stat-box">
-          <div class="stat-value">${totalScans}</div>
-          <div>Total Scans</div>
+          <div class="stat-value">${logs.length}</div>
+          <div>Days with Data</div>
         </div>
         <div class="stat-box">
           <div class="stat-value">${totalEmails}</div>
@@ -126,16 +175,15 @@ function exportToPDF(logs: HistoricalLog[]) {
         </div>
       </div>
 
-      <h2>Scan History</h2>
+      <h2>Daily Breakdown</h2>
       <table>
         <thead>
           <tr>
-            <th>Date & Time</th>
+            <th>Date</th>
             <th>Total</th>
             <th>High Risk</th>
             <th>Medium Risk</th>
             <th>Low Risk</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -146,7 +194,6 @@ function exportToPDF(logs: HistoricalLog[]) {
               <td class="high">${log.high}</td>
               <td class="medium">${log.medium}</td>
               <td class="low">${log.low}</td>
-              <td>${log.status}</td>
             </tr>
           `).join('')}
         </tbody>
@@ -168,73 +215,50 @@ function exportToPDF(logs: HistoricalLog[]) {
 }
 
 export function ReportsContent() {
-  const [scanHistory, setScanHistory] = useState<ScanResult[]>([])
-  const [chartData, setChartData] = useState<ChartDataPoint[]>([])
-  const [historicalLogs, setHistoricalLogs] = useState<HistoricalLog[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data, refresh } = useDashboardData()
+  const { scanResult, isLoading, lastUpdated, hasNewData } = data
   const [refreshing, setRefreshing] = useState(false)
 
-  const fetchReportData = useCallback(async (isRefresh = false) => {
-    if (isRefresh) setRefreshing(true)
-
-    try {
-      // Get scan history (up to 10 recent scans for faster loading)
-      const history = await getScanHistory(10)
-      setScanHistory(history)
-
-      if (history && history.length > 0) {
-        // Create chart data from scan history
-        const chartPoints: ChartDataPoint[] = history.slice(0, 7).map((scan, index) => {
-          const date = new Date(scan.scannedAt)
-          return {
-            label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-            high: scan.summary?.high || 0,
-            medium: scan.summary?.medium || 0,
-            low: scan.summary?.low || 0
-          }
-        }).reverse()
-
-        setChartData(chartPoints)
-
-        // Create historical logs from scan history
-        const logs: HistoricalLog[] = history.map((scan, index) => {
-          const date = new Date(scan.scannedAt)
-          return {
-            id: `scan-${index}`,
-            date: date.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            }),
-            total: scan.summary?.total || 0,
-            high: scan.summary?.high || 0,
-            medium: scan.summary?.medium || 0,
-            low: scan.summary?.low || 0,
-            status: 'Completed'
-          }
-        })
-
-        setHistoricalLogs(logs)
-      }
-    } catch (error) {
-      console.error('Failed to fetch report data:', error)
-    } finally {
-      setLoading(false)
-      setRefreshing(false)
+  // Process chart data - group by past 7 days
+  const chartData = useMemo(() => {
+    if (scanResult?.results && scanResult.results.length > 0) {
+      return groupEmailsByDay(scanResult.results)
     }
-  }, [])
+    return getPast7Days().map(day => ({
+      date: day.date,
+      dayName: day.dayName,
+      high: 0,
+      medium: 0,
+      low: 0,
+      total: 0
+    }))
+  }, [scanResult])
 
-  useEffect(() => {
-    fetchReportData()
+  // Create historical logs from chart data for exports
+  const historicalLogs: HistoricalLog[] = useMemo(() => {
+    return chartData.map((day, index) => ({
+      id: `day-${index}`,
+      date: day.dayName,
+      total: day.total,
+      high: day.high,
+      medium: day.medium,
+      low: day.low,
+      status: day.total > 0 ? 'Has Data' : 'No Emails'
+    }))
+  }, [chartData])
 
-    // Auto-refresh every 60 seconds (reduced frequency for better performance)
-    const interval = setInterval(() => fetchReportData(), 60000)
-    return () => clearInterval(interval)
-  }, [fetchReportData])
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    await refresh()
+    setRefreshing(false)
+  }
 
-  if (loading) {
+  // Calculate totals
+  const totalEmails = scanResult?.summary?.total || 0
+  const totalHigh = scanResult?.summary?.high || 0
+  const totalMedium = scanResult?.summary?.medium || 0
+
+  if (isLoading) {
     return (
       <div className="space-y-6">
         <GlassCard variant="strong">
@@ -249,13 +273,19 @@ export function ReportsContent() {
   return (
     <div className="space-y-6">
       {/* Header with refresh */}
-      <GlassCard className="p-4">
+      <GlassCard className={`p-4 ${hasNewData ? 'ring-2 ring-cyan/50' : ''}`}>
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
           <div className="flex items-center gap-4">
             <Calendar className="w-5 h-5 text-cyan" />
             <span className="text-white font-medium">
-              {scanHistory.length} scans in history
+              Past 7 Days Report
             </span>
+            {lastUpdated && (
+              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                Live • {lastUpdated.toLocaleTimeString()}
+              </span>
+            )}
           </div>
 
           {/* Action buttons */}
@@ -263,7 +293,7 @@ export function ReportsContent() {
             <GlowButton
               variant="ghost"
               size="sm"
-              onClick={() => fetchReportData(true)}
+              onClick={handleRefresh}
               disabled={refreshing}
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
@@ -283,23 +313,29 @@ export function ReportsContent() {
 
       {/* Charts row */}
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Bar chart - Risk Distribution per Scan */}
-        <GlassCard variant="strong">
-          <h3 className="text-lg font-semibold text-white mb-6">Risk Distribution by Scan</h3>
+        {/* Bar chart - Risk Distribution per Day */}
+        <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
+          <h3 className="text-lg font-semibold text-white mb-6">Risk Distribution by Day (Past 7 Days)</h3>
           <div className="h-72">
-            {chartData.length > 0 ? (
+            {chartData.some(d => d.total > 0) ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
-                  <XAxis dataKey="label" stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                  <XAxis
+                    dataKey="dayName"
+                    stroke="rgba(234, 246, 255, 0.5)"
+                    fontSize={11}
+                    tickFormatter={(value) => value.split(' ')[0]}
+                  />
                   <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "rgba(16, 24, 40, 0.9)",
+                      backgroundColor: "rgba(16, 24, 40, 0.95)",
                       border: "1px solid rgba(39, 243, 214, 0.3)",
                       borderRadius: "12px",
                       color: "#EAF6FF",
                     }}
+                    labelFormatter={(label) => `📅 ${label}`}
                   />
                   <Bar dataKey="high" stackId="a" fill="#ff4757" name="High Risk" radius={[0, 0, 0, 0]} />
                   <Bar dataKey="medium" stackId="a" fill="#ffa502" name="Medium Risk" radius={[0, 0, 0, 0]} />
@@ -309,7 +345,7 @@ export function ReportsContent() {
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                 <Inbox className="w-12 h-12 mb-4 opacity-50" />
-                <p>No scan data yet</p>
+                <p>No emails in the past 7 days</p>
                 <p className="text-sm">Scan your inbox to see reports</p>
               </div>
             )}
@@ -331,36 +367,42 @@ export function ReportsContent() {
         </GlassCard>
 
         {/* Area chart - Total emails scanned over time */}
-        <GlassCard variant="strong">
-          <h3 className="text-lg font-semibold text-white mb-6">Emails Scanned Over Time</h3>
+        <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
+          <h3 className="text-lg font-semibold text-white mb-6">Emails Over Time (Past 7 Days)</h3>
           <div className="h-72">
-            {chartData.length > 0 ? (
+            {chartData.some(d => d.total > 0) ? (
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={chartData.map(d => ({
-                  label: d.label,
-                  total: d.high + d.medium + d.low,
+                  dayName: d.dayName,
+                  total: d.total,
                   phishing: d.high + d.medium
                 }))}>
                   <defs>
-                    <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorTotalReport" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#27F3D6" stopOpacity={0.4} />
                       <stop offset="95%" stopColor="#27F3D6" stopOpacity={0} />
                     </linearGradient>
-                    <linearGradient id="colorPhishing" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorPhishingReport" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#ff4757" stopOpacity={0.4} />
                       <stop offset="95%" stopColor="#ff4757" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(39, 243, 214, 0.1)" />
-                  <XAxis dataKey="label" stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
+                  <XAxis
+                    dataKey="dayName"
+                    stroke="rgba(234, 246, 255, 0.5)"
+                    fontSize={11}
+                    tickFormatter={(value) => value.split(' ')[0]}
+                  />
                   <YAxis stroke="rgba(234, 246, 255, 0.5)" fontSize={12} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "rgba(16, 24, 40, 0.9)",
+                      backgroundColor: "rgba(16, 24, 40, 0.95)",
                       border: "1px solid rgba(39, 243, 214, 0.3)",
                       borderRadius: "12px",
                       color: "#EAF6FF",
                     }}
+                    labelFormatter={(label) => `📅 ${label}`}
                   />
                   <Area
                     type="monotone"
@@ -368,8 +410,8 @@ export function ReportsContent() {
                     stroke="#27F3D6"
                     strokeWidth={2}
                     fillOpacity={1}
-                    fill="url(#colorTotal)"
-                    name="Total Scanned"
+                    fill="url(#colorTotalReport)"
+                    name="Total Emails"
                   />
                   <Area
                     type="monotone"
@@ -377,7 +419,7 @@ export function ReportsContent() {
                     stroke="#ff4757"
                     strokeWidth={2}
                     fillOpacity={1}
-                    fill="url(#colorPhishing)"
+                    fill="url(#colorPhishingReport)"
                     name="Phishing Detected"
                   />
                 </AreaChart>
@@ -385,76 +427,103 @@ export function ReportsContent() {
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                 <Inbox className="w-12 h-12 mb-4 opacity-50" />
-                <p>No scan data yet</p>
+                <p>No emails in the past 7 days</p>
               </div>
             )}
+          </div>
+          <div className="flex items-center justify-center gap-6 mt-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded bg-cyan" />
+              <span className="text-muted-foreground">Total Emails</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded bg-risk-high" />
+              <span className="text-muted-foreground">Phishing</span>
+            </div>
           </div>
         </GlassCard>
       </div>
 
-      {/* Historical logs table */}
-      <GlassCard variant="strong">
+      {/* Daily breakdown table */}
+      <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-white">Scan History Logs</h3>
-          <GlowButton variant="ghost" size="sm">
+          <h3 className="text-lg font-semibold text-white">Daily Breakdown (Past 7 Days)</h3>
+          <GlowButton variant="ghost" size="sm" onClick={() => exportToCSV(historicalLogs)}>
             <Download className="w-4 h-4" />
-            Download All
+            Download
           </GlowButton>
         </div>
 
         <div className="overflow-x-auto">
-          {historicalLogs.length > 0 ? (
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-cyan/20">
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Date & Time
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Total Emails
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    High Risk
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Medium Risk
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Low Risk
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Status
-                  </th>
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-cyan/20">
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Day
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Total Emails
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  High Risk
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Medium Risk
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Low Risk
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-cyan/10">
+              {chartData.map((day, index) => (
+                <tr key={index} className="hover:bg-cyan/5 transition-colors">
+                  <td className="px-4 py-4 text-sm text-white">{day.dayName}</td>
+                  <td className="px-4 py-4 text-sm text-muted-foreground">{day.total}</td>
+                  <td className="px-4 py-4 text-sm">
+                    <span className="text-risk-high font-medium">{day.high}</span>
+                  </td>
+                  <td className="px-4 py-4 text-sm">
+                    <span className="text-risk-medium font-medium">{day.medium}</span>
+                  </td>
+                  <td className="px-4 py-4 text-sm">
+                    <span className="text-risk-low font-medium">{day.low}</span>
+                  </td>
+                  <td className="px-4 py-4">
+                    <NeonBadge variant={day.total > 0 ? "cyan" : "low"}>
+                      {day.total > 0 ? 'Has Data' : 'No Emails'}
+                    </NeonBadge>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-cyan/10">
-                {historicalLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-cyan/5 transition-colors">
-                    <td className="px-4 py-4 text-sm text-white">{log.date}</td>
-                    <td className="px-4 py-4 text-sm text-muted-foreground">{log.total}</td>
-                    <td className="px-4 py-4 text-sm">
-                      <span className="text-risk-high font-medium">{log.high}</span>
-                    </td>
-                    <td className="px-4 py-4 text-sm">
-                      <span className="text-risk-medium font-medium">{log.medium}</span>
-                    </td>
-                    <td className="px-4 py-4 text-sm">
-                      <span className="text-risk-low font-medium">{log.low}</span>
-                    </td>
-                    <td className="px-4 py-4">
-                      <NeonBadge variant="cyan">{log.status}</NeonBadge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
-              <Inbox className="w-12 h-12 mb-4 opacity-50" />
-              <p className="text-lg font-medium">No scan history yet</p>
-              <p className="text-sm">Scan your inbox to see historical logs</p>
-            </div>
-          )}
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </GlassCard>
+
+      {/* Summary stats */}
+      <GlassCard variant="strong">
+        <h3 className="text-lg font-semibold text-white mb-4">7-Day Summary</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="text-center p-4 bg-navy/50 rounded-xl">
+            <p className="text-3xl font-bold text-white">{totalEmails}</p>
+            <p className="text-sm text-muted-foreground">Total Emails</p>
+          </div>
+          <div className="text-center p-4 bg-navy/50 rounded-xl">
+            <p className="text-3xl font-bold text-risk-high">{totalHigh}</p>
+            <p className="text-sm text-muted-foreground">High Risk</p>
+          </div>
+          <div className="text-center p-4 bg-navy/50 rounded-xl">
+            <p className="text-3xl font-bold text-risk-medium">{totalMedium}</p>
+            <p className="text-sm text-muted-foreground">Medium Risk</p>
+          </div>
+          <div className="text-center p-4 bg-navy/50 rounded-xl">
+            <p className="text-3xl font-bold text-risk-low">{totalEmails - totalHigh - totalMedium}</p>
+            <p className="text-sm text-muted-foreground">Low Risk</p>
+          </div>
         </div>
       </GlassCard>
     </div>

@@ -3,7 +3,7 @@
 
 import cron from 'node-cron';
 import { getFirestoreDb } from '../config/firebase.js';
-import { fetchInboxEmails, isGmailConnected } from './gmail.service.js';
+import { fetchInboxEmails, isGmailConnected, fetchNewEmailsSince } from './gmail.service.js';
 import { analyzeEmail } from './phishing.service.js';
 import { FieldValue } from 'firebase-admin/firestore';
 
@@ -72,6 +72,7 @@ export async function updateAutoScanSettings(userId, settings) {
 
 /**
  * Perform auto-scan for a specific user
+ * Fetches only NEW emails since last scan (no fixed limit)
  * @param {string} userId - User ID
  */
 async function performAutoScan(userId) {
@@ -83,15 +84,35 @@ async function performAutoScan(userId) {
             return null;
         }
 
-        // Fetch emails (limit to 500 for auto-scan)
-        const emails = await fetchInboxEmails(userId, 500, 'in:inbox');
+        // Get user settings to check last scan time
+        const settings = await getAutoScanSettings(userId);
+        const lastScanTime = settings.lastAutoScan;
 
-        if (emails.length === 0) {
+        let emails;
+
+        if (lastScanTime) {
+            // Fetch only NEW emails since last scan (dynamic - no limit)
+            console.log(`[Auto-Scan] User ${userId} - Fetching emails since ${lastScanTime}`);
+            emails = await fetchNewEmailsSince(userId, lastScanTime);
+        } else {
+            // First scan - get emails from last 7 days (no fixed limit)
+            const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            console.log(`[Auto-Scan] User ${userId} - First scan, fetching emails from last 7 days`);
+            emails = await fetchNewEmailsSince(userId, sevenDaysAgo);
+        }
+
+        if (!emails || emails.length === 0) {
             console.log(`[Auto-Scan] User ${userId} - No new emails found`);
+            // Still update last scan time even if no emails
+            await updateAutoScanSettings(userId, {
+                lastAutoScan: new Date().toISOString()
+            });
             return null;
         }
 
-        // Analyze each email
+        console.log(`[Auto-Scan] User ${userId} - Found ${emails.length} new emails to scan`);
+
+        // Analyze each email (emails are already sorted newest first from gmail.service)
         const scanResults = emails.map(email => {
             const analysis = analyzeEmail(email);
             const isHighRisk = analysis.riskLevel === 'HIGH';
@@ -123,11 +144,18 @@ async function performAutoScan(userId) {
             low: scanResults.filter(r => r.riskLevel === 'LOW').length
         };
 
-        // Store emails prioritized by risk - HIGH risk ALWAYS stored
+        // Store results - prioritize HIGH risk (always stored), then MEDIUM, then LOW
+        // No arbitrary limits - store based on importance
         const highRisk = scanResults.filter(r => r.riskLevel === 'HIGH');
-        const mediumRisk = scanResults.filter(r => r.riskLevel === 'MEDIUM').slice(0, 100);
-        const lowRisk = scanResults.filter(r => r.riskLevel === 'LOW').slice(0, 50);
-        const resultsToStore = [...highRisk, ...mediumRisk, ...lowRisk];
+        const mediumRisk = scanResults.filter(r => r.riskLevel === 'MEDIUM');
+        const lowRisk = scanResults.filter(r => r.riskLevel === 'LOW');
+
+        // Store all high risk, up to 200 medium, up to 100 low (to prevent excessive storage)
+        const resultsToStore = [
+            ...highRisk,
+            ...mediumRisk.slice(0, 200),
+            ...lowRisk.slice(0, 100)
+        ];
 
         const scanRecord = {
             userId,
@@ -156,7 +184,8 @@ async function performAutoScan(userId) {
 }
 
 /**
- * Save scan results to Firestore
+ * Save scan results to Firestore (CUMULATIVE - merges with existing emails)
+ * New emails are added to the existing collection, duplicates are updated
  */
 async function saveScanResults(userId, scanRecord) {
     const db = getFirestoreDb();
@@ -166,13 +195,75 @@ async function saveScanResults(userId, scanRecord) {
         return;
     }
 
-    await db.collection(SCAN_RESULTS_COLLECTION)
-        .doc(userId)
-        .collection('scans')
-        .add({
-            ...scanRecord,
-            createdAt: FieldValue.serverTimestamp()
-        });
+    const userDocRef = db.collection(SCAN_RESULTS_COLLECTION).doc(userId);
+
+    // Get existing emails
+    const existingDoc = await userDocRef.get();
+    let existingEmails = [];
+
+    if (existingDoc.exists) {
+        existingEmails = existingDoc.data().emails || [];
+    }
+
+    // Create a map of existing emails by gmailId for quick lookup
+    const emailMap = new Map();
+    existingEmails.forEach(email => {
+        if (email.gmailId) {
+            emailMap.set(email.gmailId, email);
+        }
+    });
+
+    // Add/update new scan results
+    let newCount = 0;
+    let updatedCount = 0;
+
+    for (const result of scanRecord.results) {
+        if (result.gmailId) {
+            if (emailMap.has(result.gmailId)) {
+                // Update existing email (re-scanned)
+                emailMap.set(result.gmailId, result);
+                updatedCount++;
+            } else {
+                // New email
+                emailMap.set(result.gmailId, result);
+                newCount++;
+            }
+        }
+    }
+
+    // Convert map back to array and sort by receivedAt (newest first)
+    const allEmails = Array.from(emailMap.values())
+        .sort((a, b) => new Date(b.receivedAt) - new Date(a.receivedAt));
+
+    // Recalculate summary for ALL emails
+    const totalSummary = {
+        total: allEmails.length,
+        high: allEmails.filter(e => e.riskLevel === 'HIGH').length,
+        medium: allEmails.filter(e => e.riskLevel === 'MEDIUM').length,
+        low: allEmails.filter(e => e.riskLevel === 'LOW').length
+    };
+
+    // Save the cumulative results
+    await userDocRef.set({
+        userId,
+        lastScannedAt: new Date().toISOString(),
+        lastScanNewCount: scanRecord.emailCount,
+        totalEmailCount: allEmails.length,
+        summary: totalSummary,
+        emails: allEmails,
+        updatedAt: FieldValue.serverTimestamp()
+    }, { merge: true });
+
+    console.log(`[Save] User ${userId} - Added ${newCount} new, updated ${updatedCount}, total ${allEmails.length} emails`);
+
+    // Also save to scan history (for tracking individual scans)
+    await userDocRef.collection('history').add({
+        scannedAt: scanRecord.scannedAt,
+        emailCount: scanRecord.emailCount,
+        summary: scanRecord.summary,
+        isAutoScan: scanRecord.isAutoScan,
+        createdAt: FieldValue.serverTimestamp()
+    });
 }
 
 /**

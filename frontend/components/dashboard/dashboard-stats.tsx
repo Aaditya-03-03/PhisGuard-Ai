@@ -1,44 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { StatCard } from "@/components/ui/stat-card"
 import { Mail, AlertTriangle, ShieldAlert, Activity } from "lucide-react"
-import { getEmailStats, type EmailStats } from "@/lib/api"
+import { useDashboardData } from "@/contexts/dashboard-data-context"
 
 export function DashboardStats() {
-  const [stats, setStats] = useState<EmailStats>({
-    total: 0,
-    highRisk: 0,
-    mediumRisk: 0,
-    lowRisk: 0
-  })
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchStats() {
-      try {
-        const data = await getEmailStats()
-        setStats(data)
-      } catch (error) {
-        console.error('Failed to fetch stats:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchStats()
-
-    // Refresh stats every 30 seconds
-    const interval = setInterval(fetchStats, 30000)
-    return () => clearInterval(interval)
-  }, [])
+  const { data } = useDashboardData()
+  const { stats, isLoading, hasNewData } = data
 
   const safeEmails = stats.total - stats.highRisk - stats.mediumRisk
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 transition-all duration-300 ${hasNewData ? 'ring-2 ring-cyan/50 rounded-xl' : ''}`}>
       <StatCard
         title="Total Emails Scanned"
-        value={loading ? "..." : stats.total.toLocaleString()}
+        value={isLoading ? "..." : stats.total.toLocaleString()}
         subtitle="All processed emails"
         icon={Mail}
         variant="cyan"
@@ -46,7 +22,7 @@ export function DashboardStats() {
       />
       <StatCard
         title="High Risk (Phishing)"
-        value={loading ? "..." : stats.highRisk.toLocaleString()}
+        value={isLoading ? "..." : stats.highRisk.toLocaleString()}
         subtitle="Click to view threats"
         icon={AlertTriangle}
         variant="danger"
@@ -54,7 +30,7 @@ export function DashboardStats() {
       />
       <StatCard
         title="Medium Risk"
-        value={loading ? "..." : stats.mediumRisk.toLocaleString()}
+        value={isLoading ? "..." : stats.mediumRisk.toLocaleString()}
         subtitle="Click to review"
         icon={ShieldAlert}
         variant="warning"
@@ -62,7 +38,7 @@ export function DashboardStats() {
       />
       <StatCard
         title="Low Risk Emails"
-        value={loading ? "..." : safeEmails.toLocaleString()}
+        value={isLoading ? "..." : safeEmails.toLocaleString()}
         subtitle="Click to view"
         icon={Activity}
         variant="success"
