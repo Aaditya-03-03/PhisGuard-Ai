@@ -140,14 +140,17 @@ export async function getGmailClient(userId) {
     return google.gmail({ version: 'v1', auth: oauth2Client });
 }
 
+// Default query to scan inbox, spam, and important folders
+const DEFAULT_EMAIL_QUERY = 'in:inbox OR in:spam OR is:important';
+
 /**
- * Fetch emails from user's inbox
+ * Fetch emails from user's mailbox (inbox, spam, and important)
  * @param {string} userId - User's Firebase UID
  * @param {number} maxResults - Maximum number of emails to fetch (0 = unlimited, default: 10)
- * @param {string} query - Gmail search query (default: inbox emails)
+ * @param {string} query - Gmail search query (default: inbox, spam, and important emails)
  * @returns {Promise<Array>} Array of parsed email objects (sorted by newest first)
  */
-export async function fetchInboxEmails(userId, maxResults = 10, query = 'in:inbox') {
+export async function fetchInboxEmails(userId, maxResults = 10, query = DEFAULT_EMAIL_QUERY) {
     const gmail = await getGmailClient(userId);
     let allMessages = [];
     let pageToken = undefined;
@@ -227,8 +230,8 @@ export async function fetchNewEmailsSince(userId, sinceDate) {
         ? Math.floor(new Date(sinceDate).getTime() / 1000)
         : Math.floor(Date.now() / 1000) - (24 * 60 * 60); // Default: last 24 hours
 
-    // Gmail query for emails after a specific date
-    const query = `in:inbox after:${sinceTimestamp}`;
+    // Gmail query for emails after a specific date (includes inbox, spam, and important)
+    const query = `(in:inbox OR in:spam OR is:important) after:${sinceTimestamp}`;
 
     console.log(`[Gmail] Fetching new emails since ${new Date(sinceTimestamp * 1000).toISOString()}`);
 
@@ -267,6 +270,16 @@ export function parseGmailMessage(message) {
     // Extract URLs from body
     const urls = extractUrls(textBody + ' ' + htmlBody);
 
+    // Determine the folder based on Gmail labels
+    const labelIds = message.labelIds || [];
+    let folder = 'Other';
+    if (labelIds.includes('SPAM')) {
+        folder = 'Spam';
+    } else if (labelIds.includes('INBOX')) {
+        folder = 'Inbox';
+    }
+    const isImportant = labelIds.includes('IMPORTANT');
+
     return {
         messageId,
         gmailId: message.id,
@@ -280,7 +293,9 @@ export function parseGmailMessage(message) {
         urls,
         receivedAt: date ? new Date(date).toISOString() : new Date().toISOString(),
         snippet: message.snippet || '',
-        labelIds: message.labelIds || []
+        labelIds,
+        folder,           // NEW: Shows which folder (Inbox, Spam, Other)
+        isImportant       // NEW: Boolean flag for important emails
     };
 }
 
