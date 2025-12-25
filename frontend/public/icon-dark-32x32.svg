@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- PhisGuard Shield Favicon -->
+  <!-- PhisGuard Shield - Light theme icon -->
   <defs>
     <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#27F3D6"/>
@@ -8,7 +8,7 @@
     </linearGradient>
   </defs>
   
-  <!-- Shield shape -->
+  <!-- Shield shape with dark background -->
   <path 
     d="M16 2 L28 7 L28 15 Q28 24 16 30 Q4 24 4 15 L4 7 Z" 
     fill="#0D1B2A" 
@@ -22,13 +22,13 @@
     fill="rgba(39, 243, 214, 0.15)"
   />
   
-  <!-- AI/Check icon in center -->
+  <!-- AI icon in center -->
   <circle cx="16" cy="14" r="5" fill="none" stroke="#27F3D6" stroke-width="1.2"/>
   <circle cx="14" cy="13" r="1" fill="#27F3D6"/>
   <circle cx="18" cy="13" r="1" fill="#27F3D6"/>
   <path d="M13 16 Q16 18 19 16" fill="none" stroke="#27F3D6" stroke-width="1"/>
   
-  <!-- Connection line -->
+  <!-- Connection -->
   <line x1="16" y1="19" x2="16" y2="23" stroke="#3A86FF" stroke-width="1"/>
   <circle cx="16" cy="24" r="1.5" fill="#3A86FF"/>
 </svg>

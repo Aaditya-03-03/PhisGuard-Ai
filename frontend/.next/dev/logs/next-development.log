@@ -1,424 +1,59 @@
-[00:00:03.612] Server  LOG      ✓ Ready in 2.6s
-[00:00:35.260] Server  LOG      ○ Compiling / ...
-[00:00:44.205] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:45.053] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:45.053] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:00:45.053] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582744891}
-[00:00:50.114] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/signup color: rgb(120, 120, 120) color: inherit {"dp":"/signup","o":"http://localhost:3000/signup","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582750249}
-[00:00:59.984] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582760127}
-[00:01:05.715] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:05.889] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:05.889] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/login","route":"/login"}
-[00:01:05.889] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582766026}
-[00:01:07.912] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/signup color: rgb(120, 120, 120) color: inherit {"dp":"/signup","o":"http://localhost:3000/signup","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582768057}
-[00:01:08.914] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582769058}
-[00:01:11.017] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582771157}
-[00:01:31.449] Server  LOG      ○ Compiling /dashboard ...
-[00:01:33.900] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:01:33.901] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:01:33.901] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766582794029}
-[00:01:35.258] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:03.410] Server  LOG      ✓ Ready in 2.4s
+[00:00:20.144] Server  LOG      ○ Compiling /dashboard ...
+[00:00:26.437] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:27.652] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:27.652] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:00:27.652] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766653984561}
+[00:00:29.644] Browser LOG     [Dashboard] Auto-refresh set to 15s
+[00:00:29.644] Browser LOG     [Dashboard] Auto-refresh set to 15s
+[00:00:30.865] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:35.258] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:30.865] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:35.258] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:30.865] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:35.258] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:30.865] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:03:39.929] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:05:29.539] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:06:48.039] Browser ERROR   API Error: {}
-[00:06:48.039] Browser ERROR   API Error: {}
-[00:06:48.039] Browser ERROR   API Error: {}
-[00:06:48.039] Browser ERROR   API Error: {}
-[00:06:48.039] Browser ERROR   API Error: {}
-[00:06:48.039] Browser ERROR   API Error: {}
-[00:07:02.126] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:32.795] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:01:50.781] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:02:16.838] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:02:20.722] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:02:22.932] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:02:54.069] Server  LOG      ✓ Compiled in 445ms
+[00:10:31.979] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:11:05.047] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:15:53.839] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:16:02.065] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:16:02.664] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:16:02.664] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:16:02.664] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766654920268}
+[00:16:08.328] Browser LOG     [Dashboard] Auto-refresh set to 15s
+[00:16:08.328] Browser LOG     [Dashboard] Auto-refresh set to 15s
+[00:16:08.328] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766654925969}
+[00:16:08.801] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:07:02.126] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:16:08.802] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:15:00.044] Browser ERROR   API Error: {}
-[00:15:01.037] Browser ERROR   API Error: {}
-[00:15:58.038] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:16:08.802] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:15:58.038] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:16:08.802] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:19:41.043] Browser ERROR   API Error: {}
-[00:19:41.043] Browser ERROR   API Error: {}
-[00:20:39.128] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:20:39.128] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:25:27.932] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:25:31.368] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:25:31.580] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:25:31.580] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:25:31.580] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766584231727}
-[00:25:32.109] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:25:32.109] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:25:32.461] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:25:32.461] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:25:32.461] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:25:32.461] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:26:09.269] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:26:18.026] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:28:36.408] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:28:43.419] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:28:55.023] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:29:25.314] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:29:51.775] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:30:03.038] Browser LOG     [Dashboard] New emails detected! Previous: 33, New: 34
-[00:30:09.634] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:30:20.410] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b50a0e6d798360 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b50a0e6d798360","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766584520548}
-[00:30:28.063] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766584528201}
-[00:30:28.284] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:30:28.284] Browser LOG     [FlaggedEmails] Scan has 34 results, summary: {"high":1,"low":29,"medium":4,"total":34}
-[00:30:28.284] Browser LOG     [FlaggedEmails] Total unique emails: 34
-[00:30:28.284] Browser LOG     [FlaggedEmails] High risk: 1
-[00:30:28.417] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:30:28.417] Browser LOG     [FlaggedEmails] Scan has 34 results, summary: {"high":1,"low":29,"medium":4,"total":34}
-[00:30:28.417] Browser LOG     [FlaggedEmails] Total unique emails: 34
-[00:30:28.417] Browser LOG     [FlaggedEmails] High risk: 1
-[00:30:31.621] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4eee927a46d41 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4eee927a46d41","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766584531765}
-[00:32:51.886] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:34:10.124] Server  LOG      ✓ Compiled in 882ms
-[00:34:11.058] Browser ERROR   uncaughtError: ReferenceError: showHtmlView is not defined
-[00:34:32.678] Server  LOG      ✓ Compiled in 564ms
-[00:34:32.699] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:34:33.746] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4eee927a46d41 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4eee927a46d41","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766584773004}
-[00:34:33.746] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:34:33.746] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:34:34.136] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:34:35.041] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:34:35.041] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged/19b4eee927a46d41","route":"/dashboard/flagged/[id]"}
-[00:34:35.041] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4eee927a46d41 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4eee927a46d41","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766584774571}
-[00:34:36.037] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:34:36.037] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[00:36:22.667] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:36:22.958] Browser LOG     [Dashboard] New emails detected! Previous: 34, New: 35
-[00:36:29.457] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:36:29.457] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:36:29.457] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:36:29.457] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[00:36:29.457] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766584889504}
-[00:37:00.070] Server  LOG      ✓ Compiled in 508ms
-[00:37:50.413] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:39:36.328] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:39:38.404] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766585078541}
-[00:39:38.569] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:39:38.569] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:39:38.570] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:39:38.570] Browser LOG     [FlaggedEmails] High risk: 1
-[00:39:38.714] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:39:38.714] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:39:38.714] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:39:38.714] Browser LOG     [FlaggedEmails] High risk: 1
-[00:39:41.367] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b50a9d1af7e126 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b50a9d1af7e126","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766585081511}
-[00:40:50.951] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:40:52.883] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:40:55.736] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766585155877}
-[00:40:55.945] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:40:55.945] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:40:55.945] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:40:55.945] Browser LOG     [FlaggedEmails] High risk: 1
-[00:40:56.081] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:40:56.081] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:40:56.081] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:40:56.081] Browser LOG     [FlaggedEmails] High risk: 1
-[00:40:58.463] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b50a0e6d798360 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b50a0e6d798360","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766585158606}
-[00:41:28.652] Server  LOG      ✓ Compiled in 162ms
-[00:41:29.029] Server  LOG      ✓ Compiled in 181ms
-[00:41:32.040] Browser ERROR   API Error: {}
-[00:42:35.956] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:43:21.005] Server  LOG      ✓ Compiled in 501ms
-[00:43:44.734] Server  LOG      ✓ Compiled in 224ms
-[00:47:45.784] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:56:18.262] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:56:20.057] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586080202}
-[00:56:20.270] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:56:20.270] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:56:20.270] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:56:20.270] Browser LOG     [FlaggedEmails] High risk: 1
-[00:56:20.430] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:56:20.430] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:56:20.430] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:56:20.430] Browser LOG     [FlaggedEmails] High risk: 1
-[00:56:23.941] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b50a9d1af7e126 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b50a9d1af7e126","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586084087}
-[00:58:00.842] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:58:04.669] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586184815}
-[00:58:04.837] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:58:04.837] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:58:04.837] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:58:04.837] Browser LOG     [FlaggedEmails] High risk: 1
-[00:58:04.954] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:58:04.954] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:58:04.954] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:58:04.954] Browser LOG     [FlaggedEmails] High risk: 1
-[00:58:07.802] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b50a0e6d798360 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b50a0e6d798360","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586187946}
-[00:58:11.103] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586191243}
-[00:58:11.236] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:58:11.236] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:58:11.236] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:58:11.236] Browser LOG     [FlaggedEmails] High risk: 1
-[00:58:11.378] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[00:58:11.378] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[00:58:11.378] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[00:58:11.379] Browser LOG     [FlaggedEmails] High risk: 1
-[00:58:13.391] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4eee927a46d41 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4eee927a46d41","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586193530}
-[00:58:40.957] Server  LOG      ✓ Compiled in 239ms
-[00:59:13.160] Server  LOG      ✓ Compiled in 266ms
-[01:00:00.125] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:00:09.748] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:00:12.115] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586312160}
-[01:00:12.115] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:00:12.116] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:00:12.116] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:00:12.116] Browser LOG     [FlaggedEmails] High risk: 1
-[01:00:12.250] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:00:12.250] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:00:12.250] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:00:12.250] Browser LOG     [FlaggedEmails] High risk: 1
-[01:00:14.308] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:00:14.458] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:00:14.458] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged","route":"/dashboard/flagged"}
-[01:00:14.458] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586314599}
-[01:00:15.034] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:00:15.034] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:00:15.150] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:00:15.150] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:00:15.150] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:00:15.150] Browser LOG     [FlaggedEmails] High risk: 1
-[01:00:15.317] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:00:15.317] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:00:15.317] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:00:15.317] Browser LOG     [FlaggedEmails] High risk: 1
-[01:00:17.606] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b50a9d1af7e126 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b50a9d1af7e126","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586317749}
-[01:00:35.449] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586335591}
-[01:00:35.639] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:00:35.639] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:00:35.639] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:00:35.639] Browser LOG     [FlaggedEmails] High risk: 1
-[01:00:35.791] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:00:35.791] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:00:35.791] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:00:35.791] Browser LOG     [FlaggedEmails] High risk: 1
-[01:00:39.369] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4e9b2bc169218 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4e9b2bc169218","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586339509}
-[01:02:19.707] Server  LOG      ✓ Compiled in 435ms
-[01:02:58.052] Server  LOG      ✓ Compiled in 284ms
-[01:03:43.545] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:07:19.549] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:07:27.572] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:07:31.310] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586751352}
-[01:07:31.310] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:07:31.310] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:07:31.310] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:07:31.310] Browser LOG     [FlaggedEmails] High risk: 1
-[01:07:31.488] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:07:31.488] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:07:31.488] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:07:31.488] Browser LOG     [FlaggedEmails] High risk: 1
-[01:07:41.808] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b50a9d1af7e126 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b50a9d1af7e126","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586761952}
-[01:07:54.114] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586774258}
-[01:07:54.356] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:07:54.356] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:07:54.356] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:07:54.356] Browser LOG     [FlaggedEmails] High risk: 1
-[01:07:54.515] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:07:54.515] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:07:54.515] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:07:54.515] Browser LOG     [FlaggedEmails] High risk: 1
-[01:07:57.527] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4e9b2bc169218 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4e9b2bc169218","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586777667}
-[01:08:07.839] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586787981}
-[01:08:08.035] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:08:08.035] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:08:08.035] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:08:08.035] Browser LOG     [FlaggedEmails] High risk: 1
-[01:08:08.196] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:08:08.196] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:08:08.196] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:08:08.196] Browser LOG     [FlaggedEmails] High risk: 1
-[01:08:14.772] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586794914}
-[01:08:35.561] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:09:26.271] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:09:36.339] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:09:38.686] Browser ERROR   API Error: {}
-[01:09:38.686] Browser ERROR   API Error: {}
-[01:09:41.910] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:09:42.065] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:09:42.065] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged/19b4bb1d0c957951","route":"/dashboard/flagged/[id]"}
-[01:09:42.065] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586882212}
-[01:09:44.043] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:09:44.043] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:09:45.411] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:09:47.833] Browser ERROR   API Error: {}
-[01:09:47.833] Browser ERROR   API Error: {}
-[01:09:51.272] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:09:51.272] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:09:51.272] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586891407}
-[01:09:53.797] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:09:53.926] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:09:53.926] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[01:09:53.926] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586894072}
-[01:09:54.335] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:09:54.335] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:09:54.839] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:09:54.839] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:09:54.839] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:09:54.839] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:09:58.334] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586898478}
-[01:09:58.531] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:09:58.531] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:09:58.531] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:09:58.531] Browser LOG     [FlaggedEmails] High risk: 1
-[01:09:58.707] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:09:58.707] Browser LOG     [FlaggedEmails] Scan has 35 results, summary: {"high":1,"low":29,"medium":5,"total":35}
-[01:09:58.707] Browser LOG     [FlaggedEmails] Total unique emails: 35
-[01:09:58.707] Browser LOG     [FlaggedEmails] High risk: 1
-[01:10:08.689] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766586908829}
-[01:11:57.643] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:12:33.889] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:12:39.928] Server  LOG      ✓ Compiled in 81ms
-[01:12:52.412] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:13:19.965] Server  LOG      ✓ Compiled in 216ms
-[01:14:57.836] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:15:09.301] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:15:11.622] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:15:11.770] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:15:11.770] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged/19b4bb1d0c957951","route":"/dashboard/flagged/[id]"}
-[01:15:11.770] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766587211912}
-[01:15:12.380] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:15:12.381] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:15:31.996] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:15:32.122] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:15:32.122] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged/19b4bb1d0c957951","route":"/dashboard/flagged/[id]"}
-[01:15:32.123] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766587232266}
-[01:15:32.540] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:15:32.541] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:17:00.895] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:17:11.251] Server  LOG      ✓ Compiled in 73ms
-[01:17:20.495] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:17:38.335] Server  LOG      ✓ Compiled in 208ms
-[01:18:36.395] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:18:38.946] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:18:39.078] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:18:39.078] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged/19b4bb1d0c957951","route":"/dashboard/flagged/[id]"}
-[01:18:39.078] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766587419221}
-[01:18:39.594] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:18:39.594] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:20:11.031] Browser LOG     [Dashboard] New emails detected! Previous: 35, New: 36
-[01:20:19.436] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:20:21.644] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:20:21.644] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:20:21.644] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:20:21.644] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-[01:20:21.644] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766587521769}
-[01:20:27.002] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766587527142}
-[01:20:27.233] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:20:27.233] Browser LOG     [FlaggedEmails] Scan has 36 results, summary: {"high":1,"low":30,"medium":5,"total":36}
-[01:20:27.233] Browser LOG     [FlaggedEmails] Total unique emails: 36
-[01:20:27.233] Browser LOG     [FlaggedEmails] High risk: 1
-[01:20:27.233] Browser LOG     [FlaggedEmails] Scan history: 1 scans
-[01:20:27.233] Browser LOG     [FlaggedEmails] Scan has 36 results, summary: {"high":1,"low":30,"medium":5,"total":36}
-[01:20:27.233] Browser LOG     [FlaggedEmails] Total unique emails: 36
-[01:20:27.233] Browser LOG     [FlaggedEmails] High risk: 1
-[01:20:39.421] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766587539563}
-[01:22:14.248] Server  LOG      ✓ Compiled in 273ms
-[01:22:15.033] Browser ERROR   ./frontend/components/dashboard/email-analysis-report.tsx:100:2
-Parsing ecmascript source code failed
-   98 |     })
-   99 |     .join('\n')
-> 100 | })
-      |  ^
-  101 |     .join('\n')
-  102 |
-  103 | return text.trim()
-
-Expression expected
-
-Import trace:
-  Server Component:
-    ./frontend/components/dashboard/email-analysis-report.tsx
-    ./frontend/app/dashboard/flagged/[id]/page.tsx
-[01:23:53.116] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:24:03.494] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[01:24:05.544] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:24:05.691] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:24:05.691] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged/19b4bb1d0c957951","route":"/dashboard/flagged/[id]"}
-[01:24:05.691] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/flagged/19b4bb1d0c957951 color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged/[id]","o":"http://localhost:3000/dashboard/flagged/19b4bb1d0c957951","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1766587745838}
-[01:24:06.703] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:24:06.703] Browser LOG     [Dashboard] Auto-refresh set to 15s
-[01:25:24.002] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:16:29.383] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:16:39.443] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:18:53.504] Browser LOG     [Dashboard] Tab became visible, refreshing...

@@ -1,8 +1,5 @@
 {
-  "/dashboard/flagged/[id]/page": "app/dashboard/flagged/[id]/page.js",
-  "/dashboard/flagged/page": "app/dashboard/flagged/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/login/page": "app/login/page.js",
-  "/page": "app/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/page": "app/page.js"
 }

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 
 interface ProbabilityBarProps {
-  value: number // 0-100
+  value: number // 0-100 or 0-1
   label?: string
   showPercentage?: boolean
   size?: "sm" | "md" | "lg"
@@ -9,13 +9,18 @@ interface ProbabilityBarProps {
 }
 
 export function ProbabilityBar({ value, label, showPercentage = true, size = "md", className }: ProbabilityBarProps) {
+  // Normalize value: if it's a decimal (0-1), convert to percentage
+  const normalizedValue = value <= 1 ? value * 100 : value
+  // Round to 1 decimal place for display
+  const displayValue = Math.round(normalizedValue * 10) / 10
+
   const getColor = (val: number) => {
     if (val >= 70) return { bg: "bg-risk-high", glow: "shadow-[0_0_10px_rgba(255,71,87,0.5)]" }
     if (val >= 40) return { bg: "bg-risk-medium", glow: "shadow-[0_0_10px_rgba(255,165,2,0.5)]" }
     return { bg: "bg-risk-low", glow: "shadow-[0_0_10px_rgba(46,213,115,0.5)]" }
   }
 
-  const colors = getColor(value)
+  const colors = getColor(normalizedValue)
 
   return (
     <div className={cn("w-full", className)}>
@@ -25,13 +30,13 @@ export function ProbabilityBar({ value, label, showPercentage = true, size = "md
           {showPercentage && (
             <span
               className={cn(
-                "text-sm font-bold",
-                value >= 70 && "text-risk-high",
-                value >= 40 && value < 70 && "text-risk-medium",
-                value < 40 && "text-risk-low",
+                "text-sm font-bold whitespace-nowrap",
+                normalizedValue >= 70 && "text-risk-high",
+                normalizedValue >= 40 && normalizedValue < 70 && "text-risk-medium",
+                normalizedValue < 40 && "text-risk-low",
               )}
             >
-              {value}%
+              {displayValue}%
             </span>
           )}
         </div>
@@ -46,7 +51,7 @@ export function ProbabilityBar({ value, label, showPercentage = true, size = "md
       >
         <div
           className={cn("h-full rounded-full transition-all duration-500 ease-out", colors.bg, colors.glow)}
-          style={{ width: `${value}%` }}
+          style={{ width: `${Math.min(normalizedValue, 100)}%` }}
         />
       </div>
     </div>

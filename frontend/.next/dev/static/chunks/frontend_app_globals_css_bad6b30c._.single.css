@@ -99,7 +99,6 @@
     --color-red-300: #ffa3a3;
     --color-red-400: #ff6568;
     --color-red-600: #e40014;
-    --color-yellow-400: #fac800;
     --color-yellow-500: #edb200;
     --color-green-500: #00c758;
     --color-blue-50: #eff6ff;
@@ -178,7 +177,6 @@
       --color-red-300: lab(76.5514% 36.4219 15.5335);
       --color-red-400: lab(63.7053% 60.7449 31.3109);
       --color-red-600: lab(48.4493% 77.4328 61.5452);
-      --color-yellow-400: lab(83.2664% 8.65132 106.895);
       --color-yellow-500: lab(76.3898% 14.5258 98.4589);
       --color-green-500: lab(70.5521% -66.5147 45.8072);
       --color-blue-50: lab(96.492% -1.14647 -5.11479);
@@ -1171,10 +1169,6 @@
     max-height: var(--radix-select-content-available-height);
   }
 
-  .max-h-96 {
-    max-height: calc(var(--spacing) * 96);
-  }
-
   .max-h-\[300px\] {
     max-height: 300px;
   }
@@ -1185,10 +1179,6 @@
 
   .max-h-\[500px\] {
     max-height: 500px;
-  }
-
-  .max-h-\[600px\] {
-    max-height: 600px;
   }
 
   .max-h-screen {
@@ -1205,14 +1195,6 @@
 
   .min-h-16 {
     min-height: calc(var(--spacing) * 16);
-  }
-
-  .min-h-\[200px\] {
-    min-height: 200px;
-  }
-
-  .min-h-\[400px\] {
-    min-height: 400px;
   }
 
   .min-h-screen {
@@ -3168,10 +3150,6 @@
     .text-white\/80 {
       color: color-mix(in oklab, var(--color-white) 80%, transparent);
     }
-  }
-
-  .text-yellow-400 {
-    color: var(--color-yellow-400);
   }
 
   .text-yellow-500 {
