@@ -8,6 +8,8 @@ import { AlertBox } from "@/components/ui/alert-box"
 import { Settings, Brain, Lock, User, Mail, RefreshCw, Trash2, Eye, EyeOff, LogOut, Check, AlertTriangle, Clock } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { getGmailConnectUrl, checkGmailStatus, disconnectGmail, getAutoScanSettings, updateAutoScanSettings } from "@/lib/api"
+import { DeviceStatusCard } from "@/components/dashboard/device-status"
+import { DeviceCommandLog } from "@/components/dashboard/device-command-log"
 
 export function SettingsContent() {
   const { user, logout } = useAuth()
@@ -419,6 +421,10 @@ export function SettingsContent() {
           </div>
         </div>
       </GlassCard>
+
+      {/* ESP32 Device Integration Section */}
+      <DeviceStatusCard />
+      <DeviceCommandLog />
     </div>
   )
 }

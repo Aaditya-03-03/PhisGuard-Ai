@@ -104,6 +104,8 @@
     --color-blue-50: #eff6ff;
     --color-blue-600: #155dfc;
     --color-blue-800: #193cb8;
+    --color-purple-400: #c07eff;
+    --color-purple-500: #ac4bff;
     --color-gray-500: #6a7282;
     --color-gray-800: #1e2939;
     --color-gray-900: #101828;
@@ -182,6 +184,8 @@
       --color-blue-50: lab(96.492% -1.14647 -5.11479);
       --color-blue-600: lab(44.0605% 29.0279 -86.0352);
       --color-blue-800: lab(30.2514% 27.7854 -70.2699);
+      --color-purple-400: lab(63.6946% 47.6127 -59.2066);
+      --color-purple-500: lab(52.0183% 66.11 -78.2316);
       --color-gray-500: lab(47.7841% -.393212 -10.0268);
       --color-gray-800: lab(16.1051% -1.18239 -11.7533);
       --color-gray-900: lab(8.11897% .811279 -12.254);
@@ -1167,6 +1171,10 @@
 
   .max-h-\(--radix-select-content-available-height\) {
     max-height: var(--radix-select-content-available-height);
+  }
+
+  .max-h-64 {
+    max-height: calc(var(--spacing) * 64);
   }
 
   .max-h-\[300px\] {
@@ -2403,6 +2411,16 @@
     }
   }
 
+  .bg-purple-500\/20 {
+    background-color: #ac4bff33;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-purple-500\/20 {
+      background-color: color-mix(in oklab, var(--color-purple-500) 20%, transparent);
+    }
+  }
+
   .bg-risk-high {
     background-color: var(--risk-high);
   }
@@ -3092,6 +3110,10 @@
 
   .text-primary-foreground {
     color: var(--primary-foreground);
+  }
+
+  .text-purple-400 {
+    color: var(--color-purple-400);
   }
 
   .text-risk-high {

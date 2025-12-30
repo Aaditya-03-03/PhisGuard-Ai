@@ -320,3 +320,65 @@ export async function getAutoScanStatus(): Promise<{ running: boolean; jobInProg
     const response = await fetchPublic<{ running: boolean; jobInProgress: boolean }>('/autoscan/status');
     return response.success && response.data ? response.data : { running: false, jobInProgress: false };
 }
+
+// ============================================
+// ESP32 Device Integration API
+// ============================================
+
+export interface DeviceStatus {
+    connected: boolean;
+    deviceId?: string;
+    deviceName?: string;
+    status: 'online' | 'offline' | 'not_registered' | 'unknown';
+    lastSeen: string | null;
+}
+
+export interface DeviceCommand {
+    id: string;
+    command: string;
+    success: boolean;
+    response: string;
+    timestamp: string;
+}
+
+export interface PairingToken {
+    token: string;
+    expiresAt: string;
+}
+
+/**
+ * Generate a pairing token for ESP32 device registration
+ * Token is single-use and expires in 5 minutes
+ */
+export async function generatePairingToken(): Promise<PairingToken | null> {
+    const response = await fetchWithAuth<{ token: string; expiresAt: string; message: string }>('/device/pair', {
+        method: 'POST'
+    });
+    if (response.success && response.data) {
+        return { token: response.data.token, expiresAt: response.data.expiresAt };
+    }
+    return null;
+}
+
+/**
+ * Get the current status of user's registered ESP32 device
+ */
+export async function getDeviceStatus(): Promise<DeviceStatus> {
+    const response = await fetchWithAuth<DeviceStatus>('/device/status');
+    if (response.success && response.data) {
+        return response.data;
+    }
+    return { connected: false, status: 'unknown', lastSeen: null };
+}
+
+/**
+ * Get recent command history from ESP32 device
+ */
+export async function getDeviceCommandLog(limit: number = 20): Promise<DeviceCommand[]> {
+    const response = await fetchWithAuth<{ count: number; logs: DeviceCommand[] }>(`/device/logs?limit=${limit}`);
+    if (response.success && response.data) {
+        return response.data.logs;
+    }
+    return [];
+}
+

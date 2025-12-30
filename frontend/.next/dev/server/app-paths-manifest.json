@@ -1,5 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
+  "/connect-gmail/page": "app/connect-gmail/page.js",
+  "/dashboard/flagged/[id]/page": "app/dashboard/flagged/[id]/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/page": "app/page.js"
+  "/dashboard/settings/page": "app/dashboard/settings/page.js",
+  "/page": "app/page.js",
+  "/signup/page": "app/signup/page.js"
 }

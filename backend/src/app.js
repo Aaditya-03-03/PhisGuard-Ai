@@ -11,6 +11,7 @@ import authRoutes from './routes/auth.routes.js';
 import gmailRoutes from './routes/gmail.routes.js';
 import scanRoutes from './routes/scan.routes.js';
 import autoscanRoutes from './routes/autoscan.routes.js';
+import deviceRoutes from './routes/device.routes.js';
 
 // Import config
 import { isFirebaseConfigured } from './config/firebase.js';
@@ -107,6 +108,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/gmail', gmailRoutes);
 app.use('/api/scan', scanRoutes);
 app.use('/api/autoscan', autoscanRoutes);
+app.use('/api/device', deviceRoutes);  // ESP32 Device Integration
 
 // Also mount without prefix for backwards compatibility
 app.use('/auth', authRoutes);

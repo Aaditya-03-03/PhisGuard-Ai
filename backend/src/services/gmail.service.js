@@ -398,3 +398,28 @@ export async function disconnectGmail(userId) {
     await db.collection(TOKENS_COLLECTION).doc(userId).delete();
     console.log(`✅ Gmail disconnected for user: ${userId}`);
 }
+
+// ============================================
+// ESP32 DEVICE INTEGRATION - EMAIL ACTIONS
+// ============================================
+
+/**
+ * Move email to trash (reversible delete)
+ * Used by ESP32 DELETE_MAIL voice command
+ * 
+ * SAFETY: Moves to trash instead of permanent delete
+ * allowing user to recover emails if needed
+ * 
+ * @param {string} userId - User's Firebase UID
+ * @param {string} emailId - Gmail message ID to trash
+ */
+export async function trashEmail(userId, emailId) {
+    const gmail = await getGmailClient(userId);
+
+    await gmail.users.messages.trash({
+        userId: 'me',
+        id: emailId
+    });
+
+    console.log(`✅ Email ${emailId} moved to trash for user: ${userId}`);
+}
