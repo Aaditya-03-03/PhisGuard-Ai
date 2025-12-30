@@ -382,3 +382,137 @@ export async function getDeviceCommandLog(limit: number = 20): Promise<DeviceCom
     return [];
 }
 
+// ============================================
+// WhatsApp Scan API
+// ============================================
+
+export interface WhatsAppScanResult {
+    id?: string;
+    risk: 'LOW' | 'MEDIUM' | 'HIGH';
+    confidence: number;
+    reasons: string[];
+    flags: string[];
+}
+
+/**
+ * Scan a WhatsApp message for phishing indicators
+ * @param message - The message text to scan
+ */
+export async function scanWhatsAppMessage(message: string): Promise<WhatsAppScanResult> {
+    const response = await fetchWithAuth<WhatsAppScanResult>('/scan/whatsapp', {
+        method: 'POST',
+        body: JSON.stringify({ message })
+    });
+
+    if (response.success && response.data) {
+        return response.data;
+    }
+
+    throw new Error(response.error || 'Failed to scan message');
+}
+
+// ============================================
+// Telegram Integration API
+// ============================================
+
+export interface TelegramLinkCode {
+    code: string;
+    expiresAt: string;
+}
+
+export interface TelegramLinkStatus {
+    linked: boolean;
+    chatId?: string;
+}
+
+/**
+ * Generate a linking code to connect Telegram account
+ * Code expires after 5 minutes
+ */
+export async function generateTelegramLinkCode(): Promise<TelegramLinkCode> {
+    const response = await fetchWithAuth<{ code: string; expiresAt: string }>('/api/telegram/link', {
+        method: 'POST'
+    });
+
+    if (response.success && response.data) {
+        return { code: response.data.code, expiresAt: response.data.expiresAt };
+    }
+
+    throw new Error(response.error || 'Failed to generate linking code');
+}
+
+/**
+ * Check if user has a linked Telegram account
+ */
+export async function getTelegramLinkStatus(): Promise<TelegramLinkStatus> {
+    const response = await fetchWithAuth<TelegramLinkStatus>('/api/telegram/status');
+
+    if (response.success && response.data) {
+        return response.data;
+    }
+
+    return { linked: false };
+}
+
+/**
+ * Unlink user's Telegram account
+ */
+export async function unlinkTelegram(): Promise<boolean> {
+    const response = await fetchWithAuth<void>('/api/telegram/unlink', {
+        method: 'DELETE'
+    });
+
+    return response.success;
+}
+
+// ============================================
+// Platform-Specific Results API
+// ============================================
+
+export type Platform = 'email' | 'telegram' | 'whatsapp';
+
+export interface PhishingResult {
+    id: string;
+    platform: Platform;
+    content: string;
+    risk: 'LOW' | 'MEDIUM' | 'HIGH';
+    confidence: number;
+    reasons: string[];
+    createdAt: string;
+}
+
+/**
+ * Get phishing scan results filtered by platform
+ */
+export async function getResultsByPlatform(platform: Platform, limit: number = 50): Promise<PhishingResult[]> {
+    try {
+        const response = await fetchWithAuth<PhishingResult[]>(`/scan/results?platform=${platform}&limit=${limit}`);
+
+        if (response.success && response.data) {
+            return response.data;
+        }
+
+        return [];
+    } catch (error) {
+        console.error(`[API] Failed to fetch ${platform} results:`, error);
+        return [];
+    }
+}
+
+/**
+ * Get stats for a specific platform
+ */
+export async function getStatsByPlatform(platform: Platform): Promise<EmailStats> {
+    try {
+        const response = await fetchWithAuth<EmailStats>(`/scan/stats?platform=${platform}`);
+
+        if (response.success && response.data) {
+            return response.data;
+        }
+
+        return { total: 0, highRisk: 0, mediumRisk: 0, lowRisk: 0 };
+    } catch (error) {
+        console.error(`[API] Failed to fetch ${platform} stats:`, error);
+        return { total: 0, highRisk: 0, mediumRisk: 0, lowRisk: 0 };
+    }
+}

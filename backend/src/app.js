@@ -12,6 +12,8 @@ import gmailRoutes from './routes/gmail.routes.js';
 import scanRoutes from './routes/scan.routes.js';
 import autoscanRoutes from './routes/autoscan.routes.js';
 import deviceRoutes from './routes/device.routes.js';
+import whatsappRoutes from './routes/whatsapp.routes.js';
+import telegramRoutes from './routes/telegram.routes.js';
 
 // Import config
 import { isFirebaseConfigured } from './config/firebase.js';
@@ -25,7 +27,7 @@ app.use(helmet());
 app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Telegram-Bot-Api-Secret-Token'],
     credentials: true
 }));
 
@@ -80,7 +82,7 @@ app.get('/', (req, res) => {
     res.json({
         name: 'PhishGuard API',
         version: '2.0.0',
-        description: 'AI-Powered Phishing Email Detection Backend with Gmail API',
+        description: 'AI-Powered Multi-Platform Phishing Detection Backend',
         mode: isFirebaseConfigured() ? 'production' : 'development',
         endpoints: {
             health: 'GET /health',
@@ -96,8 +98,15 @@ app.get('/', (req, res) => {
             },
             scan: {
                 inbox: 'POST /scan/inbox',
+                whatsapp: 'POST /scan/whatsapp',
                 history: 'GET /scan/history',
                 latest: 'GET /scan/latest'
+            },
+            telegram: {
+                webhook: 'POST /telegram/webhook',
+                link: 'POST /telegram/link',
+                status: 'GET /telegram/status',
+                unlink: 'DELETE /telegram/unlink'
             }
         }
     });
@@ -107,8 +116,10 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/gmail', gmailRoutes);
 app.use('/api/scan', scanRoutes);
+app.use('/api/scan', whatsappRoutes);  // WhatsApp manual scan
 app.use('/api/autoscan', autoscanRoutes);
 app.use('/api/device', deviceRoutes);  // ESP32 Device Integration
+app.use('/api/telegram', telegramRoutes);  // Telegram Bot Integration
 
 // Also mount without prefix for backwards compatibility
 app.use('/auth', authRoutes);

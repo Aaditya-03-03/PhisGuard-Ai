@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import { GlassCard } from "@/components/ui/glass-card"
-import { RefreshCw } from "lucide-react"
+import { RefreshCw, Mail, Send, MessageCircle } from "lucide-react"
 import {
   XAxis,
   YAxis,
@@ -17,6 +17,7 @@ import {
 } from "recharts"
 import { useDashboardData } from "@/contexts/dashboard-data-context"
 import type { Email } from "@/lib/api"
+import type { Platform } from "@/components/dashboard/platform-selector"
 
 interface DayDataPoint {
   date: string;
@@ -32,6 +33,10 @@ interface PieDataPoint {
   value: number;
   color: string;
   [key: string]: string | number;
+}
+
+interface DashboardChartsProps {
+  platform?: Platform
 }
 
 // Get the past 7 days as an array of date strings
@@ -82,9 +87,39 @@ function groupEmailsByDay(emails: Email[]): DayDataPoint[] {
   }))
 }
 
-export function DashboardCharts() {
+export function DashboardCharts({ platform = "email" }: DashboardChartsProps) {
   const { data } = useDashboardData()
   const { scanResult, isLoading, lastUpdated, hasNewData } = data
+
+  // Platform-specific labels
+  const platformLabels = useMemo(() => {
+    switch (platform) {
+      case "telegram":
+        return {
+          barTitle: "Telegram Messages by Day (Past 7 Days)",
+          pieTitle: "Telegram Risk Distribution",
+          emptyMessage: "No Telegram messages in the past 7 days",
+          emptyHint: "Link your Telegram to start scanning",
+          icon: Send
+        }
+      case "whatsapp":
+        return {
+          barTitle: "WhatsApp Scans by Day (Past 7 Days)",
+          pieTitle: "WhatsApp Risk Distribution",
+          emptyMessage: "No WhatsApp scans in the past 7 days",
+          emptyHint: "Paste a message above to scan",
+          icon: MessageCircle
+        }
+      default:
+        return {
+          barTitle: "Emails by Day (Past 7 Days)",
+          pieTitle: "Overall Risk Distribution",
+          emptyMessage: "No emails in the past 7 days",
+          emptyHint: "Scan your inbox to see trends",
+          icon: Mail
+        }
+    }
+  }, [platform])
 
   // Process chart data from context
   const chartData = useMemo(() => {
@@ -134,12 +169,17 @@ export function DashboardCharts() {
     )
   }
 
+  const PlatformIcon = platformLabels.icon
+
   return (
     <>
-      {/* Bar Chart - Emails per Day (Past 7 Days) */}
+      {/* Bar Chart - Messages per Day (Past 7 Days) */}
       <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-white">Emails by Day (Past 7 Days)</h3>
+          <div className="flex items-center gap-2">
+            <PlatformIcon className="w-5 h-5 text-cyan" />
+            <h3 className="text-lg font-semibold text-white">{platformLabels.barTitle}</h3>
+          </div>
           {lastUpdated && (
             <span className="text-xs text-muted-foreground flex items-center gap-1">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -175,8 +215,9 @@ export function DashboardCharts() {
             </ResponsiveContainer>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-              <p>No emails in the past 7 days</p>
-              <p className="text-sm">Scan your inbox to see trends</p>
+              <PlatformIcon className="w-12 h-12 mb-4 opacity-30" />
+              <p>{platformLabels.emptyMessage}</p>
+              <p className="text-sm">{platformLabels.emptyHint}</p>
             </div>
           )}
         </div>
@@ -198,7 +239,7 @@ export function DashboardCharts() {
 
       {/* Pie Chart - Risk Distribution */}
       <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
-        <h3 className="text-lg font-semibold text-white mb-6">Overall Risk Distribution</h3>
+        <h3 className="text-lg font-semibold text-white mb-6">{platformLabels.pieTitle}</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

@@ -1,13 +1,17 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect, useCallback } from "react"
 import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { NeonBadge } from "@/components/ui/neon-badge"
-import { Calendar, Download, FileText, FileSpreadsheet, RefreshCw, Inbox } from "lucide-react"
+import { Calendar, Download, FileText, FileSpreadsheet, RefreshCw, Inbox, Mail, Send } from "lucide-react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts"
-import { useDashboardData } from "@/contexts/dashboard-data-context"
-import type { Email } from "@/lib/api"
+import { getLatestScan, getResultsByPlatform, type Email, type PhishingResult, type ScanResult } from "@/lib/api"
+import type { Platform } from "@/components/dashboard/platform-selector"
+
+interface ReportsContentProps {
+  platform?: Platform
+}
 
 interface DayDataPoint {
   date: string;
@@ -42,8 +46,8 @@ function getPast7Days(): { date: string; dayName: string }[] {
   return days
 }
 
-// Group emails by date (past 7 days)
-function groupEmailsByDay(emails: Email[]): DayDataPoint[] {
+// Group data by date (past 7 days)
+function groupByDay(emails: Email[]): DayDataPoint[] {
   const past7Days = getPast7Days()
   const groupedData: Record<string, { high: number; medium: number; low: number }> = {}
 
@@ -76,14 +80,34 @@ function groupEmailsByDay(emails: Email[]): DayDataPoint[] {
   }))
 }
 
+// Convert PhishingResult to Email format
+function convertToEmail(result: PhishingResult): Email {
+  return {
+    id: result.id,
+    gmailId: result.id,
+    messageId: result.id,
+    sender: `${result.platform}@phishguard`,
+    senderName: result.platform.charAt(0).toUpperCase() + result.platform.slice(1),
+    subject: result.content.substring(0, 80),
+    body: result.content,
+    receivedAt: result.createdAt,
+    processedAt: result.createdAt,
+    riskLevel: result.risk,
+    phishingScore: result.confidence,
+    flags: result.reasons,
+    urlCount: 0,
+    urls: []
+  }
+}
+
 // Export to CSV function
-function exportToCSV(logs: HistoricalLog[]) {
+function exportToCSV(logs: HistoricalLog[], platformLabel: string) {
   if (logs.length === 0) {
     alert('No data to export')
     return
   }
 
-  const headers = ['Date', 'Total Emails', 'High Risk', 'Medium Risk', 'Low Risk', 'Status']
+  const headers = ['Date', `Total ${platformLabel}`, 'High Risk', 'Medium Risk', 'Low Risk', 'Status']
   const csvRows = [
     headers.join(','),
     ...logs.map(log => [
@@ -101,7 +125,7 @@ function exportToCSV(logs: HistoricalLog[]) {
   const link = document.createElement('a')
   const url = URL.createObjectURL(blob)
   link.setAttribute('href', url)
-  link.setAttribute('download', `phishguard-report-${new Date().toISOString().split('T')[0]}.csv`)
+  link.setAttribute('download', `phishguard-${platformLabel.toLowerCase()}-report-${new Date().toISOString().split('T')[0]}.csv`)
   link.style.visibility = 'hidden'
   document.body.appendChild(link)
   link.click()
@@ -109,7 +133,7 @@ function exportToCSV(logs: HistoricalLog[]) {
 }
 
 // Export to PDF function
-function exportToPDF(logs: HistoricalLog[]) {
+function exportToPDF(logs: HistoricalLog[], platformLabel: string) {
   if (logs.length === 0) {
     alert('No data to export')
     return
@@ -124,13 +148,13 @@ function exportToPDF(logs: HistoricalLog[]) {
   const totalHigh = logs.reduce((sum, log) => sum + log.high, 0)
   const totalMedium = logs.reduce((sum, log) => sum + log.medium, 0)
   const totalLow = logs.reduce((sum, log) => sum + log.low, 0)
-  const totalEmails = logs.reduce((sum, log) => sum + log.total, 0)
+  const totalMessages = logs.reduce((sum, log) => sum + log.total, 0)
 
   const html = `
     <!DOCTYPE html>
     <html>
     <head>
-      <title>PhishGuard AI - Security Report (Past 7 Days)</title>
+      <title>PhishGuard AI - ${platformLabel} Security Report (Past 7 Days)</title>
       <style>
         body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
         h1 { color: #0a0f1f; border-bottom: 3px solid #27f3d6; padding-bottom: 10px; }
@@ -149,7 +173,7 @@ function exportToPDF(logs: HistoricalLog[]) {
       </style>
     </head>
     <body>
-      <h1>🛡️ PhishGuard AI - Security Report (Past 7 Days)</h1>
+      <h1>🛡️ PhishGuard AI - ${platformLabel} Security Report (Past 7 Days)</h1>
       <p>Generated: ${new Date().toLocaleString()}</p>
       
       <div class="summary">
@@ -158,8 +182,8 @@ function exportToPDF(logs: HistoricalLog[]) {
           <div>Days with Data</div>
         </div>
         <div class="stat-box">
-          <div class="stat-value">${totalEmails}</div>
-          <div>Emails Analyzed</div>
+          <div class="stat-value">${totalMessages}</div>
+          <div>${platformLabel} Analyzed</div>
         </div>
         <div class="stat-box">
           <div class="stat-value high">${totalHigh}</div>
@@ -214,15 +238,90 @@ function exportToPDF(logs: HistoricalLog[]) {
   printWindow.document.close()
 }
 
-export function ReportsContent() {
-  const { data, refresh } = useDashboardData()
-  const { scanResult, isLoading, lastUpdated, hasNewData } = data
+export function ReportsContent({ platform = "email" }: ReportsContentProps) {
+  const [emails, setEmails] = useState<Email[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
-  // Process chart data - group by past 7 days
+  // Platform-specific labels
+  const platformLabels = useMemo(() => {
+    switch (platform) {
+      case "telegram":
+        return {
+          messages: "Messages",
+          emptyTitle: "No Telegram messages in the past 7 days",
+          emptyHint: "Messages scanned via the Telegram bot will appear here",
+          icon: Send
+        }
+      default:
+        return {
+          messages: "Emails",
+          emptyTitle: "No emails in the past 7 days",
+          emptyHint: "Scan your inbox to see reports",
+          icon: Mail
+        }
+    }
+  }, [platform])
+
+  const fetchData = useCallback(async (isRefresh = false) => {
+    if (isRefresh) setRefreshing(true)
+    setIsLoading(true)
+
+    try {
+      let allEmails: Email[] = []
+
+      if (platform === "email") {
+        // Email uses existing scan endpoints
+        const { getScanHistory, getLatestScan } = await import("@/lib/api")
+        const scanHistory = await getScanHistory(10)
+
+        if (scanHistory && scanHistory.length > 0) {
+          const emailMap = new Map()
+          scanHistory.forEach(scan => {
+            if (scan.results && Array.isArray(scan.results)) {
+              scan.results.forEach((email: Email) => {
+                const key = email.gmailId || email.id || email.messageId
+                if (key && !emailMap.has(key)) {
+                  emailMap.set(key, email)
+                }
+              })
+            }
+          })
+          allEmails = Array.from(emailMap.values())
+        }
+
+        if (allEmails.length === 0) {
+          const latestScan = await getLatestScan()
+          if (latestScan && latestScan.results) {
+            allEmails = latestScan.results
+          }
+        }
+      } else {
+        // Telegram uses platform-specific endpoint
+        const results = await getResultsByPlatform(platform, 500)
+        allEmails = results.map(convertToEmail)
+      }
+
+      setEmails(allEmails)
+      setLastUpdated(new Date())
+    } catch (error) {
+      console.error(`Failed to fetch ${platform} data:`, error)
+      setEmails([])
+    } finally {
+      setIsLoading(false)
+      setRefreshing(false)
+    }
+  }, [platform])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+  // Process chart data
   const chartData = useMemo(() => {
-    if (scanResult?.results && scanResult.results.length > 0) {
-      return groupEmailsByDay(scanResult.results)
+    if (emails.length > 0) {
+      return groupByDay(emails)
     }
     return getPast7Days().map(day => ({
       date: day.date,
@@ -232,9 +331,9 @@ export function ReportsContent() {
       low: 0,
       total: 0
     }))
-  }, [scanResult])
+  }, [emails])
 
-  // Create historical logs from chart data for exports
+  // Create historical logs for exports
   const historicalLogs: HistoricalLog[] = useMemo(() => {
     return chartData.map((day, index) => ({
       id: `day-${index}`,
@@ -243,20 +342,16 @@ export function ReportsContent() {
       high: day.high,
       medium: day.medium,
       low: day.low,
-      status: day.total > 0 ? 'Has Data' : 'No Emails'
+      status: day.total > 0 ? 'Has Data' : `No ${platformLabels.messages}`
     }))
-  }, [chartData])
-
-  const handleRefresh = async () => {
-    setRefreshing(true)
-    await refresh()
-    setRefreshing(false)
-  }
+  }, [chartData, platformLabels.messages])
 
   // Calculate totals
-  const totalEmails = scanResult?.summary?.total || 0
-  const totalHigh = scanResult?.summary?.high || 0
-  const totalMedium = scanResult?.summary?.medium || 0
+  const totalMessages = emails.length
+  const totalHigh = emails.filter(e => e.riskLevel?.toUpperCase() === 'HIGH').length
+  const totalMedium = emails.filter(e => e.riskLevel?.toUpperCase() === 'MEDIUM').length
+
+  const PlatformIcon = platformLabels.icon
 
   if (isLoading) {
     return (
@@ -273,17 +368,17 @@ export function ReportsContent() {
   return (
     <div className="space-y-6">
       {/* Header with refresh */}
-      <GlassCard className={`p-4 ${hasNewData ? 'ring-2 ring-cyan/50' : ''}`}>
+      <GlassCard className="p-4">
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
           <div className="flex items-center gap-4">
-            <Calendar className="w-5 h-5 text-cyan" />
+            <PlatformIcon className="w-5 h-5 text-cyan" />
             <span className="text-white font-medium">
-              Past 7 Days Report
+              Past 7 Days {platform === "email" ? "Email" : "Telegram"} Report
             </span>
             {lastUpdated && (
               <span className="text-xs text-muted-foreground flex items-center gap-1">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                Live • {lastUpdated.toLocaleTimeString()}
+                Updated • {lastUpdated.toLocaleTimeString()}
               </span>
             )}
           </div>
@@ -293,17 +388,17 @@ export function ReportsContent() {
             <GlowButton
               variant="ghost"
               size="sm"
-              onClick={handleRefresh}
+              onClick={() => fetchData(true)}
               disabled={refreshing}
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
               Refresh
             </GlowButton>
-            <GlowButton variant="secondary" size="sm" onClick={() => exportToPDF(historicalLogs)}>
+            <GlowButton variant="secondary" size="sm" onClick={() => exportToPDF(historicalLogs, platformLabels.messages)}>
               <FileText className="w-4 h-4" />
               Export PDF
             </GlowButton>
-            <GlowButton variant="secondary" size="sm" onClick={() => exportToCSV(historicalLogs)}>
+            <GlowButton variant="secondary" size="sm" onClick={() => exportToCSV(historicalLogs, platformLabels.messages)}>
               <FileSpreadsheet className="w-4 h-4" />
               Export CSV
             </GlowButton>
@@ -313,8 +408,8 @@ export function ReportsContent() {
 
       {/* Charts row */}
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Bar chart - Risk Distribution per Day */}
-        <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
+        {/* Bar chart */}
+        <GlassCard variant="strong">
           <h3 className="text-lg font-semibold text-white mb-6">Risk Distribution by Day (Past 7 Days)</h3>
           <div className="h-72">
             {chartData.some(d => d.total > 0) ? (
@@ -344,9 +439,9 @@ export function ReportsContent() {
               </ResponsiveContainer>
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-                <Inbox className="w-12 h-12 mb-4 opacity-50" />
-                <p>No emails in the past 7 days</p>
-                <p className="text-sm">Scan your inbox to see reports</p>
+                <PlatformIcon className="w-12 h-12 mb-4 opacity-50" />
+                <p>{platformLabels.emptyTitle}</p>
+                <p className="text-sm">{platformLabels.emptyHint}</p>
               </div>
             )}
           </div>
@@ -366,9 +461,9 @@ export function ReportsContent() {
           </div>
         </GlassCard>
 
-        {/* Area chart - Total emails scanned over time */}
-        <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
-          <h3 className="text-lg font-semibold text-white mb-6">Emails Over Time (Past 7 Days)</h3>
+        {/* Area chart */}
+        <GlassCard variant="strong">
+          <h3 className="text-lg font-semibold text-white mb-6">{platformLabels.messages} Over Time (Past 7 Days)</h3>
           <div className="h-72">
             {chartData.some(d => d.total > 0) ? (
               <ResponsiveContainer width="100%" height="100%">
@@ -411,7 +506,7 @@ export function ReportsContent() {
                     strokeWidth={2}
                     fillOpacity={1}
                     fill="url(#colorTotalReport)"
-                    name="Total Emails"
+                    name={`Total ${platformLabels.messages}`}
                   />
                   <Area
                     type="monotone"
@@ -426,15 +521,15 @@ export function ReportsContent() {
               </ResponsiveContainer>
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-                <Inbox className="w-12 h-12 mb-4 opacity-50" />
-                <p>No emails in the past 7 days</p>
+                <PlatformIcon className="w-12 h-12 mb-4 opacity-50" />
+                <p>{platformLabels.emptyTitle}</p>
               </div>
             )}
           </div>
           <div className="flex items-center justify-center gap-6 mt-4 text-sm">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded bg-cyan" />
-              <span className="text-muted-foreground">Total Emails</span>
+              <span className="text-muted-foreground">Total {platformLabels.messages}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded bg-risk-high" />
@@ -445,10 +540,10 @@ export function ReportsContent() {
       </div>
 
       {/* Daily breakdown table */}
-      <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50' : ''}>
+      <GlassCard variant="strong">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-white">Daily Breakdown (Past 7 Days)</h3>
-          <GlowButton variant="ghost" size="sm" onClick={() => exportToCSV(historicalLogs)}>
+          <GlowButton variant="ghost" size="sm" onClick={() => exportToCSV(historicalLogs, platformLabels.messages)}>
             <Download className="w-4 h-4" />
             Download
           </GlowButton>
@@ -462,7 +557,7 @@ export function ReportsContent() {
                   Day
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Total Emails
+                  Total {platformLabels.messages}
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   High Risk
@@ -494,7 +589,7 @@ export function ReportsContent() {
                   </td>
                   <td className="px-4 py-4">
                     <NeonBadge variant={day.total > 0 ? "cyan" : "low"}>
-                      {day.total > 0 ? 'Has Data' : 'No Emails'}
+                      {day.total > 0 ? 'Has Data' : `No ${platformLabels.messages}`}
                     </NeonBadge>
                   </td>
                 </tr>
@@ -509,8 +604,8 @@ export function ReportsContent() {
         <h3 className="text-lg font-semibold text-white mb-4">7-Day Summary</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center p-4 bg-navy/50 rounded-xl">
-            <p className="text-3xl font-bold text-white">{totalEmails}</p>
-            <p className="text-sm text-muted-foreground">Total Emails</p>
+            <p className="text-3xl font-bold text-white">{totalMessages}</p>
+            <p className="text-sm text-muted-foreground">Total {platformLabels.messages}</p>
           </div>
           <div className="text-center p-4 bg-navy/50 rounded-xl">
             <p className="text-3xl font-bold text-risk-high">{totalHigh}</p>
@@ -521,7 +616,7 @@ export function ReportsContent() {
             <p className="text-sm text-muted-foreground">Medium Risk</p>
           </div>
           <div className="text-center p-4 bg-navy/50 rounded-xl">
-            <p className="text-3xl font-bold text-risk-low">{totalEmails - totalHigh - totalMedium}</p>
+            <p className="text-3xl font-bold text-risk-low">{totalMessages - totalHigh - totalMedium}</p>
             <p className="text-sm text-muted-foreground">Low Risk</p>
           </div>
         </div>

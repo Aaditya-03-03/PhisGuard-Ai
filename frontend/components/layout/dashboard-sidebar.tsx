@@ -11,6 +11,7 @@ import {
   FileBarChart,
   Settings,
   Mail,
+  Send,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -20,10 +21,11 @@ import { useAuth } from "@/contexts/auth-context"
 
 const sidebarLinks = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/dashboard/flagged", icon: AlertTriangle, label: "Flagged Emails" },
+  { href: "/dashboard/flagged", icon: AlertTriangle, label: "Flagged Messages" },
   { href: "/dashboard/reports", icon: FileBarChart, label: "Reports" },
   { href: "/dashboard/settings", icon: Settings, label: "Settings" },
   { href: "/connect-gmail", icon: Mail, label: "Connect Gmail" },
+  { href: "/connect-telegram", icon: Send, label: "Connect Telegram" },
 ]
 
 export function DashboardSidebar() {

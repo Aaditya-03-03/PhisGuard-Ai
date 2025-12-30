@@ -7,10 +7,35 @@ import { GlassCard } from "@/components/ui/glass-card"
 import { GlowButton } from "@/components/ui/glow-button"
 import { NeonBadge } from "@/components/ui/neon-badge"
 import { ProbabilityBar } from "@/components/ui/probability-bar"
-import { Search, Filter, Eye, RefreshCw, Inbox } from "lucide-react"
-import { getEmailsByRisk, getLatestScan, type Email } from "@/lib/api"
+import { Search, Filter, Eye, RefreshCw, Inbox, Mail, Send } from "lucide-react"
+import { getLatestScan, getResultsByPlatform, type Email, type PhishingResult } from "@/lib/api"
+import type { Platform } from "@/components/dashboard/platform-selector"
 
-export function FlaggedEmailsList() {
+interface FlaggedEmailsListProps {
+  platform?: Platform
+}
+
+// Convert PhishingResult to Email format for display
+function convertToEmail(result: PhishingResult): Email {
+  return {
+    id: result.id,
+    gmailId: result.id,
+    messageId: result.id,
+    sender: `${result.platform}@phishguard`,
+    senderName: result.platform.charAt(0).toUpperCase() + result.platform.slice(1) + " Message",
+    subject: result.content.substring(0, 80) + (result.content.length > 80 ? "..." : ""),
+    body: result.content,
+    receivedAt: result.createdAt,
+    processedAt: result.createdAt,
+    riskLevel: result.risk,
+    phishingScore: result.confidence,
+    flags: result.reasons,
+    urlCount: 0,
+    urls: []
+  }
+}
+
+export function FlaggedEmailsList({ platform = "email" }: FlaggedEmailsListProps) {
   const searchParams = useSearchParams()
   const initialFilter = (searchParams.get('filter') as "all" | "high" | "medium" | "low") || "all"
 
@@ -20,62 +45,70 @@ export function FlaggedEmailsList() {
   const [filter, setFilter] = useState<"all" | "high" | "medium" | "low">(initialFilter)
   const [searchQuery, setSearchQuery] = useState("")
 
-  const fetchFlaggedEmails = useCallback(async (isRefresh = false) => {
+  const fetchFlaggedMessages = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true)
+    setLoading(true)
 
     try {
-      // Get all emails from scan history (multiple scans)
-      const { getScanHistory, getLatestScan } = await import("@/lib/api")
-      const scanHistory = await getScanHistory(10) // Get last 10 scans
-
-      console.log('[FlaggedEmails] Scan history:', scanHistory?.length, 'scans')
-
       let allEmails: Email[] = []
 
-      if (scanHistory && scanHistory.length > 0) {
-        // Combine all results from all scans, avoiding duplicates by emailId
-        const emailMap = new Map()
-        scanHistory.forEach(scan => {
-          console.log('[FlaggedEmails] Scan has', scan.results?.length, 'results, summary:', scan.summary)
-          if (scan.results && Array.isArray(scan.results)) {
-            scan.results.forEach((email: Email) => {
-              const key = email.gmailId || email.id || email.messageId || email.subject
-              if (key && !emailMap.has(key)) {
-                emailMap.set(key, email)
-              }
-            })
-          }
-        })
-        allEmails = Array.from(emailMap.values())
-      }
+      if (platform === "email") {
+        // Email uses existing scan history
+        const { getScanHistory, getLatestScan } = await import("@/lib/api")
+        const scanHistory = await getScanHistory(10)
 
-      // Fallback: also try latest scan if no emails found
-      if (allEmails.length === 0) {
-        console.log('[FlaggedEmails] Trying fallback to latest scan...')
-        const latestScan = await getLatestScan()
-        if (latestScan && latestScan.results) {
-          allEmails = latestScan.results
+        console.log(`[FlaggedMessages] Email scan history:`, scanHistory?.length, 'scans')
+
+        if (scanHistory && scanHistory.length > 0) {
+          const emailMap = new Map()
+          scanHistory.forEach(scan => {
+            if (scan.results && Array.isArray(scan.results)) {
+              scan.results.forEach((email: Email) => {
+                const key = email.gmailId || email.id || email.messageId || email.subject
+                if (key && !emailMap.has(key)) {
+                  emailMap.set(key, email)
+                }
+              })
+            }
+          })
+          allEmails = Array.from(emailMap.values())
         }
+
+        // Fallback to latest scan
+        if (allEmails.length === 0) {
+          const latestScan = await getLatestScan()
+          if (latestScan && latestScan.results) {
+            allEmails = latestScan.results
+          }
+        }
+      } else {
+        // Telegram and WhatsApp use platform-specific endpoint
+        console.log(`[FlaggedMessages] Fetching ${platform} results...`)
+        const results = await getResultsByPlatform(platform, 100)
+        console.log(`[FlaggedMessages] Got ${results.length} ${platform} results`)
+
+        // Convert to Email format for display
+        allEmails = results.map(convertToEmail)
       }
 
-      console.log('[FlaggedEmails] Total unique emails:', allEmails.length)
-      console.log('[FlaggedEmails] High risk:', allEmails.filter(e => e.riskLevel?.toLowerCase() === 'high').length)
+      console.log(`[FlaggedMessages] Total ${platform} messages:`, allEmails.length)
       setEmails(allEmails)
     } catch (error) {
-      console.error('Failed to fetch flagged emails:', error)
+      console.error(`Failed to fetch flagged ${platform} messages:`, error)
+      setEmails([])
     } finally {
       setLoading(false)
       setRefreshing(false)
     }
-  }, [])
+  }, [platform])
 
   useEffect(() => {
-    fetchFlaggedEmails()
+    fetchFlaggedMessages()
 
     // Auto-refresh every 30 seconds
-    const interval = setInterval(() => fetchFlaggedEmails(), 30000)
+    const interval = setInterval(() => fetchFlaggedMessages(), 30000)
     return () => clearInterval(interval)
-  }, [fetchFlaggedEmails])
+  }, [fetchFlaggedMessages])
 
   const filteredEmails = emails.filter((email) => {
     const riskLevel = email.riskLevel.toLowerCase()
@@ -95,6 +128,29 @@ export function FlaggedEmailsList() {
       minute: '2-digit'
     })
   }
+
+  // Platform-specific labels
+  const getPlatformLabels = () => {
+    switch (platform) {
+      case "telegram":
+        return {
+          searchPlaceholder: "Search Telegram messages...",
+          emptyTitle: "No flagged Telegram messages",
+          emptyMessage: "Messages scanned via the Telegram bot will appear here",
+          icon: Send
+        }
+      default:
+        return {
+          searchPlaceholder: "Search emails...",
+          emptyTitle: "No flagged emails found",
+          emptyMessage: "Scan your inbox to detect phishing threats",
+          icon: Mail
+        }
+    }
+  }
+
+  const labels = getPlatformLabels()
+  const PlatformIcon = labels.icon
 
   if (loading) {
     return (
@@ -116,7 +172,7 @@ export function FlaggedEmailsList() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search emails..."
+              placeholder={labels.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-navy-lighter/50 border border-cyan/20 rounded-xl text-white placeholder:text-muted-foreground focus:outline-none focus:border-cyan/50 focus:ring-2 focus:ring-cyan/20"
@@ -141,7 +197,7 @@ export function FlaggedEmailsList() {
             <GlowButton
               variant="ghost"
               size="sm"
-              onClick={() => fetchFlaggedEmails(true)}
+              onClick={() => fetchFlaggedMessages(true)}
               disabled={refreshing}
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
@@ -150,16 +206,16 @@ export function FlaggedEmailsList() {
         </div>
       </GlassCard>
 
-      {/* Email cards */}
+      {/* Message cards */}
       {filteredEmails.length > 0 ? (
         <div className="grid gap-4">
           {filteredEmails.map((email, index) => {
             const riskLevel = email.riskLevel.toLowerCase() as 'low' | 'medium' | 'high'
 
             return (
-              <GlassCard key={email.id || `email-${index}`} hover className="p-6">
+              <GlassCard key={email.id || `message-${index}`} hover className="p-6">
                 <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-                  {/* Email info */}
+                  {/* Message info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start gap-3 mb-2">
                       <NeonBadge variant={riskLevel}>
@@ -167,7 +223,9 @@ export function FlaggedEmailsList() {
                       </NeonBadge>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-white font-semibold truncate">
-                          {email.sender || email.senderName || 'Unknown sender'}
+                          {platform === "email"
+                            ? (email.sender || email.senderName || 'Unknown sender')
+                            : (email.senderName || 'Message')}
                         </h3>
                         <p className="text-muted-foreground text-sm truncate">
                           {email.subject || 'No subject'}
@@ -219,12 +277,12 @@ export function FlaggedEmailsList() {
         </div>
       ) : (
         <GlassCard className="p-12 text-center">
-          <Inbox className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-          <p className="text-lg font-medium text-white mb-2">No flagged emails found</p>
+          <PlatformIcon className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+          <p className="text-lg font-medium text-white mb-2">{labels.emptyTitle}</p>
           <p className="text-muted-foreground">
             {searchQuery || filter !== "all"
-              ? "No emails match your search criteria"
-              : "Scan your inbox to detect phishing threats"}
+              ? "No messages match your search criteria"
+              : labels.emptyMessage}
           </p>
         </GlassCard>
       )}

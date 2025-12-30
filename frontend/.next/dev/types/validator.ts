@@ -45,6 +45,15 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   type __Unused = __Check
 }
 
+// Validate ../../../app/connect-telegram/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/connect-telegram">> = Specific
+  const handler = {} as typeof import("../../../app/connect-telegram/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/dashboard/flagged/[id]/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/dashboard/flagged/[id]">> = Specific
