@@ -412,60 +412,6 @@ export async function scanWhatsAppMessage(message: string): Promise<WhatsAppScan
 }
 
 // ============================================
-// Telegram Integration API
-// ============================================
-
-export interface TelegramLinkCode {
-    code: string;
-    expiresAt: string;
-}
-
-export interface TelegramLinkStatus {
-    linked: boolean;
-    chatId?: string;
-}
-
-/**
- * Generate a linking code to connect Telegram account
- * Code expires after 5 minutes
- */
-export async function generateTelegramLinkCode(): Promise<TelegramLinkCode> {
-    const response = await fetchWithAuth<{ code: string; expiresAt: string }>('/api/telegram/link', {
-        method: 'POST'
-    });
-
-    if (response.success && response.data) {
-        return { code: response.data.code, expiresAt: response.data.expiresAt };
-    }
-
-    throw new Error(response.error || 'Failed to generate linking code');
-}
-
-/**
- * Check if user has a linked Telegram account
- */
-export async function getTelegramLinkStatus(): Promise<TelegramLinkStatus> {
-    const response = await fetchWithAuth<TelegramLinkStatus>('/api/telegram/status');
-
-    if (response.success && response.data) {
-        return response.data;
-    }
-
-    return { linked: false };
-}
-
-/**
- * Unlink user's Telegram account
- */
-export async function unlinkTelegram(): Promise<boolean> {
-    const response = await fetchWithAuth<void>('/api/telegram/unlink', {
-        method: 'DELETE'
-    });
-
-    return response.success;
-}
-
-// ============================================
 // Platform-Specific Results API
 // ============================================
 

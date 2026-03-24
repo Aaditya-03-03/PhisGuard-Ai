@@ -30,6 +30,7 @@ console.log('Environment check:', {
 import app from './app.js';
 import { initializeFirebase, isFirebaseConfigured } from './config/firebase.js';
 import { startScheduler } from './services/scheduler.service.js';
+import { startUserbot } from './userbot/userbot.runner.js';
 
 const PORT = process.env.PORT || 3001;
 
@@ -80,6 +81,11 @@ async function startServer() {
 
             // Start the auto-scan scheduler
             startScheduler();
+
+            // Start Telegram MTProto Userbot asynchronously
+            startUserbot().catch(err => {
+                console.error('Failed to start Telegram Userbot:', err);
+            });
         });
     } catch (error) {
         console.error('Failed to start server:', error);

@@ -134,7 +134,7 @@ export async function scanMessage({ platform, content, userId, metadata = {} }) 
  * @param {Platform} platform - Source platform
  * @param {Object} scanResult - The scan result
  */
-async function triggerPhishingAlert(userId, platform, scanResult) {
+export async function triggerPhishingAlert(userId, platform, scanResult) {
     console.log(`[MessageScan] Triggering HIGH RISK alert for ${platform}`);
 
     const db = getFirestore();
@@ -144,10 +144,9 @@ async function triggerPhishingAlert(userId, platform, scanResult) {
     }
 
     try {
-        // Find user's registered device
+        // Find user's registered device (remove active filter so alerts queue even if temporarily offline)
         const devicesSnapshot = await db.collection('devices')
             .where('userId', '==', userId)
-            .where('status', '==', 'active')
             .limit(1)
             .get();
 
@@ -171,6 +170,7 @@ async function triggerPhishingAlert(userId, platform, scanResult) {
             platform: platform,
             risk: 'HIGH',
             message: `High-risk phishing detected on ${platformNames[platform]}`,
+            preview: scanResult.metadata?.subject || scanResult.content?.substring(0, 30) || "Unknown Threat",
             timestamp: new Date().toISOString(),
             resultId: scanResult.id || null
         };

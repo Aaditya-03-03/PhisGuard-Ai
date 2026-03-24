@@ -11,7 +11,6 @@ import {
   FileBarChart,
   Settings,
   Mail,
-  Send,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -25,7 +24,6 @@ const sidebarLinks = [
   { href: "/dashboard/reports", icon: FileBarChart, label: "Reports" },
   { href: "/dashboard/settings", icon: Settings, label: "Settings" },
   { href: "/connect-gmail", icon: Mail, label: "Connect Gmail" },
-  { href: "/connect-telegram", icon: Send, label: "Connect Telegram" },
 ]
 
 export function DashboardSidebar() {

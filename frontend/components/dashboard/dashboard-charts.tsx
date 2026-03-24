@@ -99,7 +99,7 @@ export function DashboardCharts({ platform = "email" }: DashboardChartsProps) {
           barTitle: "Telegram Messages by Day (Past 7 Days)",
           pieTitle: "Telegram Risk Distribution",
           emptyMessage: "No Telegram messages in the past 7 days",
-          emptyHint: "Link your Telegram to start scanning",
+          emptyHint: "Start receiving messages to populate trends",
           icon: Send
         }
       case "whatsapp":

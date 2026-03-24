@@ -480,3 +480,58 @@ export async function updateDeviceHeartbeat(deviceId) {
 
     return { success: true, timestamp: new Date().toISOString() };
 }
+
+// ============================================
+// ALERT POLLING
+// ============================================
+
+/**
+ * Get pending (undelivered) high-risk alerts for the device
+ * 
+ * @param {string} deviceId - Device identifier
+ * @param {string} userId - Device owner's Firebase UID
+ * @returns {Promise<Array>} List of pending alerts
+ */
+export async function getPendingAlerts(deviceId, userId) {
+    const db = getFirestoreDb();
+    if (!db) return [];
+
+    try {
+        // Query undelivered alerts for this device
+        // Removed orderBy to prevent any composite index hanging/latency
+        const alertsSnapshot = await db.collection('device_alerts')
+            .where('deviceId', '==', deviceId)
+            .where('userId', '==', userId)
+            .where('delivered', '==', false)
+            .limit(5)
+            .get();
+
+        if (alertsSnapshot.empty) {
+            return [];
+        }
+
+        const alerts = [];
+        const batch = db.batch();
+
+        alertsSnapshot.docs.forEach(doc => {
+            alerts.push({
+                id: doc.id,
+                ...doc.data().alert
+            });
+
+            // Acknowledge alert immediately (mark as delivered)
+            batch.update(doc.ref, { 
+                delivered: true,
+                deliveredAt: FieldValue.serverTimestamp()
+            });
+        });
+
+        // Commit all acknowledgements safely
+        await batch.commit();
+
+        return alerts;
+    } catch (error) {
+        console.error('[DeviceService] Failed to fetch pending alerts:', error);
+        return [];
+    }
+}

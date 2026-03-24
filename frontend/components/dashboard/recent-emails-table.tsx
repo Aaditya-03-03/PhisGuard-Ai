@@ -35,7 +35,9 @@ export function RecentEmailsTable() {
     <GlassCard variant="strong" className={hasNewData ? 'ring-2 ring-cyan/50 transition-all duration-300' : 'transition-all duration-300'}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <h3 className="text-lg font-semibold text-white">Recent Emails</h3>
+          <h3 className="text-lg font-semibold text-white">
+            {data.platform === 'email' ? 'Recent Emails' : 'Recent Messages'}
+          </h3>
           {lastUpdated && (
             <span className="text-xs text-muted-foreground flex items-center gap-1">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -69,8 +71,12 @@ export function RecentEmailsTable() {
         ) : emails.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
             <Inbox className="w-12 h-12 mb-4 opacity-50" />
-            <p className="text-lg font-medium">No emails processed yet</p>
-            <p className="text-sm">Click "Scan Now" above to analyze your inbox</p>
+            <p className="text-lg font-medium">No messages processed yet</p>
+            <p className="text-sm">
+              {data.platform === 'email' 
+                ? 'Click "Scan Now" above to analyze your inbox' 
+                : 'Waiting for new messages to be scanned...'}
+            </p>
           </div>
         ) : (
           <table className="w-full">

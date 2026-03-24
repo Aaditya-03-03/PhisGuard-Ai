@@ -252,14 +252,18 @@ function analyzeUrls(urls, riskReasons) {
             }
         }
 
-        // EXISTING: Check for spoofed domains (typosquatting)
+        // Check for spoofed domains (impersonation)
         for (const domain of COMMONLY_SPOOFED_DOMAINS) {
-            if (urlLower.includes(domain) && !urlLower.includes(`${domain}.com`)) {
-                if (/[0-9]/.test(urlLower.split(domain)[0]?.slice(-1) || '') ||
-                    /[0-9]/.test(urlLower.split(domain)[1]?.slice(0, 1) || '')) {
-                    urlScore += 60;
-                    riskReasons.push(`Possible typosquatting of ${domain} detected`);
-                }
+            const hasBrandName = urlLower.includes(domain);
+            const officialDomains = OFFICIAL_DOMAINS[domain] || [`${domain}.com`];
+            const isOfficial = officialDomains.some(official => {
+                // Check if it's the exact domain or a valid subdomain
+                return urlLower.includes(`://${official}`) || urlLower.includes(`.${official}`);
+            });
+            
+            if (hasBrandName && !isOfficial) {
+                urlScore += 60;
+                riskReasons.push(`Suspicious URL impersonating "${domain}" detected`);
             }
         }
 
@@ -550,21 +554,32 @@ export function analyzeEmail(email) {
     const keywordAnalysis = analyzeKeywords(email.subject || '', email.body || '', riskReasons);
     const senderAnalysis = analyzeSender(email.sender || '', riskReasons);
 
-    // PRESERVED: Calculate weighted final score (same formula)
-    const weightedScore = (
-        urlAnalysis.score * 0.35 +
-        keywordAnalysis.score * 0.35 +
-        senderAnalysis.score * 0.30
-    );
+    // Dynamic weighted final score (adjusts if source has no email sender like Telegram)
+    let weightedScore = 0;
+    if (!email.sender || !email.sender.includes('@')) {
+        // Non-email platform weights (Telegram/WhatsApp typically don't have spoofable sender domains)
+        weightedScore = (
+            urlAnalysis.score * 0.50 +
+            keywordAnalysis.score * 0.50
+        );
+    } else {
+        // Standard Email Weighting
+        weightedScore = (
+            urlAnalysis.score * 0.35 +
+            keywordAnalysis.score * 0.35 +
+            senderAnalysis.score * 0.30
+        );
+    }
 
     // PRESERVED: Normalize to 0-1 range
     const normalizedScore = Math.min(Math.max(weightedScore / 100, 0), 1);
 
-    // PRESERVED: Determine risk level (same thresholds)
+    // Dynamic Risk Evaluation: Averaged scores often dilute severe localized threats.
+    // If either the linguistic (keywords) or technical (URLs) vectors are overtly malicious, auto-escalate.
     let riskLevel;
-    if (normalizedScore >= 0.7) {
+    if (normalizedScore >= 0.7 || keywordAnalysis.score >= 75 || urlAnalysis.score >= 75) {
         riskLevel = 'HIGH';
-    } else if (normalizedScore >= 0.4) {
+    } else if (normalizedScore >= 0.4 || keywordAnalysis.score >= 40) {
         riskLevel = 'MEDIUM';
     } else {
         riskLevel = 'LOW';

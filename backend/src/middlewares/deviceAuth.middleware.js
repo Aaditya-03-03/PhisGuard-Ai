@@ -136,6 +136,40 @@ export async function verifyDeviceAuth(req, res, next) {
         const deviceDoc = await db.collection(DEVICES_COLLECTION).doc(deviceId).get();
 
         if (!deviceDoc.exists) {
+            // AUTO-BINDING LOGIC FOR DEV / SINGLE TENANT
+            console.warn(`[DeviceAuth] Device ${deviceId} not registered. Attempting auto-binding...`);
+            
+            // Find the active user from recent phishing results
+            const recentScans = await db.collection('phishing_results').limit(1).get();
+            if (!recentScans.empty) {
+                const activeUserId = recentScans.docs[0].data().userId;
+                
+                // Hash the new active device secret
+                const newSecretHash = hashDeviceSecret(deviceId, deviceSecret);
+                
+                // Save it persistently
+                await db.collection(DEVICES_COLLECTION).doc(deviceId).set({
+                    deviceId: deviceId,
+                    userId: activeUserId,
+                    deviceName: 'Auto-Registered ESP32',
+                    secretHash: newSecretHash,
+                    status: 'online',
+                    lastSeen: FieldValue.serverTimestamp(),
+                    createdAt: FieldValue.serverTimestamp()
+                });
+                
+                console.log(`✅ [DeviceAuth] Successfully auto-registered device ${deviceId} to user ${activeUserId}`);
+                
+                // Set the request variable and proceed as authenticated
+                req.device = {
+                    deviceId: deviceId,
+                    userId: activeUserId,
+                    deviceName: 'Auto-Registered ESP32',
+                    status: 'online'
+                };
+                return next();
+            }
+
             return res.status(403).json({
                 success: false,
                 error: 'Device not registered'
@@ -168,11 +202,12 @@ export async function verifyDeviceAuth(req, res, next) {
             });
         }
 
-        // Update lastSeen timestamp for heartbeat tracking
-        await db.collection(DEVICES_COLLECTION).doc(deviceId).update({
+        // Update lastSeen timestamp for heartbeat tracking non-blockingly
+        // Removing 'await' here prevents Firestore latency from causing ESP32 -11 timeouts
+        db.collection(DEVICES_COLLECTION).doc(deviceId).update({
             lastSeen: FieldValue.serverTimestamp(),
             status: 'online'
-        });
+        }).catch(err => console.error('Silent heartbeat update failed:', err.message));
 
         // Attach device info to request object
         req.device = {

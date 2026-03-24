@@ -13,7 +13,6 @@ import scanRoutes from './routes/scan.routes.js';
 import autoscanRoutes from './routes/autoscan.routes.js';
 import deviceRoutes from './routes/device.routes.js';
 import whatsappRoutes from './routes/whatsapp.routes.js';
-import telegramRoutes from './routes/telegram.routes.js';
 
 // Import config
 import { isFirebaseConfigured } from './config/firebase.js';
@@ -101,12 +100,6 @@ app.get('/', (req, res) => {
                 whatsapp: 'POST /scan/whatsapp',
                 history: 'GET /scan/history',
                 latest: 'GET /scan/latest'
-            },
-            telegram: {
-                webhook: 'POST /telegram/webhook',
-                link: 'POST /telegram/link',
-                status: 'GET /telegram/status',
-                unlink: 'DELETE /telegram/unlink'
             }
         }
     });
@@ -119,7 +112,6 @@ app.use('/api/scan', scanRoutes);
 app.use('/api/scan', whatsappRoutes);  // WhatsApp manual scan
 app.use('/api/autoscan', autoscanRoutes);
 app.use('/api/device', deviceRoutes);  // ESP32 Device Integration
-app.use('/api/telegram', telegramRoutes);  // Telegram Bot Integration
 
 // Also mount without prefix for backwards compatibility
 app.use('/auth', authRoutes);

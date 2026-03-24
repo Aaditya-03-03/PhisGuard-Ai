@@ -7,7 +7,6 @@ import { DashboardCharts } from "@/components/dashboard/dashboard-charts"
 import { RecentEmailsTable } from "@/components/dashboard/recent-emails-table"
 import { PlatformSelector, DASHBOARD_PLATFORMS, type Platform } from "@/components/dashboard/platform-selector"
 import { WhatsAppScanner } from "@/components/dashboard/whatsapp-scanner"
-import { TelegramLink } from "@/components/dashboard/telegram-link"
 import { useDashboardData } from "@/contexts/dashboard-data-context"
 
 export default function DashboardPage() {
@@ -62,13 +61,13 @@ export default function DashboardPage() {
       {/* Telegram Platform */}
       {selectedPlatform === "telegram" && (
         <div className="space-y-6">
-          {/* Telegram Link Status */}
-          <TelegramLink />
-
           {/* Telegram Stats - same layout as email */}
           <DashboardStats platform="telegram" />
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
             <DashboardCharts platform="telegram" />
+          </div>
+          <div className="mt-8">
+            <RecentEmailsTable />
           </div>
         </div>
       )}
@@ -83,6 +82,9 @@ export default function DashboardPage() {
           <DashboardStats platform="whatsapp" />
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
             <DashboardCharts platform="whatsapp" />
+          </div>
+          <div className="mt-8">
+            <RecentEmailsTable />
           </div>
         </div>
       )}

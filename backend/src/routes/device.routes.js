@@ -30,7 +30,8 @@ import {
     processDeviceCommand,
     updateDeviceHeartbeat,
     getDeviceCommandLogs,
-    isValidCommand
+    isValidCommand,
+    getPendingAlerts
 } from '../services/device.service.js';
 
 const router = Router();
@@ -376,6 +377,32 @@ router.post('/heartbeat', heartbeatLimiter, verifyDeviceAuth, async (req, res) =
         res.status(500).json({
             success: false,
             error: 'Heartbeat update failed'
+        });
+    }
+});
+
+/**
+ * GET /api/device/alerts/pending
+ * Retrieve and acknowledge any unread High-Risk alerts.
+ * 
+ * Auth: Device authentication via middleware
+ * Returns: Array of alerts triggered since last check
+ */
+router.get('/alerts/pending', heartbeatLimiter, verifyDeviceAuth, async (req, res) => {
+    try {
+        const { deviceId, userId } = req.device;
+
+        const alerts = await getPendingAlerts(deviceId, userId);
+
+        res.json({
+            success: true,
+            data: alerts
+        });
+    } catch (error) {
+        console.error('Pending alerts fetch failed:', error.message);
+        res.status(500).json({
+            success: false,
+            error: 'Pending alerts fetch failed'
         });
     }
 });

@@ -5,6 +5,7 @@ import cron from 'node-cron';
 import { getFirestoreDb } from '../config/firebase.js';
 import { fetchInboxEmails, isGmailConnected, fetchNewEmailsSince } from './gmail.service.js';
 import { analyzeEmail } from './phishing.service.js';
+import { triggerPhishingAlert } from './message-scan.service.js';
 import { FieldValue } from 'firebase-admin/firestore';
 
 const SCAN_RESULTS_COLLECTION = 'scanResults';
@@ -143,6 +144,19 @@ async function performAutoScan(userId) {
             medium: scanResults.filter(r => r.riskLevel === 'MEDIUM').length,
             low: scanResults.filter(r => r.riskLevel === 'LOW').length
         };
+
+        // Hardware Integration: Trigger ESP32 alerts for all high-risk items found in this batch
+        for (const result of scanResults.filter(r => r.riskLevel === 'HIGH')) {
+            // We format the object to match what triggerPhishingAlert expects:
+            const alertAdapter = {
+                id: result.id,
+                metadata: { subject: result.subject },
+                content: result.snippet
+            };
+            // Run background trigger without await so it doesn't block the scheduler pool
+            triggerPhishingAlert(userId, 'gmail', alertAdapter)
+                .catch(e => console.error('[Auto-Scan] Failed to queue hardware alert:', e));
+        }
 
         // Store results - prioritize HIGH risk (always stored), then MEDIUM, then LOW
         // No arbitrary limits - store based on importance

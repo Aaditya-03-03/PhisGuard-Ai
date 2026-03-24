@@ -138,6 +138,14 @@ export function DashboardDataProvider({
             total: results.length
         }
 
+        const parseDate = (dateVal: any) => {
+            if (!dateVal) return new Date().toISOString();
+            if (typeof dateVal === 'string') return dateVal;
+            if (dateVal._seconds) return new Date(dateVal._seconds * 1000).toISOString();
+            if (dateVal.seconds) return new Date(dateVal.seconds * 1000).toISOString();
+            return new Date().toISOString();
+        };
+
         // Convert to email-like format for chart compatibility
         const emailResults = results.map(r => ({
             id: r.id,
@@ -147,8 +155,8 @@ export function DashboardDataProvider({
             senderName: r.platform.charAt(0).toUpperCase() + r.platform.slice(1),
             subject: r.content.substring(0, 100) + (r.content.length > 100 ? "..." : ""),
             body: r.content,
-            receivedAt: r.createdAt,
-            processedAt: r.createdAt,
+            receivedAt: parseDate(r.createdAt),
+            processedAt: parseDate(r.createdAt),
             riskLevel: r.risk,
             phishingScore: r.confidence,
             flags: r.reasons,
