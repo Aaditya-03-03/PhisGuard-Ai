@@ -1,188 +1,310 @@
-[00:00:02.065] Server  LOG      ✓ Ready in 1352ms
-[00:00:21.029] Server  LOG      ○ Compiling /dashboard/settings ...
-[00:00:24.412] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:24.654] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:24.654] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/settings","route":"/dashboard/settings"}
-[00:00:24.654] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774327298338} /_vercel/insights/view
-[00:00:25.585] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
-[00:00:25.585] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
-[00:00:32.411] Server  LOG      ○ Compiling /dashboard ...
-[00:00:33.522] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:02.974] Server  LOG      ✓ Ready in 2.1s
+[00:00:19.598] Server  LOG      ○ Compiling / ...
+[00:00:24.344] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:24.748] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:24.748] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:24.748] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454212839} /_vercel/insights/view
+[00:00:45.659] Server  LOG      ○ Compiling /dashboard ...
+[00:00:47.365] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:47.645] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:47.645] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:00:47.645] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454235745} /_vercel/insights/view
+[00:00:48.192] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
+[00:00:48.192] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
+[00:00:53.258] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:33.522] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:53.258] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:33.522] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:53.259] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:33.522] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:00:53.259] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:33.523] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774327307098} /_vercel/insights/view
-[00:00:45.287] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:05.672] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:01:07.974] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:45.287] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:07.974] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:45.287] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:07.974] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:00:45.287] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:07.974] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:00.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:23.152] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:00.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:23.152] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:00.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:23.152] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:00.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:23.152] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:01.025] Browser LOG     [Dashboard] Tab became visible, refreshing...
-[00:01:04.282] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:36.784] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:04.282] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:36.784] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:04.282] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:36.784] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:04.282] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:36.784] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:14.346] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:56.741] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:14.346] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:56.742] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:14.346] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:56.742] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:14.346] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:01:56.742] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:31.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:12.396] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:31.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:12.396] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:31.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:12.396] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:31.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:12.396] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:47.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:26.097] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:47.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:26.097] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:47.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:26.098] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:01:47.291] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:26.098] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:00.365] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:37.577] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:00.365] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:37.577] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:00.365] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:37.577] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:00.365] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:37.577] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:22.286] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:57.410] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:22.286] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:57.410] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:22.286] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:57.410] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:02:22.286] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:02:57.410] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:03:19.290] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:13.408] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:03:19.290] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:13.408] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:03:19.290] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:13.408] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:03:19.290] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:13.408] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:04:18.279] Browser LOG     [Dashboard] New email data! Previous: 631, New: 632
-[00:04:18.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:23.768] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:03:28.189] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:04:18.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:28.189] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:04:18.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:28.189] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
-[00:04:18.279] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+[00:03:28.189] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
+[00:03:28.342] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454396438} /_vercel/insights/view
+[00:03:36.556] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:03:36.556] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:03:38.133] Browser LOG     [FlaggedMessages] Fetching telegram results...
+[00:03:39.209] Browser LOG     [FlaggedMessages] Got 7 telegram results
+[00:03:39.209] Browser LOG     [FlaggedMessages] Total telegram messages: 7
+[00:03:44.683] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:03:44.683] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:03:50.267] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:03:50.267] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:03:52.683] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/reports color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/reports","o":"http://localhost:3000/dashboard/reports","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454420776} /_vercel/insights/view
+[00:03:58.309] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:03:58.309] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:03:58.309] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:03:58.309] Browser WARN    The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+[00:03:58.467] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454426566} /_vercel/insights/view
+[00:07:01.716] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:07:03.362] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454611459} /_vercel/insights/view
+[00:07:35.707] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser LOG     [FlaggedMessages] Email scan history: 0 scans
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser LOG     [FlaggedMessages] Email scan history: 0 scans
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:57.534] Browser ERROR   API Error: {}
+[00:07:58.461] Browser ERROR   API Error: {}
+[00:07:58.461] Browser LOG     [FlaggedMessages] Total email messages: 0
+[00:07:58.461] Browser ERROR   API Error: {}
+[00:07:58.461] Browser LOG     [FlaggedMessages] Total email messages: 0
+[00:07:58.835] Browser ERROR   API Error: {}
+[00:07:58.835] Browser ERROR   API Error: {}
+[00:07:58.835] Browser LOG     [FlaggedMessages] Email scan history: 0 scans
+[00:07:58.835] Browser ERROR   API Error: {}
+[00:07:58.835] Browser ERROR   API Error: {}
+[00:07:58.835] Browser ERROR   API Error: {}
+[00:07:58.835] Browser ERROR   API Error: {}
+[00:08:00.864] Browser ERROR   API Error: {}
+[00:08:00.864] Browser LOG     [FlaggedMessages] Total email messages: 0
+[00:08:03.451] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:03.597] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:08:03.597] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged","route":"/dashboard/flagged"}
+[00:08:03.597] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454671696} /_vercel/insights/view
+[00:08:07.158] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
+[00:08:07.158] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
+[00:08:09.186] Browser ERROR   API Error: {}
+[00:08:09.186] Browser ERROR   API Error: {}
+[00:08:09.186] Browser ERROR   API Error: {}
+[00:08:09.186] Browser ERROR   API Error: {}
+[00:08:09.186] Browser ERROR   API Error: {}
+[00:08:09.186] Browser LOG     [FlaggedMessages] Email scan history: 0 scans
+[00:08:09.186] Browser ERROR   API Error: {}
+[00:08:09.186] Browser LOG     [FlaggedMessages] Email scan history: 0 scans
+[00:08:19.010] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:08:21.251] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:21.393] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:08:21.393] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/flagged","route":"/dashboard/flagged"}
+[00:08:21.393] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454689485} /_vercel/insights/view
+[00:08:22.183] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
+[00:08:22.183] Browser LOG     [Dashboard] Auto-refresh set to 15s for email
+[00:09:04.829] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:09:17.508] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:09:17.508] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:09:21.854] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:09:21.854] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:09:22.057] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454750155} /_vercel/insights/view
+[00:09:25.086] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/dashboard/flagged color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/flagged","o":"http://localhost:3000/dashboard/flagged","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1774454753182} /_vercel/insights/view
+[00:09:25.556] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:09:25.557] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:09:29.813] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:09:29.813] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:09:34.073] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:09:34.073] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:09:59.029] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:09:59.029] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:10:29.496] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:10:29.496] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:10:36.576] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:10:59.026] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:10:59.026] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:11:30.288] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:11:30.288] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:12:04.378] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:12:04.378] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:12:33.338] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:12:33.338] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:13:58.655] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:13:58.655] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:15:13.009] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:15:13.009] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:15:56.915] Browser LOG     [Dashboard] Tab became visible, refreshing...
+[00:16:01.240] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:16:01.240] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:16:09.506] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:16:09.506] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:16:37.391] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:16:37.391] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:17:07.891] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:17:07.891] Browser LOG     [FlaggedMessages] Total email messages: 639
+[00:17:37.124] Browser LOG     [FlaggedMessages] Email scan history: 1 scans
+[00:17:37.124] Browser LOG     [FlaggedMessages] Total email messages: 639
